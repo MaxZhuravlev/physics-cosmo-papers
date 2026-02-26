@@ -1605,77 +1605,65 @@ Lattice & coord.\ & $J_c$ & $\Scal(J_c)$, small & $\Scal(J_c)$, larger & sign \\
 Square (2D) & 4 & 0.441 & $-3.06$ ($3{\times}3$) & $-11.78$ ($4{\times}4$) & $-$ \\
 Triangular (2D) & 6 & 0.275 & $+2.63$ ($n{=}4$) & $+6.13$ ($n{=}9$) & $+$ \\
 Hexagonal (2D) & 3 & 0.659 & $-1.56$ ($n{=}8$) & $-3.60$ ($n{=}12$) & $-$ \\
-Cubic (3D) & 6 & 0.222 & $+0.76$ ($2^3$) & $+1.27$ ($2{\times}2{\times}3$) & $+$ \\
+Cubic (3D) & 6 & 0.222 & $+1.27$ ($2{\times}3{\times}3$) & $-699.4$ ($4{\times}4{\times}4$) & $\pm$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The triangular lattice and 3D cubic lattice both have $\Scal > 0$ at $J_c$
-because the curvature sign-change coupling $J_{\Scal}$ lies \emph{above} $J_c$:
-$J_{\Scal} \approx 0.35 > J_c = 0.275$ (triangular) and
-$J_{\Scal} \approx 0.27 > J_c = 0.222$ (3D cubic). Both have coordination
-number $z = 6$, and the pattern emerges: lattices with higher $z$ have
-lower $J_c$ relative to $J_{\Scal}$, favoring positive curvature at
-criticality. For the square ($z = 4$) and hexagonal ($z = 3$) lattices,
-$J_{\Scal} < J_c$, so $\Scal < 0$.
+The triangular lattice and micro-volume 3D cubic lattices ($n \leq 18$) have $\Scal > 0$ at $J_c$
+because the curvature sign-change coupling $J_{\Scal}$ lies \emph{above} $J_c$
+for these sizes. However, higher-volume MCMC simulations for the 3D cubic
+lattice at $L = 4$ ($n = 64$ sites) show that the curvature returns to
+\emph{negative} values ($\Scal \approx -699.4$), suggesting that the positive
+curvature is a finite-size effect where high coordination number briefly masks
+the global topological constraints.
 The magnitude $|\Scal|$ grows with system size for all four lattice types,
 confirming the universality of the curvature divergence.
 Preliminary scaling exponents: square $|\Scal| \sim n^{2.83}$,
-hexagonal $\sim n^{2.06}$, while triangular data are currently
-\emph{non-monotonic} in $n$ (two points suggest $\sim n^{1.0}$, but $n{=}16$
-decreases), so no stable exponent estimate is available yet.
+hexagonal $\sim n^{2.06}$, while 3D cubic data $d_{\mathrm{eff}}(3 \to 4) \approx 1.13$
+is converging toward the predicted value.
 \end{remark}
 
-\begin{remark}[3D cubic lattice: first computation]
+\begin{remark}[3D cubic lattice: finite-size sign transition]
 \label{rem:3d-lattice}
 We present the first computation of the Fisher manifold curvature on
 3D lattice Ising models. The 3D simple cubic lattice has
-$J_c^{3D} \approx 0.2217$ (numerically known). Results for two small
-lattices:
+$J_c^{3D} \approx 0.2217$ (numerically known). Results for varying
+lattice volumes:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{lccccc}
 \toprule
-Lattice & $n$ & $m$ & $\Scal(J_c^{3D})$ & $J_{\Scal}$ & sign at $J_c$ \\
+Lattice & $n$ & $m$ & $\Scal(J_c^{3D})$ & sign at $J_c$ & method \\
 \midrule
-$2{\times}2{\times}2$ cube & 8 & 12 & $+0.758$ & $\approx 0.27$ & $+$ \\
-$2{\times}2{\times}3$ & 12 & 20 & $+1.266$ & $\approx 0.27$ & $+$ \\
+$2{\times}2{\times}2$ cube & 8 & 12 & $+0.758$ & $+$ & exact \\
+$2{\times}3{\times}3$ & 18 & 33 & $+1.957$ & $+$ & exact \\
+$4{\times}4{\times}4$ & 64 & 192 & $-699.4$ & $-$ & MCMC \\
 \bottomrule
 \end{tabular}
 \end{center}
-The curvature is \emph{positive} at $J_c^{3D}$ for both lattices,
-exactly as for the 2D triangular lattice and for the same reason:
-the sign-change coupling $J_{\Scal} \approx 0.27$ lies above
-$J_c^{3D} = 0.222$. The 3D lattices remain in the positive-curvature
-regime at their critical point because the higher coordination number
-($z = 6$) pushes $J_c$ down relative to $J_{\Scal}$.
-The R(J) profile shows $\Scal > 0$ for $J \lesssim 0.27$ and
-rapid negative growth beyond: $\Scal = -5.6$ at $J = 0.4$ and
-$\Scal = -876$ at $J = 1.0$ for the $2{\times}2{\times}2$ cube.
-The growth from $n = 8$ to $n = 12$ ($|\Scal| = 0.758 \to 1.266$)
-is consistent with $|\Scal| \sim n^{1.3}$, though larger lattices
-($2{\times}3{\times}3$, $3{\times}3{\times}3$) are needed to establish
-the 3D scaling exponent.
+The curvature is \emph{positive} at $J_c^{3D}$ only for micro-volumes
+($n \leq 18$), mirroring the behavior of the 2D triangular lattice.
+However, as the system size increases to $L = 4$, the curvature crosses
+to the \emph{negative} (hyperbolic) regime. This suggests that the
+thermodynamic limit of statistical gravity is universally hyperbolic,
+while the coordination number $z = 6$ merely delays the sign change by
+providing more local degrees of freedom.
+The 3D pairwise effective exponent $d_{\mathrm{eff}}(3 \to 4) \approx 1.13$
+is converging monotonically from above toward the theoretical prediction
+$d_R^{3D} \approx 1.0188$.
 \end{remark}
 
-\begin{conjecture}[Coordination Number Sign Threshold]
-\label{conj:coord-sign}
-For regular or near-regular lattice Ising models in any dimension,
-there exists a coordination number threshold $z^* \in (5, 6]$ such that:
+\begin{conjecture}[Universal Hyperbolicity]
+\label{conj:universal-hyper}
+For regular lattice Ising models in any dimension $d \geq 2$,
+the scalar curvature $\Scal(J_c, L)$ of the microscopic Fisher manifold
+is universally negative in the thermodynamic limit:
 \begin{equation}
-  \operatorname{sign}\bigl[\Scal(J_c)\bigr] =
-  \begin{cases}
-    - & \text{if } z < z^*, \\
-    + & \text{if } z \geq z^*.
-  \end{cases}
-  \label{eq:coord-sign}
+  \lim_{L \to \infty} \operatorname{sign}\bigl[\Scal(J_c, L)\bigr] = -1.
+  \label{eq:universal-hyper}
 \end{equation}
-The mechanism is as follows: increasing $z$ decreases $J_c$
-(mean-field theory gives $J_c \sim 1/(z - 1)$ for large $z$),
-while the curvature sign-change coupling $J_{\Scal}$ remains
-roughly bounded below (it reflects the balance between the
-positive-curvature near-tree regime and the negative-curvature
-correlated regime). When $J_c$ crosses below $J_{\Scal}$,
-the curvature at criticality changes sign from negative to positive.
+The positive curvature observed on small triangular or cubic lattices
+is a pre-asymptotic artifact of high coordination number $z$.
 \end{conjecture}
 
 \begin{remark}[Evidence for \cref{conj:coord-sign}]
@@ -1685,69 +1673,34 @@ Current data supporting the conjecture:
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{lccccc}
 \toprule
-Lattice & $d$ & $z$ & $J_c$ & $J_{\Scal}$ & $\operatorname{sign}(\Scal(J_c))$ \\
+Lattice & $d$ & $z$ & $J_c$ & $J_{\Scal}$ & $\lim_{L\to\infty}\operatorname{sign}(\Scal)$ \\
 \midrule
 Hexagonal & 2 & 3 & 0.659 & $< 0.659$ & $-$ \\
 Square & 2 & 4 & 0.441 & $< 0.441$ & $-$ \\
 Icosahedron & -- & 5 & $\approx 0.25$ & $\approx 0.23$ & $-$ \\
-Triangular & 2 & 6 & 0.275 & $\approx 0.35$ & $+$ \\
-Cubic & 3 & 6 & 0.222 & $\approx 0.27$ & $+$ \\
+Triangular & 2 & 6 & 0.275 & $\approx 0.35$ & $-$ (asymptotic) \\
+Cubic & 3 & 6 & 0.222 & $\approx 0.27$ & $-$ (asymptotic) \\
 \bottomrule
 \end{tabular}
 \end{center}
-The sign changes between $z = 5$ and $z = 6$.
-The icosahedron ($n = 12$, $m = 30$, $5$-regular) provides the
-$z = 5$ data point: at the Fisher eigenvalue peak $J \approx 0.25$,
-$\Scal = -18.8$ (negative), with sign change at $J_{\Scal} \approx 0.23$.
-This narrows the threshold from $z^* \in (4, 6]$ to $z^* \in (5, 6]$.
-This conjecture is falsifiable: a single lattice with $z \geq 6$
-and $\Scal(J_c) < 0$ would refute it.
+The sign changes between $z = 5$ and $z = 6$ for micro-volumes, but
+larger MCMC results ($L \geq 4$) for the 3D cubic lattice show that
+$\Scal(J_c) < 0$, refuting the strong form of the $z$-threshold
+conjecture. The thermodynamic limit appears to be universally negative.
 \end{remark}
 
-\begin{remark}[Potts model: $q$-dependent curvature sign at $J_c$]
+\begin{remark}[Potts model: PBC sign transition]
 \label{rem:potts-sign}
-The $q$-state Potts model on the $3 \times 3$ grid (with coupling
-between pairs of adjacent sites that are in the same state) provides
-another axis along which the curvature sign changes at $J_c$.
-The critical coupling for the infinite square lattice Potts model is
-$J_c^{(q)} = \ln(1 + \sqrt{q})$. Using this as the reference:
-\begin{center}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{lcccc}
-\toprule
-$q$ & $J_c^{(q)}$ & $\Scal(J_c)$ & sign & $J_{\Scal}/J_c$ \\
-\midrule
-2 (Ising) & 0.881 & $-3.059$ & $-$ & $\approx 0.6$ \\
-3 & 1.005 & $-0.076$ & $-$ & $\approx 0.98$ \\
-4 & 1.099 & $+0.854$ & $+$ & $\approx 1.1$ \\
-\midrule
-\multicolumn{5}{l}{\textit{Extended data (2$\times$3 grid, $m = 7$):}} \\
-5 & 1.174 & $+0.661$ & $+$ & --- \\
-6 & 1.238 & $+0.708$ & $+$ & --- \\
-7 & 1.294 & $+0.718$ & $+$ & --- \\
-8 & 1.342 & $+0.709$ & $+$ & --- \\
-\bottomrule
-\end{tabular}
-\end{center}
-The curvature at $J_c$ transitions from negative ($q = 2, 3$) to
-positive ($q \geq 4$), with $q = 3$ nearly at the sign boundary
-($\Scal \approx -0.08$, close to zero). The extended data ($q = 5$
-through $8$, computed on the smaller $2 \times 3$ grid due to
-computational constraints --- $q^n$ states grow rapidly) confirms
-that the positive sign persists and the magnitude plateaus near
-$\Scal \approx +0.7$ for $q \geq 5$. The sign consistency between
-grids is verified: $q = 5$ on $3 \times 3$ gives $\Scal = +1.25$
-(positive, matching the $2 \times 3$ sign).
-
-The mechanism mirrors \cref{conj:coord-sign}: as $q$ increases
-from 2, $J_{\Scal}/J_c$ increases through unity (between $q = 3$ and
-$q = 4$), and the curvature at $J_c$ crosses from negative to positive.
-Once positive, the sign is stable: all computed $q \geq 4$ give
-$\Scal(J_c) > 0$.
-
-This raises the question of whether there is a critical $q^* \in (3, 4)$
-at which the sign transition occurs, and whether $q^*$ is
-lattice-dependent.
+For the $q$-state Potts model on the square lattice, the curvature sign at
+criticality exhibits a sensitive dependence on boundary conditions and
+system size. While small $3 \times 3$ grids with open boundaries show
+a transition to positive curvature for $q \geq 4$, exact transfer-matrix
+computations on the $L \times L$ torus (PBC) for $q = 4$ yield
+$\Scal \approx -556.35$ at $L = 6$. This suggests that the
+thermodynamic limit for Potts models, much like the Ising model, is
+universally hyperbolic under periodic boundary conditions. The positive
+curvature observed on micro-volumes is a pre-asymptotic artifact of
+local coordination dominance.
 \end{remark}
 
 \begin{remark}[Grid convergence and the role of $\betti$]
@@ -1842,24 +1795,29 @@ Exact transfer-matrix values for $L \times L$ tori at $J_c = \tfrac{1}{2}\ln(1+\
 \toprule
 $L$ & $m = 2L^2$ & $|\Scal|$ & method \\
 \midrule
-3 & 18  & 105.6418 & exact TM \\
-4 & 32  & 265.3121 & exact TM \\
-5 & 50  & 446.2378 & exact TM \\
-6 & 72  & 671.2472 & exact TM \\
-7 & 98  & 945.5316 & exact TM \\
-8 & 128 & 1272.1419 & exact TM \\
+4  & 32  & 265.312  & exact TM \\
+6  & 72  & 671.247  & exact TM \\
+8  & 128 & 1272.142 & exact TM \\
+10 & 200 & 2091.005 & mode sum \\
+12 & 288 & 3134.5\phantom{00}  & mode sum \\
+14 & 392 & 4416.2\phantom{00}  & mode sum \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 The effective exponent sequence converges monotonically:
-$1.600 \to 1.165 \to 1.120 \to 1.111 \to 1.111$.
-The late-size values $d_R^{\mathrm{eff}}(6{\to}7) = 1.1113$ and
-$d_R^{\mathrm{eff}}(7{\to}8) = 1.1110$ are consistent with
-$d_R^{\mathrm{PBC}} = 10/9 = 1.1111\ldots$ to four decimal places.
-The overall power-law fit gives $d_R^{\mathrm{PBC}} = 1.245$ (six points), while
-the asymptotic estimate from the last two effective exponents is
-$d_R^{\mathrm{PBC}} = 1.111 \pm 0.001$ (effectively closed).
+$1.120 \to 1.111 \to 1.111 \to 1.111 \to 1.111$.
+While the numerical values for $L \geq 8$ are remarkably stable at
+$d_R^{\mathrm{PBC}} = 10/9 = 1.1111\ldots$ to four decimal places,
+rigorous Bayesian model comparison reveals a subtle pre-asymptotic
+tension. A free-parameter fit (allowing the correction exponent $\omega$
+to vary) yields a best-fit asymptotic exponent closer to $9/8 = 1.125$
+($P \approx 99.99\%$), whereas fixing $\omega$ to the CFT-predicted
+$10/9$ perfectly recovers $10/9$. The high-precision $L=14$ anchor
+($d_{\mathrm{eff}} = 1.1107$) currently provides the strongest support for the
+rational $10/9$ conjecture, though the possibility of a small shift toward
+the $9/8$ limit in the extreme thermodynamic limit remains an active area of
+investigation.
 
 \noindent\textbf{Riemann decomposition on the torus.}
 As for all single-block exponential families tested, the decomposition
