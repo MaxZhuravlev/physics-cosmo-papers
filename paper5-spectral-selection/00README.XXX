@@ -1,0 +1,22 @@
+nonstopmode
+\pdfoutput=1
+
+This submission contains:
+
+  main.tex          - LaTeX source (article class, 11pt)
+  main.bbl          - Compiled bibliography
+  references.bib    - BibTeX bibliography source
+  figures/          - Directory containing 6 PDF figures
+
+  fig1_phase_diagram.pdf            - Phase diagram of Lorentzian selection
+  fig2_spectral_gap_vs_q.pdf        - Spectral gap W(q) vs q
+  fig3_tree_fisher_verification.pdf - Tree Fisher Identity verification
+  fig4_near_diagonal_decay.pdf      - Near-diagonal decay with girth
+  fig5_potts_universality.pdf       - Potts model universality
+  fig6_on_gap_elimination.pdf       - O(N>=2) gap elimination
+
+Compilation: pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+  (or: tectonic main.tex)
+
+No special packages beyond standard LaTeX distribution required:
+  amsmath, amssymb, amsthm, hyperref, cleveref, geometry, booktabs, graphicx

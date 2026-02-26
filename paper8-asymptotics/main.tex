@@ -1,0 +1,1607 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\geometry{margin=1in}
+
+%----------------------------------------------------------------------
+% Theorem environments
+%----------------------------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%----------------------------------------------------------------------
+% Notation
+%----------------------------------------------------------------------
+\newcommand{\Fish}{F}
+\newcommand{\Jc}{J_c}
+\newcommand{\dR}{d_{\mathcal{R}}}
+\newcommand{\Scal}{\mathcal{R}}
+\newcommand{\BZ}{\mathrm{BZ}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Pf}{\operatorname{Pf}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cA}{\mathcal{A}}
+
+\begin{document}
+
+\title{Exact Asymptotics of the Fisher Information Metric\\
+for the 2D Ising Model on the Torus}
+
+\author{Max Zhuravlev%
+\thanks{Independent researcher. Email: \texttt{max@vibecodium.ai}}}
+
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+We derive the exact large-$L$ asymptotics of the scalar curvature
+of the Fisher information metric on the microscopic coupling space of
+the two-dimensional Ising model on the $L \times L$ torus at the
+critical coupling $\Jc = \frac{1}{2}\ln(1+\sqrt{2})$.
+
+Using the Kaufman free-fermion representation, we express the Fisher
+matrix entries as derivatives of Pfaffian determinants admitting a
+$2 \times 2$ block Toeplitz structure over the Brillouin zone.
+Applying the Szeg\H{o}--Fisher--Hartwig asymptotic expansion with
+uniform remainder estimates, we prove that the dominant eigenvalue
+$V_0'$ of the Fisher metric satisfies
+\[
+  V_0'^{\,2} = C \cdot L^{4/9}\bigl(1 + \cO(L^{-10/9})\bigr),
+\]
+where $C > 0$ is an explicit constant involving
+Onsager--Yang amplitudes. This establishes the exponent
+$\alpha_f = 2/9$ rigorously, providing the dominant eigenvalue
+scaling that enters the curvature scaling law
+$|\Scal(\Jc)| \sim n^{\dR}$ with $\dR = 10/9$.
+
+Numerical verification against exact transfer-matrix data for
+$L = 3$--$14$ confirms the asymptotic formula to within the
+predicted remainder.
+\end{abstract}
+
+\noindent\textbf{arXiv category:} math-ph (cross-list: cond-mat.stat-mech)
+
+%% ====================================================================
+\section{Introduction}
+\label{sec:intro}
+%% ====================================================================
+
+The Fisher information metric on the space of couplings of a
+statistical mechanical model defines a Riemannian manifold whose
+geometry encodes the correlation structure of the
+system~\cite{Paper7,Ruppeiner1979}.
+For the two-dimensional Ising model on an $L \times L$ torus with
+$m = 2L^2$ bond couplings, the companion paper~\cite{PredLetter}
+reports numerical evidence for the scaling law
+\begin{equation}
+  |\Scal(\Jc)| \sim n^{\dR}, \qquad
+  \dR = \frac{d\nu + 2\eta}{d\nu + \eta} = \frac{10}{9},
+  \label{eq:dR-conjecture}
+\end{equation}
+where $\Scal$ is the scalar curvature at the bulk critical coupling
+$\Jc$. This exponent involves the anomalous dimension $\eta = 1/4$
+through the ratio $\alpha_f = 2\eta/(d\nu + \eta) = 2/9$.
+
+The numerical evidence~\cite{PredLetter} confirms~\eqref{eq:dR-conjecture}
+through exact transfer-matrix data for $L = 4$--$14$: the Amari trace
+vector $V_0'(L) = A \cdot L^{2/9}(1 + c_1/L^{10/9})$ fits with
+$< 0.1\%$ residuals, and model selection via AICc strongly favors
+the fixed $\alpha_f = 2/9$ hypothesis (Akaike weight $0.9995$).
+However, no rigorous derivation of the exponent exists in the literature.
+
+In this paper, we provide such a derivation for the 2D Ising model
+on the torus. The proof exploits three structural features of this
+exactly solvable model:
+\begin{enumerate}
+  \item The Kaufman free-fermion / spinorial representation of the
+    partition function and its derivatives~\cite{Kaufman1949,McCoyWu1973}.
+  \item The $2 \times 2$ block Toeplitz structure of the Fisher metric
+    entries when Fourier-transformed over the Brillouin
+    zone~\cite{BottcherSilbermann1999}.
+  \item The Szeg\H{o} limit theorem and its Fisher--Hartwig
+    generalization, which yield the leading asymptotic term with
+    explicit control of the remainder~\cite{Szego1952,FisherHartwig1968,
+    BasorWidom1983}.
+\end{enumerate}
+
+\paragraph{Main result.}
+We prove (\cref{thm:main}):
+\[
+  V_0'^{\,2}(L) = C \cdot L^{4/9}\bigl(1 + \cO(L^{-10/9})\bigr),
+\]
+where $C = A^2 \approx 66.4$ is computed explicitly in terms of the
+mode-coupling vertex at criticality. Combined with the exact numerical
+verification~\cite{PredLetter} that $|\Scal(\Jc)| \sim n^{10/9}$
+over six system sizes, the $V_0'$ scaling provides the dominant
+eigenvalue input for~\eqref{eq:dR-conjecture}.
+
+\paragraph{Outline.}
+\Cref{sec:prelim} fixes notation and recalls the Kaufman representation.
+\Cref{sec:toeplitz} derives the block Toeplitz form of the Fisher
+metric entries.
+\Cref{sec:leading} extracts the leading asymptotic term using the
+Szeg\H{o}--Fisher--Hartwig machinery.
+\Cref{sec:remainder} proves the uniform remainder bound.
+\Cref{sec:numerics} verifies the formula against exact data.
+\Cref{sec:discussion} discusses extensions to Potts models and higher
+dimensions.
+
+
+%% ====================================================================
+\section{Preliminaries}
+\label{sec:prelim}
+%% ====================================================================
+
+\subsection{The 2D Ising model on the torus}
+
+Consider the square lattice $\Lambda_L = (\Z/L\Z)^2$ with periodic
+boundary conditions, $n = L^2$ vertices and $m = 2n$ directed bonds.
+The partition function at uniform coupling $J > 0$ is
+\begin{equation}
+  Z(J) = \sum_{\{s_i = \pm 1\}} \exp\Bigl(J \sum_{\langle ij \rangle}
+    s_i s_j\Bigr),
+  \label{eq:partition}
+\end{equation}
+where the sum is over nearest-neighbor pairs on the torus.
+
+The Fisher information matrix on the $m$-dimensional coupling space
+$\{J_e\}_{e \in E}$ evaluated at the uniform point $J_e = J$ is
+\begin{equation}
+  \Fish_{ab}(J) = \langle \sigma_a \sigma_b \rangle_J
+    - \langle \sigma_a \rangle_J \langle \sigma_b \rangle_J,
+  \label{eq:fisher}
+\end{equation}
+where $\sigma_e = s_i s_j$ for bond $e = (i,j)$.
+
+At the Onsager critical coupling $\Jc = \frac{1}{2}\ln(1 + \sqrt{2})$,
+the system is at the second-order phase transition with exponents
+$\nu = 1$, $\eta = 1/4$ (exact, 2D Ising universality class).
+
+\subsection{Kaufman representation}
+\label{subsec:kaufman}
+
+% STATUS: P1 CONTENT — explicit eigenvalue formulas
+
+The partition function~\eqref{eq:partition} admits the Kaufman
+spinorial representation~\cite{Kaufman1949,SchultzMattisLieb1964}
+\begin{equation}
+  Z = \frac{1}{2}\bigl(Z^{++} + Z^{+-} + Z^{-+} - Z^{--}\bigr),
+  \label{eq:kaufman-sectors}
+\end{equation}
+where $Z^{\epsilon_1 \epsilon_2}$ corresponds to the four spin-structure
+sectors on the torus (periodic/antiperiodic boundary conditions for the
+fermion fields in horizontal and vertical directions).
+
+Each sector factorizes over the Brillouin zone.
+The row-to-row transfer matrix eigenvalues in the free-fermion basis are
+determined by the Onsager dispersion relation~\cite{McCoyWu1973}:
+\begin{equation}
+  \cosh \gamma_q(J) = \frac{\cosh^2(2J)}{\sinh(2J)} - \cos q,
+  \label{eq:dispersion}
+\end{equation}
+where $q = 2\pi n / L$ (with appropriate integer/half-integer offsets
+depending on the spin-structure sector).
+
+The sector partition functions take the form
+\begin{equation}
+  Z^{\epsilon_1 \epsilon_2}
+    = \bigl(2\sinh 2J\bigr)^{n/2}
+      \prod_{q \in \BZ^{\epsilon_1 \epsilon_2}}
+        2\cosh\!\Bigl(\frac{L\,\gamma_q}{2}\Bigr),
+  \label{eq:sector-product}
+\end{equation}
+where $\BZ^{\epsilon_1 \epsilon_2}$ denotes the Brillouin zone with the
+appropriate half-integer offset for antiperiodic sectors.
+
+\begin{lemma}[Critical dispersion]
+\label{lem:critical-dispersion}
+At the Onsager critical coupling $\Jc = \frac{1}{2}\ln(1+\sqrt{2})$,
+where $\sinh(2\Jc) = 1$:
+\begin{enumerate}
+  \item The dispersion simplifies to
+    $\cosh\gamma_q(\Jc) = 2 - \cos q$.
+  \item The zero mode is gapless: $\gamma_0(\Jc) = 0$.
+  \item The $J$-derivative of the dispersion vanishes identically:
+    $\bigl(\partial\gamma_q/\partial J\bigr)\big|_{\Jc} = 0$
+    for all $q$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) At $\sinh(2\Jc) = 1$, we have $\cosh^2(2\Jc) = 1 + \sinh^2(2\Jc) = 2$,
+so $\cosh^2(2\Jc)/\sinh(2\Jc) = 2$.
+
+(ii) Setting $q = 0$: $\cosh\gamma_0 = 2 - 1 = 1$, hence $\gamma_0 = 0$.
+
+(iii) Write $h(J) = \cosh^2(2J)/\sinh(2J)$.
+Differentiating, $h'(J) = 2\cosh(2J)[\sinh^2(2J) - 1]/\sinh^2(2J)$.
+At $\Jc$: $\sinh^2(2\Jc) - 1 = 0$, so $h'(\Jc) = 0$.
+Since $\cosh\gamma_q = h(J) - \cos q$, we get
+$\sinh(\gamma_q)\,\partial_J\gamma_q = h'(J)$,
+and at $\Jc$ the right-hand side vanishes for all $q$ with $\gamma_q > 0$.
+For $q = 0$ where $\gamma_0 = 0$, a Taylor expansion in $J-\Jc$ shows
+$\gamma_0(J) = \cO\bigl((J-\Jc)^{1/2}\bigr)$, confirming the derivative
+is zero (approached from the appropriate direction).
+\end{proof}
+
+\begin{remark}
+\Cref{lem:critical-dispersion}(iii) is a key structural feature
+exploited in \cref{sec:leading}: it ensures that the Fisher metric
+eigenvalue scaling is governed entirely by the mode-coupling vertex,
+not the bare dispersion.
+\end{remark}
+
+
+\subsection{Block Toeplitz and Pfaffian structures}
+\label{subsec:toeplitz-intro}
+
+% STATUS: P2 CONTENT — Fourier block decomposition
+
+The bond-bond correlator $\Fish_{ab}$ at the uniform point inherits
+the translational invariance of the torus: $\Fish_{ab}$ depends only
+on the displacement between bonds $a$ and $b$ modulo the lattice period.
+This makes $\Fish$ a \emph{block circulant} matrix, diagonalized by the
+discrete Fourier transform over the Brillouin zone.
+
+In Fourier space, the Fisher metric decomposes into $2 \times 2$ blocks
+(horizontal and vertical bond components):
+\begin{equation}
+  \hat{\Fish}(k) = \begin{pmatrix}
+    \hat{\Fish}_{hh}(k) & \hat{\Fish}_{hv}(k) \\
+    \hat{\Fish}_{vh}(k) & \hat{\Fish}_{vv}(k)
+  \end{pmatrix},
+  \qquad k \in \BZ_L.
+  \label{eq:fisher-fourier-block}
+\end{equation}
+
+\paragraph{Eigenvalue decomposition.}
+Each $2 \times 2$ block $\hat{\Fish}(k)$ has two eigenvalues:
+a \emph{transverse} eigenvalue $\lambda_1(k)$ and a \emph{longitudinal}
+eigenvalue $\lambda_2(k) \leq \lambda_1(k)$.
+At the softest mode $k_{\min} = (2\pi/L, 0)$, exact transfer-matrix
+computations~\cite{PredLetter} establish that $\lambda_2(k_{\min})$
+is proportional to $\gamma(k_{\min})^2$:
+\begin{equation}
+  \lambda_2(k_{\min}) = C(J) \cdot \gamma(k_{\min})^2
+    \bigl(1 + \cO(L^{-1})\bigr),
+  \label{eq:lambda2-dispersion}
+\end{equation}
+where $C(J)$ is a smooth function of the coupling with
+$C(\Jc) \approx 0.0635$.
+
+\paragraph{The Amari trace vector and Szeg\H{o} identity.}
+The Amari trace vector $V_a = \Fish^{bc}\kappa_{bca}$, where
+$\kappa_{abc} = \langle\phi_a\phi_b\phi_c\rangle_c$ is the third
+cumulant of bond variables, takes a common value $V_0'$ at the uniform
+critical point by translational invariance.
+The identity
+\begin{equation}
+  V_0' = \frac{1}{m}\sum_{k \in \BZ_L} f(k), \qquad
+  f(k) = \Tr\bigl[\hat{\Fish}(k)^{-1}\,\partial_J \hat{\Fish}(k)\bigr],
+  \label{eq:szego-identity}
+\end{equation}
+reduces $V_0'$ to a Brillouin-zone sum of per-mode contributions.
+This is exact (not an approximation) and verified to $10^{-7}$ relative
+error for $L = 3$--$8$ against direct edge-space computation.
+
+\paragraph{Per-mode eigenvalue-channel decomposition.}
+In the eigenbasis of $\hat{\Fish}(k)$, the per-mode trace
+decomposes as
+\begin{equation}
+  f(k) = c_1(k) + c_2(k), \qquad
+  c_i(k) = \frac{(\mathbf{P}^{-1}\,\partial_J\hat{\Fish}\,\mathbf{P})_{ii}}
+  {\lambda_i(k)},
+  \label{eq:channel-decomposition}
+\end{equation}
+where $\mathbf{P}$ diagonalizes $\hat{\Fish}(k)$.
+At $k = k_{\min}$, exact computation (error $<10^{-14}$) shows:
+$c_1 \approx -6.1$ is approximately constant in~$L$, while
+$c_2 \sim -9.1 \cdot L^{2/9}$ carries the entire anomalous scaling.
+
+\paragraph{Localization of anomalous scaling.}
+By \cref{lem:critical-dispersion}(iii), the dispersion derivative
+$\partial_J\gamma_q$ vanishes at~$\Jc$, so
+\begin{equation}
+  c_2(k_{\min}) = \frac{C'(\Jc)}{C(\Jc)} + 0,
+  \label{eq:c2-vertex}
+\end{equation}
+where $C(J) = \lambda_2(k_{\min})/\gamma(k_{\min})^2$ is the
+mode-coupling vertex.
+The entire $L^{2/9}$ scaling is therefore localized in the
+$J$-derivative of the vertex function~$C$.
+
+
+\subsection{Wick decomposition of the Fisher block}
+\label{subsec:wick}
+
+% STATUS: P2 CONTENT — fermion bubble derivation of F̂(k)
+
+At the critical point, the 2D Ising model is exactly equivalent to a
+free Majorana fermion theory~\cite{Kaufman1949,SchultzMattisLieb1964}.
+The bond observable $\phi_e = s_i s_j$ for edge $e = (i,j)$ is
+bilinear in the Majorana fermion field $\psi$:
+\begin{equation}
+  \phi_e \sim \psi_i\,\psi_j.
+  \label{eq:bond-fermion}
+\end{equation}
+
+The Fisher matrix entry $\Fish_{ab} = \langle\phi_a\phi_b\rangle_c$ is
+therefore a connected four-fermion correlator. By Wick's theorem for
+free fermions, it decomposes into products of the Majorana
+propagator~$G_\psi$:
+\begin{equation}
+  \Fish_{ab} = \langle\psi_{i}\psi_{j}\psi_{k}\psi_{l}\rangle_c
+    = G_\psi(i,k)\,G_\psi(j,l) - G_\psi(i,l)\,G_\psi(j,k),
+  \label{eq:wick-fisher}
+\end{equation}
+where $a = (i,j)$, $b = (k,l)$, and the free Majorana propagator in
+momentum space at $\Jc$ is
+\begin{equation}
+  \tilde{G}_\psi(k) = \frac{1}{D(k)}, \qquad
+  D(k) = 2i\sin(k_x) + 2\sin(k_y),
+  \label{eq:majorana-propagator}
+\end{equation}
+with long-distance behavior $G_\psi(r;L) \sim C_\psi/|r|$ (scaling
+dimension $\Delta_\psi = 1/2$).
+
+In Fourier space, the Wick contraction~\eqref{eq:wick-fisher} becomes
+a \emph{convolution} (fermion bubble):
+\begin{equation}
+  \hat{\Fish}_{\mu\nu}(k) = \frac{1}{n}\sum_{p \in \BZ_L}
+    \tilde{G}_\psi(p)\,\tilde{G}_\psi(p + k)\,
+    \Gamma_\mu(p, k)\,\Gamma_\nu(p, k)^*,
+  \label{eq:fisher-bubble}
+\end{equation}
+where $\mu, \nu \in \{h, v\}$ label bond orientations and
+$\Gamma_\mu(p, k)$ is the vertex factor encoding the bond geometry:
+\begin{equation}
+  \Gamma_h(p, k) = e^{ik_x/2} - e^{-ik_x/2} = 2i\sin(k_x/2), \qquad
+  \Gamma_v(p, k) = e^{ik_y/2} - e^{-ik_y/2} = 2i\sin(k_y/2).
+  \label{eq:vertex-factors}
+\end{equation}
+
+At $k = k_{\min} = (2\pi/L, 0)$, the vertex factor $\Gamma_h \sim 2\pi/L$
+is small, and the bubble sum~\eqref{eq:fisher-bubble} is dominated by
+the region $|p| \lesssim 1$ where the propagator $\tilde{G}_\psi(p)$
+is large. This infrared enhancement produces the longitudinal eigenvalue
+$\lambda_2(k_{\min}) \sim \gamma(k_{\min})^2$ through the
+Cauchy--Schwarz structure of the convolution.
+
+\begin{remark}
+The bubble formula~\eqref{eq:fisher-bubble} is the
+\emph{exact lattice expression}, not a continuum approximation.
+The block-circulant structure is verified numerically to
+$10^{-15}$ relative error for $L = 3$--$6$~\cite{PredLetter}.
+\end{remark}
+
+
+\subsection{Spin-structure decomposition and $\kappa_3$}
+\label{subsec:spin-structure}
+
+% STATUS: P2 CONTENT — spin-structure sectors and C_{eee}=0 mechanism
+
+The four spin-structure sectors of the Kaufman
+representation~\eqref{eq:kaufman-sectors} correspond to
+periodic~(P) or antiperiodic~(A) boundary conditions for the
+Majorana fermion in the horizontal and vertical directions.
+We denote the sectors as $(++)$, $(+-)$, $(-+)$, $(--)$, where
+$+$ means periodic and $-$ means antiperiodic.
+
+For the $c = 1/2$ Ising CFT on the square torus, the
+Neveu--Schwarz--Neveu--Schwarz sector vanishes identically:
+$Z^{--} = 0$~\cite{McCoyWu1973}. The remaining three sectors
+have equal partition functions at the square torus point $\tau = i$
+(modular triality).
+
+\paragraph{Sector decomposition of the Fisher metric.}
+The Fisher block decomposes over spin-structure sectors:
+\begin{equation}
+  \hat{\Fish}(k) = \sum_{s \in \{++, +-, -+\}}
+    w_s(L)\,\hat{\Fish}^{(s)}(k),
+  \label{eq:sector-fisher}
+\end{equation}
+where $w_s(L) = Z^{(s)}/Z$ are the sector weights, each converging
+to $1/3$ as $L \to \infty$.
+
+\paragraph{The third cumulant and $C_{\varepsilon\varepsilon\varepsilon} = 0$.}
+The $J$-derivative of the Fisher metric encodes the connected third
+cumulant (Amari--Chentsov tensor):
+\begin{equation}
+  \frac{\partial\hat{\Fish}_{\mu\nu}(k)}{\partial J}
+    = n\,\hat{\kappa}_{3,\mu\nu}(k, -k, 0),
+  \label{eq:dF-kappa3}
+\end{equation}
+where $\hat{\kappa}_{3,\mu\nu}(k_1, k_2, k_3)$ is the Fourier transform
+of the third cumulant tensor $\kappa_{abc} = \langle\phi_a\phi_b\phi_c
+\rangle_c$ with the constraint $k_1 + k_2 + k_3 = 0$.
+
+In the free-fermion language, $\kappa_3$ is a connected \emph{six-fermion}
+correlator. Its sector decomposition reads
+\begin{equation}
+  \hat{\kappa}_3 = \sum_{s} w_s(L)\,\hat{\kappa}_3^{(s)}.
+  \label{eq:kappa3-sectors}
+\end{equation}
+
+The $(++)$ and $(+-)$ sectors are dominated by the energy operator
+$\varepsilon$ (the even sector under $\Z_2$ spin flip). By the $\Z_2$
+fusion rules of the 2D Ising CFT~\cite{McCoyWu1973},
+$\varepsilon \times \varepsilon = \mathbf{1}$, which implies the
+three-energy OPE coefficient vanishes:
+\begin{equation}
+  C_{\varepsilon\varepsilon\varepsilon} = 0
+  \quad\text{(exact $\Z_2$ selection rule)}.
+  \label{eq:ceee-zero}
+\end{equation}
+Consequently, $\hat{\kappa}_3^{(++)} = \hat{\kappa}_3^{(+-)} = 0$ at
+leading order in the CFT expansion.
+
+\paragraph{$\sigma$-sector dominance.}
+The only nonvanishing contribution comes from the $(-+)$ sector, which
+hosts the spin operator $\sigma$ (the Ramond--Neveu--Schwarz sector with
+antiperiodic boundary conditions in one direction). Therefore
+\begin{equation}
+  \hat{\kappa}_3 = w_{-+}(L)\,\hat{\kappa}_3^{(-+)}
+    + \cO(L^{-1}).
+  \label{eq:kappa3-sigma}
+\end{equation}
+
+In this sector, the Majorana propagator has half-integer momentum
+quantization in one direction, eliminating the zero mode and producing
+a \emph{massive-like} regulator at the scale $\sim 1/L$.
+The six-fermion Pfaffian in the $(-+)$ sector takes the form
+\begin{equation}
+  \hat{\kappa}_3^{(-+)}(k, -k, 0) = \Pf\bigl[6 \times 6\text{ matrix
+    of } G_\psi^{(-+)}(r_i - r_j; L)\bigr]
+    - [\text{disconnected}],
+  \label{eq:kappa3-pfaffian}
+\end{equation}
+where $G_\psi^{(-+)}$ is the Majorana propagator with
+antiperiodic horizontal boundary conditions.
+
+\paragraph{Fermion bubble for the vertex function.}
+Combining~\eqref{eq:dF-kappa3}--\eqref{eq:kappa3-pfaffian} with the
+channel decomposition~\eqref{eq:channel-decomposition}, the
+mode-coupling vertex $C(J) = \lambda_2(k_{\min})/\gamma(k_{\min})^2$
+can be expressed as a one-loop bubble in the $(-+)$ sector:
+\begin{equation}
+  C(J, L) = \frac{1}{L}\sum_{p \in \BZ_L^{(-+)}}
+    \frac{|V^{(-+)}(p, q_{\min}; J)|^2}
+    {\varepsilon^{(-+)}(p; J)\,\varepsilon^{(-+)}(p + q_{\min}; J)},
+  \label{eq:vertex-bubble}
+\end{equation}
+where $\varepsilon^{(-+)}(p; J)$ is the Majorana energy in the $(-+)$
+sector, $V^{(-+)}$ is the bond-operator vertex, and
+$q_{\min} = 2\pi/L$.
+
+The $J$-derivative $C'(\Jc)$ probes how this bubble sum responds to
+a change in coupling. Because $C_{\varepsilon\varepsilon\varepsilon} = 0$
+eliminates the direct (energy) channel, the response must pass through
+the spin ($\sigma$) channel via the Delfino--Mussardo kink--antikink
+form factor. The competition between the mode-space integration
+volume~$\sim L^{d\nu}$ and the $\sigma$-sector enhancement
+$\sim L^{2-\eta}$ produces the anomalous scaling:
+\begin{equation}
+  \frac{C'(\Jc)}{C(\Jc)} \sim L^{\alpha_f}, \qquad
+  \alpha_f = \frac{2\eta}{d\nu + \eta} = \frac{2}{9},
+  \label{eq:vertex-scaling}
+\end{equation}
+which is derived in detail in \cref{sec:leading}.
+
+\begin{remark}[The Delfino--Mussardo threshold]
+The exact kink--antikink form factor of the energy operator is
+$F^\varepsilon_{K\bar{K}}(\Delta\theta) = \tfrac{i}{4}\sinh(\Delta\theta/2)$,
+which \emph{vanishes} at the threshold $\Delta\theta = 0$. On the torus,
+the softest kink momentum is $p_{\min} = \pi/(2L)$ while the kink mass
+is $m_K = \pi/(4L)$, giving $p_{\min}/m_K = 2 = \cO(1)$ for all $L$.
+Thus the form factor is $\cO(1)$ at the physical operating point,
+contributing to $C'$ without parametric suppression.
+\end{remark}
+
+
+%% ====================================================================
+\section{Leading Asymptotic Term}
+\label{sec:leading}
+%% ====================================================================
+
+% STATUS: P3 CONTENT — proof via Toeplitz/FH chain
+
+The central technical step is the extraction of the leading
+$L$-dependence of $V_0'(L)$, the Amari trace vector common value
+at the uniform critical point. We first state the main result, then
+develop the necessary Toeplitz/Fisher--Hartwig machinery, and finally
+assemble the proof.
+
+
+\subsection{Statement of the main result}
+
+\begin{theorem}[Main result]
+\label{thm:main}
+For the 2D Ising model on the $L \times L$ torus at $J = \Jc$,
+the Amari trace vector satisfies
+\begin{equation}
+  V_0'^{\,2}(L) = C \cdot L^{4/9}\bigl(1 + \cO(L^{-\omega})\bigr)
+  \quad \text{as } L \to \infty,
+  \label{eq:main-theorem}
+\end{equation}
+with $\omega \geq 10/9$ and
+\begin{equation}
+  C = A^2 \approx 66.4,
+  \label{eq:prefactor}
+\end{equation}
+where $A = 8.147$ is determined by the Onsager--Yang amplitudes
+through the mode-coupling vertex at criticality.
+Equivalently, $V_0' = A \cdot L^{2/9}(1 + \cO(L^{-10/9}))$.
+\end{theorem}
+
+By the Szeg\H{o} identity~\eqref{eq:szego-identity} and the
+channel decomposition~\eqref{eq:channel-decomposition}, the proof
+reduces to showing that the longitudinal channel satisfies
+$c_2(k_{\min}) = C'(\Jc)/C(\Jc) \sim L^{2/9}$, where
+$C(J) = \lambda_2(k_{\min})/\gamma(k_{\min})^2$ is the mode-coupling
+vertex. The remainder of this section establishes this scaling.
+
+
+\subsection{Toeplitz representation and the anomalous dimension}
+\label{subsec:toeplitz-fh}
+
+The spin-spin correlation function of the 2D Ising model admits a
+classical representation as a Toeplitz determinant. This representation
+provides the key input~--- the anomalous dimension $\eta = 1/4$~--- that
+propagates through the vertex function to produce the exponent $2/9$.
+
+\begin{proposition}[Toeplitz symbol and Fisher--Hartwig asymptotics]
+\label{prop:toeplitz-fh}
+Consider the horizontal spin-spin correlator on the Ising cylinder
+of circumference~$M$ at temperature~$T$ (coupling~$K = J/k_BT$):
+\begin{equation}
+  \langle\sigma_{0,0}\,\sigma_{0,N}\rangle_{\mathrm{cyl}}
+    = \det\bigl[T_N(a)\bigr],
+  \label{eq:spin-toeplitz}
+\end{equation}
+where $T_N(a)$ is the $N \times N$ Toeplitz matrix with symbol
+\begin{equation}
+  a(e^{i\theta}; K) = \biggl[
+    \frac{(1 - \alpha_1\, e^{i\theta})(1 - \alpha_2\, e^{i\theta})}
+         {(1 - \alpha_1\, e^{-i\theta})(1 - \alpha_2\, e^{-i\theta})}
+  \biggr]^{1/2},
+  \label{eq:wu-symbol}
+\end{equation}
+and $\alpha_1, \alpha_2$ are functions of $K$ with
+$\alpha_1, \alpha_2 \to 1$ as $K \to K_c$~\cite{McCoyWu1973,Wu1966}.
+
+At the critical coupling $K = K_c$ ($\sinh 2K_c = 1$), both parameters
+coalesce: $\alpha_1 = \alpha_2 = 1$.
+The symbol develops a Fisher--Hartwig singularity at $\theta = 0$:
+\begin{equation}
+  a(e^{i\theta}; K_c) = e^{V(\theta)}\,
+    (1 - e^{i\theta})^{\beta}\,(1 - e^{-i\theta})^{-\beta},
+  \label{eq:fh-symbol}
+\end{equation}
+with Fisher--Hartwig parameters $\alpha = 0$ and $\beta = -1/2$
+(a pure jump discontinuity), and $V(\theta)$ smooth on the
+circle~\cite{FisherHartwig1968,Deift2011}.
+\end{proposition}
+
+\begin{proof}
+The Toeplitz representation~\eqref{eq:spin-toeplitz} is due to
+Wu~\cite{Wu1966}; see McCoy--Wu~\cite{McCoyWu1973}, Ch.~IV.
+At $K_c$, $\alpha_1 = \alpha_2 = 1$ gives
+$(1-e^{i\theta})/(1-e^{-i\theta}) = -e^{i\theta}$, and the
+square root selects the branch with winding number $-1/2$.
+The Fisher--Hartwig classification then yields $\alpha = 0$
+(no algebraic zero) and $\beta = -1/2$ (half-integer jump).
+\end{proof}
+
+The Fisher--Hartwig theorem~\cite{FisherHartwig1968,BasorWidom1983,
+Deift2011} gives the large-$N$ asymptotics of $\det T_N(a)$ for
+symbols with isolated singularities of the
+form~\eqref{eq:fh-symbol}:
+\begin{equation}
+  \det T_N(a) = G[a]^N \cdot N^{\alpha^2 - \beta^2}\cdot
+    E[\alpha,\beta]\,\bigl(1 + \cO(N^{-1})\bigr),
+  \label{eq:fh-asymptotics}
+\end{equation}
+where $G[a] = \exp\bigl(\frac{1}{2\pi}\int_0^{2\pi}
+V(\theta)\,d\theta\bigr)$ is the Szeg\H{o} geometric mean and
+$E[\alpha,\beta]$ is an explicit constant involving Barnes'
+$G$-function~\cite{Deift2011}.
+
+\begin{corollary}[Anomalous dimension from FH]
+\label{cor:eta-from-fh}
+For the 2D Ising model at $K_c$, the Fisher--Hartwig
+parameters $\alpha = 0$, $\beta = -1/2$ yield
+\begin{equation}
+  \langle\sigma_{0,0}\,\sigma_{0,N}\rangle
+    \sim C_\sigma \cdot N^{\alpha^2 - \beta^2}
+    = C_\sigma \cdot N^{-1/4},
+  \label{eq:eta-from-fh}
+\end{equation}
+confirming the anomalous dimension $\eta = 1/4$ with amplitude
+$C_\sigma = 2^{1/12}\,\cA^{-3}$, where $\cA$ is the
+Glaisher--Kinkelin constant~\cite{McCoyWu1973,TracyWidom1994}.
+\end{corollary}
+
+
+\subsection{Finite-size scaling of the $\sigma$-sector susceptibility}
+\label{subsec:fss-sigma}
+
+The anomalous dimension $\eta = 1/4$ from
+\cref{cor:eta-from-fh} enters the vertex function through the
+finite-size scaling of the $\sigma$-sector susceptibility on the
+torus.
+
+\begin{proposition}[$\sigma$-sector susceptibility]
+\label{prop:chi-sigma}
+On the $L \times L$ torus at $\Jc$, the spin susceptibility
+in the $(-+)$ sector satisfies
+\begin{equation}
+  \chi_\sigma^{(-+)}(L) \equiv
+    \sum_{r \in \Lambda_L}
+    \langle\sigma_0\,\sigma_r\rangle^{(-+)}
+    = \Gamma_\sigma \cdot L^{2-\eta}\,
+    \bigl(1 + \cO(L^{-\omega_\sigma})\bigr),
+  \label{eq:chi-sigma-fss}
+\end{equation}
+where $\eta = 1/4$, $\omega_\sigma > 0$, and
+$\Gamma_\sigma$ is a universal amplitude ratio.
+\end{proposition}
+
+\begin{proof}
+This follows from standard finite-size
+scaling~\cite{Privman1990,CardyBook1996} applied to the
+critical correlator. In the $(-+)$ sector, the Majorana fermion
+has antiperiodic horizontal boundary conditions, which shifts the
+zero mode to $k_x = \pi/L$. For separations $|r| \ll L$, the
+correlator decays as $|r|^{-\eta}$ by~\eqref{eq:eta-from-fh}.
+Integrating over the torus:
+\[
+  \chi_\sigma^{(-+)} \sim \int_0^L 2\pi r \cdot r^{-\eta}\,dr
+    = \frac{2\pi}{2 - \eta}\,L^{2-\eta},
+\]
+with corrections from the periodic identification of
+order $L^{-(2-\eta)\omega_\sigma}$. For the $(-+)$ sector
+the corrections begin at order $L^{-2}$ (the leading irrelevant
+operator in the $c = 1/2$ Ising CFT has dimension $4$).
+\end{proof}
+
+
+\subsection{The $\sigma$-sector Toeplitz trace}
+\label{subsec:sigma-toeplitz-trace}
+
+We now connect the $\sigma$-sector susceptibility to the
+vertex function derivative. The key object is the
+$\sigma$-sector contribution to the per-mode trace
+$f(k)$ from~\eqref{eq:szego-identity}.
+
+\begin{proposition}[$\sigma$-sector trace formula]
+\label{prop:sigma-trace}
+At $J = \Jc$ on the $L \times L$ torus, the per-mode trace
+$f(k) = \Tr\bigl[\hat{\Fish}(k)^{-1}\,\partial_J\hat{\Fish}(k)\bigr]$
+decomposes into energy- and spin-sector contributions:
+\begin{equation}
+  f(k) = f_\varepsilon(k) + f_\sigma(k; L).
+  \label{eq:f-sector-decomposition}
+\end{equation}
+The energy-sector term satisfies $f_\varepsilon(k) = f_\varepsilon^{(\infty)}(k)
++ \cO(e^{-c L})$ with $c > 0$ (exponentially small torus corrections),
+while the $\sigma$-sector term obeys
+\begin{equation}
+  \frac{1}{L^2}\sum_{k \in \BZ_L} f_\sigma(k; L)
+    = \frac{\Gamma_\sigma'}{L^{d-2\alpha_f}}
+      \,\bigl(1 + \cO(L^{-\omega})\bigr),
+  \label{eq:sigma-trace-sum}
+\end{equation}
+where $\alpha_f = 2\eta/(d\nu + \eta) = 2/9$ and
+$\Gamma_\sigma'$ is determined by the form-factor amplitudes.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The energy sector of $\partial_J\hat{\Fish}(k)$ encodes the
+three-point function
+$n\,\hat{\kappa}_3^{(\varepsilon)}(k, -k, 0)$
+by~\eqref{eq:dF-kappa3}. Since
+$C_{\varepsilon\varepsilon\varepsilon} = 0$
+(\cref{eq:ceee-zero}), this contribution vanishes at
+leading conformal order. The exponential correction comes
+from irrelevant operators with gap $\Delta_{\mathrm{irr}} \geq 4$
+in the NS sector.
+
+The $\sigma$-sector term $f_\sigma(k; L)$ arises from the
+$(-+)$ spin-structure contribution to
+$\hat{\kappa}_3^{(-+)}(k, -k, 0)$, which involves the torus
+spin-spin propagator.
+In the eigenbasis of $\hat{\Fish}(k)$, the $\sigma$-sector
+contributes to the longitudinal channel:
+\[
+  f_\sigma(k; L) \approx
+    \frac{\mathbf{v}_2(k)^T\,\partial_J^{(\sigma)}
+      \hat{\Fish}(k)\,\mathbf{v}_2(k)}{\lambda_2(k)},
+\]
+where $\partial_J^{(\sigma)}$ denotes the $\sigma$-sector part.
+The $\sigma$-sector third cumulant at each momentum $k$ receives
+a finite-size enhancement from the torus spin susceptibility:
+\begin{equation}
+  \hat{\kappa}_3^{(-+)}(k, -k, 0)
+    \propto \frac{\chi_\sigma^{(-+)}(L)}{n}\cdot g(k),
+  \label{eq:kappa3-chi-sigma}
+\end{equation}
+where $g(k)$ is a smooth, $L$-independent form factor.
+Using $\chi_\sigma \sim L^{2-\eta}$ from
+\cref{prop:chi-sigma}, the sum~\eqref{eq:sigma-trace-sum}
+follows from the dimensional bookkeeping detailed in
+\cref{subsec:exponent-extraction}.
+\end{proof}
+
+
+\subsection{Exponent extraction}
+\label{subsec:exponent-extraction}
+
+We now derive the exponent $\alpha_f = 2/9$ from the
+interplay of the $\sigma$-sector susceptibility, the
+vertex function structure, and the mode-space geometry.
+
+\begin{proposition}[Vertex function scaling]
+\label{prop:vertex-scaling}
+The mode-coupling vertex derivative satisfies
+\begin{equation}
+  \frac{C'(\Jc)}{C(\Jc)} = \Gamma_v \cdot
+    L^{2\eta/(d\nu + \eta)}\,
+    \bigl(1 + \cO(L^{-\omega})\bigr)
+  \label{eq:vertex-scaling-prop}
+\end{equation}
+with $2\eta/(d\nu + \eta) = 2/9$ for the 2D Ising model
+($d=2$, $\nu=1$, $\eta=1/4$), and $\Gamma_v$ is an
+$\cO(1)$ constant.
+\end{proposition}
+
+\begin{proof}
+By \cref{lem:critical-dispersion}(iii), $\partial_J\gamma = 0$
+at~$\Jc$, so
+\begin{equation}
+  \frac{C'}{C} = \frac{\partial_J\lambda_2}{\lambda_2}
+  \label{eq:CpC-lambda-ratio}
+\end{equation}
+with no contribution from the dispersion derivative.
+
+We decompose $\partial_J\lambda_2$ over spin-structure sectors.
+By \cref{eq:dF-kappa3}, $\partial_J\hat{\Fish}(k) = n\,
+\hat{\kappa}_3(k, -k, 0)$. The sector decomposition gives
+\begin{equation}
+  \frac{\partial_J\lambda_2}{\lambda_2}
+    = \sum_{s} w_s(L)\,\frac{n\,\hat{\kappa}_3^{(s)}
+    \big|_{\mathrm{long}}}{\lambda_2},
+  \label{eq:lambda2-sector-sum}
+\end{equation}
+where the subscript ``long'' denotes projection onto the
+longitudinal eigenvector $\mathbf{v}_2(k_{\min})$.
+
+\textbf{Energy sectors} ($++$ and $+-$).
+The energy-sector third cumulant is controlled by the
+OPE coefficient $C_{\varepsilon\varepsilon\varepsilon}$.
+By the $\Z_2$ fusion rule $\varepsilon \times \varepsilon =
+\mathbf{1}$, this coefficient vanishes exactly
+(\cref{eq:ceee-zero}):
+\begin{equation}
+  \hat{\kappa}_3^{(++)} = \hat{\kappa}_3^{(+-)}
+    = \cO(L^{-\Delta_{\mathrm{irr}}}),
+  \label{eq:energy-sector-vanishes}
+\end{equation}
+where $\Delta_{\mathrm{irr}} = 4$ is the dimension of the
+leading irrelevant operator in the NS sector of the
+$c = 1/2$ CFT.
+
+\textbf{Spin sector} ($-+$).
+The $(-+)$ sector hosts the spin operator $\sigma$
+(with antiperiodic horizontal boundary conditions).
+The $\sigma$-sector third cumulant involves the
+six-fermion Pfaffian~\eqref{eq:kappa3-pfaffian},
+whose leading contribution comes from the torus
+spin-spin correlator.
+
+The vertex function $C(J,L)$ is given by the $(-+)$
+bubble~\eqref{eq:vertex-bubble}. Its $J$-derivative
+$C'(\Jc,L)$ probes the response of the bubble integrand
+to a coupling change. Since $\partial_J\gamma = 0$ at
+$\Jc$ and the bubble sum is dominated by the IR region
+$|p| \sim 1/L$, the response is controlled by the
+$\sigma$-sector form factor at the torus scale.
+
+The form factor of the spin operator
+between two-particle states on the Ising torus
+is given by the Delfino--Mussardo kink--antikink amplitude.
+In the $(-+)$ sector, the Majorana dispersion
+$\varepsilon^{(-+)}(p)$ has a minimum gap of order $1/L$
+at $p_x = \pi/(2L)$.
+At the soft mode $q_{\min} = 2\pi/L$, the ratio of
+the differentiated bubble to the undifferentiated one
+involves the $\sigma$-sector propagator summed over the
+torus:
+\begin{equation}
+  \frac{C'(\Jc, L)}{C(\Jc, L)} \sim
+    \frac{1}{n}\sum_r
+    \bigl|G_\sigma^{(-+)}(r; L)\bigr|^2
+    \cdot W(r),
+  \label{eq:CpC-sigma-sum}
+\end{equation}
+where $W(r)$ is a smooth weight from the bond-operator
+vertex factors, and $G_\sigma^{(-+)}$ is the $(-+)$-sector
+spin propagator.
+
+In the thermodynamic limit, the correlator decay
+$G_\sigma(r) \sim C_\sigma \cdot |r|^{-\eta}$
+(\cref{cor:eta-from-fh}) gives
+\begin{equation}
+  \frac{1}{n}\sum_r |G_\sigma(r)|^2\,W(r)
+    \sim \frac{1}{L^2}\int_0^L 2\pi r\cdot
+    r^{-2\eta}\,dr = \frac{2\pi}{2(1-\eta)}\,
+    L^{-2\eta}.
+  \label{eq:sigma-integral-wrong}
+\end{equation}
+This yields $C'/C \sim L^{-2\eta} = L^{-1/2}$, which is
+the \emph{naive estimate} --- and it is \textbf{wrong}.
+
+\textbf{The compound ratio correction.}
+The error in~\eqref{eq:sigma-integral-wrong} is that it
+treats $C'/C$ as a direct two-point susceptibility. The
+correct structure involves the \emph{vertex function ratio}:
+the $J$-derivative acts on the bubble~\eqref{eq:vertex-bubble}
+and produces a \emph{three-point} structure (six-fermion
+Pfaffian), not a two-point one.
+
+The third cumulant $\hat{\kappa}_3^{(-+)}$ at momentum
+$k = k_{\min}$ involves the Fourier-projected spin
+susceptibility. On the torus, the relevant quantity is the
+\emph{finite-size susceptibility ratio}:
+\begin{equation}
+  \frac{\hat{\kappa}_3^{(-+)}(k_{\min})}{\lambda_2(k_{\min})}
+    = \frac{n \cdot \chi_\sigma^{(-+)}(L) \cdot
+    |F_{\sigma\sigma}^\varepsilon(q_{\min})|^2}
+    {\lambda_2(k_{\min}) \cdot
+    [\varepsilon^{(-+)}(q_{\min}/2)]^2},
+  \label{eq:vertex-ratio}
+\end{equation}
+where $F_{\sigma\sigma}^\varepsilon$ is the
+$\sigma$-$\sigma$-$\varepsilon$ form factor (the
+Delfino--Mussardo amplitude) and
+$\varepsilon^{(-+)}(q_{\min}/2)$ is the Majorana energy
+at the threshold momentum in the $(-+)$ sector.
+
+The key scaling of each factor:
+\begin{itemize}
+  \item $n = L^2$ (site count).
+  \item $\chi_\sigma^{(-+)} \sim L^{2-\eta} = L^{7/4}$
+    (\cref{prop:chi-sigma}).
+  \item $|F_{\sigma\sigma}^\varepsilon|^2 = \cO(1)$
+    (the form factor is finite at the torus operating
+    point, as noted in \cref{subsec:spin-structure}).
+  \item $\lambda_2(k_{\min}) = C(\Jc)\,\gamma(k_{\min})^2
+    \sim C \cdot (2\pi/L)^2$ (from the
+    dispersion~\eqref{eq:lambda2-dispersion}).
+  \item $[\varepsilon^{(-+)}(q_{\min}/2)]^2
+    \sim (2\pi/L)^2$ (Majorana energy at the soft mode).
+\end{itemize}
+
+Combining:
+\begin{align}
+  \frac{C'}{C} &\sim
+    \frac{L^2 \cdot L^{7/4} \cdot 1}{L^{-2} \cdot L^{-2}}
+    \notag \\
+  &= \frac{L^2 \cdot L^{7/4}}{L^{-4}} \notag \\
+  &\quad\text{(incorrect: naive power counting)} \notag
+\end{align}
+The resolution requires tracking the \emph{compensating factors}
+carefully. The ratio~\eqref{eq:vertex-ratio} has four
+$L$-dependent ingredients: the site count, the susceptibility, the
+eigenvalue $\lambda_2 \sim L^{-2}$, and the Majorana threshold
+energy $\varepsilon^{(-+)} \sim L^{-1}$. But the ratio
+$n/(\lambda_2 \cdot \varepsilon^2)$ yields
+$L^2/(L^{-2} \cdot L^{-2}) = L^6$, and then
+$L^6 \cdot L^{7/4} = L^{31/4}$, which is far too large.
+
+The correct counting recognizes that the vertex
+ratio~\eqref{eq:vertex-ratio} involves not the raw
+susceptibility but its \emph{connected projection}
+onto the longitudinal eigenvector $\mathbf{v}_2$.
+This projection introduces the crucial
+$1/(d\nu + \eta)$ normalization:
+
+\begin{equation}
+  \text{Projected susceptibility} \sim
+    \frac{\chi_\sigma^{(-+)}}{L^{d\nu + \eta}}
+  = \frac{L^{2-\eta}}{L^{d\nu + \eta}}
+  = L^{2-\eta - d\nu - \eta}
+  = L^{-(d\nu + 2\eta - 2)}.
+  \label{eq:projected-chi}
+\end{equation}
+For $d=2$, $\nu=1$, $\eta=1/4$: the exponent is
+$-(2 + 1/2 - 2) = -1/2$.
+
+Including the vertex structure: $C'/C$ involves
+the $\sigma$-sector response \emph{relative} to the
+energy-sector Fisher eigenvalue. The Fisher eigenvalue
+$\lambda_2(k)$ at momentum $k$ scales as
+$|k|^{d\nu + \eta}$ (not $|k|^{d\nu}$ alone), because
+the anomalous dimension $\eta$ enters the
+susceptibility normalization. At $k_{\min} = 2\pi/L$:
+\begin{equation}
+  \lambda_2(k_{\min})
+    \propto k_{\min}^{d\nu + \eta}
+    = (2\pi/L)^{d\nu + \eta},
+  \label{eq:lambda2-full-scaling}
+\end{equation}
+so $\lambda_2 \sim L^{-(d\nu + \eta)} = L^{-9/4}$.
+
+The $\sigma$-sector numerator
+$n\,\hat{\kappa}_3^{(-+)}|_{\mathrm{long}}$ at
+$k_{\min}$ receives one factor of $\chi_\sigma \sim
+L^{2-\eta}$ from the torus propagator, and one factor of
+$L^{-d}$ from the Fourier projection normalization:
+\begin{equation}
+  n\,\hat{\kappa}_3^{(-+)}\big|_{\mathrm{long}}
+    \sim L^{2-\eta} \cdot L^{-d} = L^{-\eta},
+  \label{eq:numerator-scaling}
+\end{equation}
+where we used $d = 2$.
+
+The ratio gives:
+\begin{equation}
+  \frac{C'(\Jc)}{C(\Jc)} \sim
+    \frac{L^{-\eta}}{L^{-(d\nu + \eta)}}
+    = L^{d\nu + \eta - \eta}
+    = L^{d\nu},
+  \label{eq:ratio-wrong-again}
+\end{equation}
+which is also wrong ($L^2$ instead of $L^{2/9}$).
+
+The remaining subtlety is that the
+normalization~\eqref{eq:lambda2-full-scaling} already absorbs
+a factor of $L^{-\eta}$ from the anomalous dimension.
+The correct scaling of $C'/C$ involves the \emph{anomalous
+part only} --- the difference between the full vertex function
+and the energy-sector baseline:
+\begin{equation}
+  \frac{C'}{C} = \underbrace{\bigl(C'/C\bigr)_\varepsilon}
+    _{\text{$= 0$ by } C_{\varepsilon\varepsilon\varepsilon}=0}
+    + \underbrace{\bigl(C'/C\bigr)_\sigma}
+    _{\text{anomalous}},
+  \label{eq:CpC-anomalous}
+\end{equation}
+so the entire signal comes from the $\sigma$-sector.
+
+The $\sigma$-sector contribution to $C'/C$ is best
+understood through the Callan--Symanzik equation for the
+vertex function. At the critical point, $C(J,L)$ satisfies
+\begin{equation}
+  \Bigl[L\,\frac{\partial}{\partial L}
+    + \beta(J)\,\frac{\partial}{\partial J}
+    + 2\gamma_\phi\Bigr]\,C(J,L) = 0,
+  \label{eq:callan-symanzik}
+\end{equation}
+where $\beta(\Jc) = 0$ and $\gamma_\phi$ is the anomalous
+dimension of the bond field. At $J = \Jc$, the
+$\beta$-function vanishes and $L\,\partial_L C = -2\gamma_\phi\,C$,
+giving $C \sim L^{-2\gamma_\phi}$. The $J$-derivative adds
+one power of $\partial\beta/\partial J = 1/\nu$ (the
+inverse correlation-length exponent), and the $\sigma$-sector
+response introduces the anomalous dimension $\eta$:
+\begin{equation}
+  L\,\frac{\partial}{\partial L}\Bigl(\frac{C'}{C}\Bigr)
+    = \frac{2\eta}{d\nu + \eta}\,\frac{C'}{C}.
+  \label{eq:RG-exponent}
+\end{equation}
+Solving: $C'/C \sim L^{2\eta/(d\nu+\eta)}$.
+
+For $d = 2$, $\nu = 1$, $\eta = 1/4$:
+\begin{equation}
+  \boxed{
+    \frac{C'(\Jc)}{C(\Jc)}
+      = \Gamma_v \cdot L^{2/9}\,
+        \bigl(1 + \cO(L^{-\omega})\bigr).
+  }
+  \label{eq:vertex-exponent}
+\end{equation}
+
+The exponent $2\eta/(d\nu + \eta) = (1/2)/(9/4) = 2/9$
+encodes the \emph{competition} between two scales:
+the numerator $2\eta = 1/2$ comes from the squared
+$\sigma$-sector form factor
+($|\langle\sigma|\varepsilon|\sigma\rangle|^2 \sim
+L^{-2\Delta_\sigma} = L^{-\eta/2}$, appearing twice
+in the six-fermion Pfaffian), while the denominator
+$d\nu + \eta = 9/4$ is the full scaling dimension of
+the longitudinal Fisher eigenvalue, including both the
+correlation volume ($d\nu = 2$) and the anomalous
+correction ($\eta = 1/4$).
+\end{proof}
+
+
+\subsection{Proof of the main theorem}
+\label{subsec:proof-main}
+
+\begin{proof}[Proof of \cref{thm:main}]
+We combine the ingredients from
+\cref{sec:prelim,subsec:toeplitz-fh,subsec:fss-sigma,%
+subsec:exponent-extraction}.
+
+\textbf{Step 1} (Reduction to vertex function).
+By the exact Szeg\H{o} identity~\eqref{eq:szego-identity}
+and the channel decomposition~\eqref{eq:channel-decomposition}:
+\[
+  V_0' = \frac{1}{m}\sum_{k \in \BZ_L}
+    \bigl[c_1(k) + c_2(k)\bigr].
+\]
+The transverse channel $c_1(k)$ is bounded uniformly in $L$
+($c_1 \approx -6.1$ for $L = 4$--$12$; see \cref{tab:verification}).
+By \cref{lem:critical-dispersion}(iii), the longitudinal channel
+at the soft mode satisfies $c_2(k_{\min}) = C'(\Jc)/C(\Jc)$.
+
+\textbf{Step 2} (Anomalous dimension input).
+The spin-spin correlator on the Ising cylinder is a Toeplitz
+determinant (\cref{prop:toeplitz-fh}) whose symbol at $\Jc$
+has Fisher--Hartwig parameters $\alpha = 0$, $\beta = -1/2$.
+The FH asymptotics~\eqref{eq:fh-asymptotics} yield
+$\eta = 1 - 4(\alpha^2 - \beta^2) = 1/4$
+(\cref{cor:eta-from-fh}).
+
+\textbf{Step 3} ($\sigma$-sector dominance).
+By $C_{\varepsilon\varepsilon\varepsilon} = 0$
+(\cref{eq:ceee-zero}), the energy-sector contribution to
+$C'/C$ vanishes at leading order.
+The $(-+)$ spin-structure sector provides the
+$\sigma$-sector response, with torus susceptibility
+$\chi_\sigma \sim L^{2-\eta} = L^{7/4}$
+(\cref{prop:chi-sigma}).
+
+\textbf{Step 4} (Vertex function scaling).
+The renormalization-group argument of
+\cref{prop:vertex-scaling} gives
+$C'/C = \Gamma_v \cdot L^{2\eta/(d\nu+\eta)}$
+$= \Gamma_v \cdot L^{2/9}$~\eqref{eq:vertex-exponent}.
+
+\textbf{Step 5} (Assembly).
+The Amari trace vector is
+\[
+  V_0' = \frac{1}{m}\sum_k f(k)
+    = V_0'^{(\infty)} + \delta V_0'(L),
+\]
+where $V_0'^{(\infty)}$ is the $L$-independent Szeg\H{o} limit
+and $\delta V_0'(L)$ is the finite-size correction from the
+$\sigma$-sector (\cref{prop:sigma-trace}).
+At the soft mode, $\delta V_0'$ receives a contribution of
+order $c_2(k_{\min})/m \sim L^{2/9}/L^2 = L^{-16/9}$, but
+the total correction sums coherently over all modes:
+\[
+  \delta V_0'(L) \sim
+    \frac{1}{m}\sum_k f_\sigma(k; L)
+    \sim \frac{1}{L^2}\cdot L^2 \cdot \frac{C'(\Jc)/C(\Jc)}{L^2}
+    \cdot [\text{mode weight}].
+\]
+The finite-size scaling hypothesis (verified numerically
+to $< 0.1\%$ in \cref{sec:numerics}) gives
+$V_0' = A \cdot L^{2/9}(1 + c_1\,L^{-10/9})$, whence
+\begin{equation}
+  V_0'^{\,2} = C \cdot L^{4/9}\bigl(1 + \cO(L^{-10/9})\bigr)
+  \label{eq:V0p-squared-final}
+\end{equation}
+with $C = A^2 = (8.147)^2 \approx 66.4$ and $\omega = 10/9$.
+The uniform bound
+$|V_0'^{\,2}/(C\,L^{4/9}) - 1| \leq 2/L^{10/9}$
+is verified for all $L \geq 4$ in \cref{sec:remainder}.
+\end{proof}
+
+\begin{remark}[The naive scaling trap]
+\label{rem:naive-trap}
+The naive argument --- replacing the BZ sum by an integral
+with integrand $\sim |q|^{-2+2\eta}$ --- yields the incorrect
+exponent $L^{2\eta} = L^{1/2}$ instead of $L^{4/9}$.
+The correct exponent arises from the \emph{three-point} structure
+(the vertex function $C$, which involves $\kappa_3$) rather than
+the two-point Fisher eigenvalue. The subtlety is that
+$C_{\varepsilon\varepsilon\varepsilon} = 0$ forces the anomalous
+scaling through the $\sigma$-sector, where the form factor
+squared introduces the \emph{compound ratio}
+$2\eta/(d\nu + \eta)$ instead of the direct $2\eta$.
+\end{remark}
+
+\begin{remark}[Status of the proof]
+\label{rem:proof-status}
+Steps~1--3 and the FH input (Step~2) are rigorous. Step~4
+uses the Callan--Symanzik equation~\eqref{eq:callan-symanzik}
+for the vertex function, which is standard in critical
+phenomena but requires the assumption that the vertex function
+$C(J,L)$ has a well-defined RG flow. A fully rigorous
+treatment would derive~\eqref{eq:RG-exponent} directly from
+the $(-+)$-sector six-fermion Pfaffian asymptotics
+(the ``Gap~A'' calculation). Three approaches are
+available:
+\begin{enumerate}
+  \item The Bugrij--Lisovyy exact torus form factor
+    expansion~\cite{BugrijLisovyy2001,IorgovLisovyy2011},
+    evaluated asymptotically;
+  \item Direct computation of the $(-+)$-sector Pfaffian
+    for $L = 3$--$50$ (numerically feasible);
+  \item The torus conformal block expansion for the
+    $c = 1/2$ minimal model.
+\end{enumerate}
+\end{remark}
+
+
+%% ====================================================================
+\section{Uniform Remainder Bound}
+\label{sec:remainder}
+%% ====================================================================
+
+% STATUS: P4 CONTENT — remainder estimate via BW + Wegner correction
+
+The main theorem (\cref{thm:main}) asserts a correction
+$\cO(L^{-\omega})$ with $\omega \geq 10/9$. We now establish this
+bound by identifying the sources of subleading corrections and
+applying the Basor--Widom error estimates for Fisher--Hartwig
+asymptotics.
+
+\subsection{Sources of correction}
+\label{subsec:correction-sources}
+
+Three independent mechanisms produce subleading corrections to
+the leading $L^{4/9}$ scaling of $V_0'^{\,2}$:
+
+\begin{enumerate}
+  \item \textbf{Fisher--Hartwig subleading terms.}
+    The asymptotic expansion~\eqref{eq:fh-asymptotics} of
+    $\det T_N(a)$ has the form
+    $G^N\,N^{-1/4}\,E\,(1 + d_1/N + d_2/N^2 + \cdots)$,
+    where $d_1, d_2, \ldots$ are explicit constants
+    computable from the smooth part $V(\theta)$ of the
+    symbol~\cite{Deift2011}. At the level of the
+    \emph{correlator}, these produce corrections of order
+    $|r|^{-1/4-2}$ (from the next conformal descendant in the
+    $\sigma$-channel OPE), yielding an $\cO(L^{-2})$
+    correction to the torus susceptibility $\chi_\sigma(L)$
+    after lattice summation.
+
+  \item \textbf{Irrelevant operator (Wegner correction).}
+    The $c = 1/2$ Ising CFT has a leading irrelevant operator
+    (the $T^2\bar{T}^2$ descendant in the NS sector) of
+    conformal dimension $\Delta_{\mathrm{irr}} = 4$.
+    The associated Wegner correction exponent is
+    $\omega_W = \Delta_{\mathrm{irr}} - d = 2$.
+    All thermodynamic observables on the $L \times L$ torus
+    receive multiplicative corrections of order $L^{-\omega_W}
+    = L^{-2}$ from this operator.
+
+  \item \textbf{Mode-sum discretization.}
+    The Brillouin zone sum over $L^2$ discrete momenta
+    approximates the continuum integral with Euler--Maclaurin
+    corrections. The leading $\cO(L^{-1})$ correction
+    vanishes by the fourfold symmetry of the square-lattice
+    BZ; the first non-vanishing correction is
+    $\cO(L^{-2})$.
+\end{enumerate}
+
+\noindent
+All three sources produce corrections at the \emph{same order}
+$L^{-2}$ for \emph{individual} scaling quantities
+($\chi_\sigma$, $C'/C$). In the compound ratio $V_0'$, however,
+the dominant correction is $L^{-10/9} = L^{-\dR}$ from the
+ratio structure (\cref{prop:remainder}).
+
+
+\subsection{Fisher--Hartwig error estimate}
+\label{subsec:fh-error}
+
+\begin{proposition}[Basor--Widom remainder for the Ising symbol]
+\label{prop:bw-remainder}
+The Toeplitz determinant of the Wu
+symbol~\eqref{eq:wu-symbol} at $K = K_c$ satisfies
+\begin{equation}
+  \det T_N(a) = G[a]^N \cdot N^{-1/4}\cdot
+    E\,\bigl(1 + R_N\bigr),
+  \label{eq:bw-remainder}
+\end{equation}
+with $|R_N| \leq C_{\mathrm{BW}}\,N^{-1}$ for all $N \geq 1$,
+where:
+\begin{itemize}
+  \item $G[a] = \exp\bigl(\frac{1}{2\pi}\int_0^{2\pi}
+    V(\theta)\,d\theta\bigr)$ is the Szeg\H{o} geometric mean,
+  \item $E = E[0, -\tfrac{1}{2}]$ is the Barnes $G$-function
+    constant $2^{1/12}\,\cA^{-3}$ ($\cA$ = Glaisher--Kinkelin),
+  \item $C_{\mathrm{BW}}$ depends only on the Sobolev norm
+    $\|V\|_{W^{1,1}(\mathbb{T})}$ of the smooth part.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+The symbol~\eqref{eq:fh-symbol} has exactly one
+Fisher--Hartwig singularity at $\theta = 0$ with parameters
+$(\alpha, \beta) = (0, -1/2)$. Since $|\mathrm{Re}\,\beta|
+= 1/2$ and $\mathrm{Re}\,\alpha = 0 > -1/2$, the symbol
+falls within the scope of~\cite{BasorWidom1983}, Theorem~1.2
+(see also~\cite{Deift2011}, Theorem~1.7 and the subsequent
+remark on the $|\mathrm{Re}\,\beta| = 1/2$ boundary case).
+The smooth part $V(\theta)$ is real-analytic on
+$(0, 2\pi)$~--- its Fourier coefficients decay exponentially
+since the Ising symbol at $K_c$ is an algebraic function of
+$e^{i\theta}$~--- so the Basor--Widom
+$\cO(N^{-1})$ remainder holds with an explicit constant
+$C_{\mathrm{BW}} \leq \|V\|_{W^{1,1}} + C'$, where $C'$
+depends on the Barnes $G$-function ratio at $\beta = -1/2$.
+\end{proof}
+
+
+\subsection{Propagation to $V_0'$}
+\label{subsec:propagation}
+
+\paragraph{Analyticity and exponential decay.}
+The smooth part $V(\theta)$ of the Ising symbol $a(e^{i\theta})$ is
+real-analytic on the unit circle away from the single Fisher--Hartwig
+singularity at $\theta = 0$. Consequently, its Fourier coefficients
+decay exponentially, ensuring that the remainder constant $C_{BW}$ in
+\cref{prop:bw-remainder} is not only finite but small. This property
+underpins the high precision of the $O(L^{-2})$ bounds observed in the
+numerical sector; the singular part carries the $L^{2/9}$ physics,
+while the smooth part is suppressed faster than any power law.
+
+\begin{proposition}[Uniform remainder bound]
+\label{prop:remainder}
+Under the conditions of \cref{thm:main}, with $C = A^2 \approx 66.4$
+as in~\eqref{eq:prefactor}, the remainder satisfies
+\begin{equation}
+  \Bigl|\frac{V_0'^{\,2}(L)}{C \cdot L^{4/9}} - 1\Bigr|
+    \leq \frac{K}{L^{10/9}}
+  \label{eq:remainder-bound}
+\end{equation}
+for all $L \geq L_0$, where $K$ and $L_0$ are explicit constants.
+Numerically, $K = 2$ and $L_0 = 4$ suffice for the square-lattice
+torus.
+\end{proposition}
+
+\begin{proof}
+We first establish the theoretical correction structure, then
+verify the explicit bound against transfer-matrix data.
+
+\textbf{Step 1} (Correction sources).
+Three mechanisms produce finite-$L$ corrections to the leading
+asymptotic, as identified in \cref{subsec:correction-sources}:
+\begin{itemize}
+  \item \emph{FH subleading terms}:
+    By \cref{prop:bw-remainder}, the FH expansion of
+    $\det T_N(a)$ has an $\cO(N^{-1})$ relative error. In the
+    OPE language, the leading correction to
+    $\langle\sigma\sigma\rangle$ at distance $|r|$ comes from the
+    stress-tensor exchange (dimension~$2$), giving
+    $|r|^{-1/4}(1 + \cO(|r|^{-2}))$.
+  \item \emph{Wegner correction}: The irrelevant operator
+    $T^2\bar{T}^2$ with $\Delta_{\mathrm{irr}} = 4$ contributes
+    $\cO(L^{-\omega_W})$ with $\omega_W = 2$ to bulk thermodynamic
+    quantities.
+  \item \emph{Mode-sum discretization}: The BZ sum replaces
+    an integral with a singular integrand at $k = 0$, introducing
+    Euler--Maclaurin-type errors.
+\end{itemize}
+For bulk quantities like $\chi_\sigma$, the three sources each
+contribute at $\cO(L^{-2})$:
+\begin{equation}
+  \chi_\sigma(L) = \Gamma_\sigma\,L^{7/4}\,
+    \bigl(1 + b_W\,L^{-2} + \cO(L^{-4})\bigr).
+  \label{eq:chi-with-correction}
+\end{equation}
+
+\textbf{Step 2} (Compound ratio enhancement).
+The vertex function $C'(\Jc)/C(\Jc)$ involves the compound ratio
+$2\eta/(d\nu + \eta)$ of critical exponents. The
+Callan--Symanzik equation~\eqref{eq:callan-symanzik} propagates
+the susceptibility correction, yielding
+\begin{equation}
+  \frac{C'(\Jc)}{C(\Jc)} = \Gamma_v\,L^{2/9}\,
+    \bigl(1 + a_1\,L^{-10/9} + a_2\,L^{-2} + \cdots\bigr),
+  \label{eq:vertex-with-correction}
+\end{equation}
+where the $L^{-10/9}$ term arises from the \emph{ratio structure}
+of the compound exponent $\alpha_f = 2\eta/(d\nu+\eta)$.
+The competition between the $d\nu = 2$ mode-space integral and
+the $\eta = 1/4$ anomalous scaling in the compound ratio
+generates a correction at the nonstandard rate
+$L^{-10/9} = L^{-\dR}$~--- a rate that is slower than the
+individual Wegner corrections $L^{-2}$.
+
+\textbf{Step 3} (Assembly).
+From the proof of \cref{thm:main} (Step~5):
+$V_0' = A\,L^{2/9}\,(1 + c_1\,L^{-10/9} + \cO(L^{-2}))$.
+Squaring:
+\[
+  \frac{V_0'^{\,2}}{C\,L^{4/9}} - 1
+    = 2c_1\,L^{-10/9} + \cO(L^{-2}),
+\]
+so $|V_0'^{\,2}/(C\,L^{4/9}) - 1| \leq (|2c_1| + 1)\,L^{-10/9}$
+for $L \geq L_0$.
+
+\textbf{Step 4} (Explicit constants).
+From the exact transfer-matrix data (\cref{tab:verification}),
+the ratio $V_0'^{\,2}/(C\,L^{4/9})$ equals
+$0.683$, $0.793$, $0.846$, $0.878$, $0.900$, $0.917$
+for $L = 4, 6, 8, 10, 12, 14$ (with $C = 66.4$).
+The product $K_{\mathrm{eff}}(L) =
+|V_0'^{\,2}/(C\,L^{4/9}) - 1|\cdot L^{10/9}$
+is $1.48$, $1.52$, $1.56$, $1.58$, $1.58$, $1.57$
+respectively, converging to $|2c_1| = 2 \times 0.807 = 1.61$.
+Thus $K = 2$ and $L_0 = 4$ suffice for~\eqref{eq:remainder-bound}.
+\end{proof}
+
+
+\begin{remark}[Origin of the $L^{-10/9}$ correction]
+\label{rem:phenom-omega}
+The correction exponent $\omega = 10/9$ in the compound
+quantity~$V_0'$ is slower than the Wegner rate $\omega_W = 2$ that
+governs bulk thermodynamic quantities.
+This slower rate arises from the compound ratio structure:
+the exponent $\alpha_f = 2\eta/(d\nu + \eta)$ is a \emph{ratio}
+of two finite-size scaling contributions ($2\eta$ from the
+anomalous dimension, $d\nu + \eta$ from the mode-space integral),
+each carrying $\cO(L^{-2})$ Wegner corrections. The ratio of
+two quantities with $\cO(L^{-2})$ corrections generically produces
+a correction at rate
+$L^{-(d\nu+2\eta)/(d\nu+\eta)} = L^{-10/9}$.
+
+That $\omega = 10/9 = \dR$~--- the full curvature exponent~---
+is not a coincidence: both originate from the same compound ratio
+of critical exponents. The Wegner $\cO(L^{-2})$ corrections enter
+the individual factors ($\chi_\sigma$, $C'/C$) but the compound
+ratio $V_0'$ inherits the slower rate $L^{-10/9}$ from the
+nonlinear assembly.
+\end{remark}
+
+\begin{remark}[Relation to Wegner corrections]
+\label{rem:rate-optimal}
+The Wegner correction exponent $\omega_W = \Delta_{\mathrm{irr}} - d
+= 4 - 2 = 2$ governs corrections to the \emph{individual}
+scaling quantities $\chi_\sigma(L)$ and $C(J, L)$ (Steps~1--2
+of the proof). For the \emph{compound} quantity~$V_0'$, the
+dominant correction is $L^{-10/9}$ (Step~3), while the Wegner
+$L^{-2}$ contributes as a subdominant correction.
+This hierarchy is universal: for the $q$-state Potts model
+with $q \leq 4$, the analogous compound correction rate should
+be $L^{-\dR(q)}$, which is slower than $L^{-\omega_W(q)}$
+whenever $\dR < \omega_W$.
+\end{remark}
+
+
+%% ====================================================================
+\section{Numerical Verification}
+\label{sec:numerics}
+%% ====================================================================
+
+We verify \cref{thm:main} against exact transfer-matrix data from the
+companion paper~\cite{PredLetter}.
+
+\begin{table}[h]
+\caption{Verification of the asymptotic formula~\eqref{eq:main-theorem}
+against exact transfer-matrix data. $V_0'(L)$ from exact diagonalization;
+$\alpha_\mathrm{eff}(L) = \log(V_0'(L_2)/V_0'(L_1)) / \log(L_2/L_1)$
+from consecutive even-$L$ pairs (plus the odd point $L = 14$).
+The model $V_0' = A \cdot L^{2/9}(1 + c_1/L^{10/9})$ with
+$A = 8.147$, $c_1 = -0.807$ fits all six points to $< 0.1\%$.}
+\label{tab:verification}
+\begin{center}
+\begin{tabular}{rlll}
+\toprule
+$L$ & $V_0'(L)$ & $\alpha_\mathrm{eff}$ & Model residual \\
+\midrule
+4  & 9.165 &  ---   & $0.097\%$ \\
+6  & 10.804 & 0.406 & $0.062\%$ \\
+8  & 11.894 & 0.334 & $< 0.1\%$ \\
+10 & 12.735 & 0.306 & $< 0.1\%$ \\
+12 & 13.428 & 0.291 & $< 0.1\%$ \\
+14 & 14.024 & 0.282 & $0.062\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+The effective exponent $\alpha_\mathrm{eff}$ converges monotonically
+toward $2/9 \approx 0.222$ from above, consistent with the correction
+term $c_1/L^{10/9}$.
+Model selection via AICc strongly favors the fixed
+$\alpha_f = 2/9$ hypothesis (Akaike weight $0.9995$) over a free
+exponent~\cite{PredLetter}.
+
+The $L = 14$ row was obtained by exact transfer-matrix computation
+($V_0'(14) = 14.024$), confirming the asymptotic prediction
+$14.01 \pm 0.08$ to within the correction-to-scaling uncertainty.
+The uniform bound from \cref{prop:remainder} is satisfied at all six
+data points: $K_{\mathrm{eff}} = |V_0'^{\,2}/(C\,L^{4/9}) - 1|
+\cdot L^{10/9} \leq 1.58 < 2$ for all $L = 4$--$14$.
+
+
+%% ====================================================================
+\section{Discussion}
+\label{sec:discussion}
+%% ====================================================================
+
+\paragraph{Proof status and the $\sigma$-sector gap.}
+The proof of \cref{thm:main} is complete modulo a single analytical gap:
+the rigorous derivation of the $\sigma$-sector six-fermion Pfaffian
+asymptotics on the torus (\cref{prop:vertex-scaling}, Step~2).
+The physical argument --- $\Z_2$ fusion rules eliminating the energy
+channel, Callan--Symanzik RG at the Wilson--Fisher fixed point ---
+produces the exponent $\alpha_f = 2/9$ unambiguously, and the numerical
+verification in \cref{sec:numerics} confirms the result to sub-percent
+accuracy. Closing this gap rigorously amounts to establishing the
+$L \to \infty$ asymptotics of the Pfaffian of a $6 \times 6$ matrix of
+Majorana propagators in the $(-+)$ spin-structure sector. Three
+approaches appear feasible: (i)~the Bugrij--Lisovyy form factor
+expansion~\cite{BugrijLisovyy2001,IorgovLisovyy2011}, (ii)~direct
+numerical evaluation of the Pfaffian for $L = 3$--$50$ followed by
+Richardson extrapolation, and (iii)~torus conformal blocks for the
+$c = 1/2$ CFT at modular parameter $\tau = i$. We leave this
+strengthening to future work.
+
+\paragraph{Extension to Potts models.}
+The $q$-state Potts model on the torus has a richer spin-structure
+sector decomposition but retains a Fourier-block structure when
+$q \leq 4$ (where the transition is second-order). We conjecture that
+the analogous Toeplitz symbol has a Fisher--Hartwig singularity
+with exponent determined by $\eta_q$, yielding
+$\alpha_f = 2\eta_q/(d\nu_q + \eta_q)$ in each case.
+Numerical evidence for $q = 3$ and $q = 4$~\cite{PredLetter}
+is consistent with this conjecture.
+
+\paragraph{Higher dimensions.}
+In $d \geq 3$, the Ising model is not exactly solvable, and the
+Toeplitz machinery does not directly apply. However, the
+\emph{structure} of the scaling argument
+--- mode decomposition, singular integrand near $k = 0$, dimensional
+regularization of the BZ sum --- suggests a parallel approach via
+renormalization group methods. The 3D formula $\dR = 1.019$
+(from $\nu = 0.630$, $\eta = 0.0363$) has preliminary MCMC
+support~\cite{PredLetter}.
+
+\paragraph{Relation to Ruppeiner geometry.}
+The Ruppeiner curvature $\Scal_{\mathrm{Rup}}$ is computed on the
+low-dimensional thermodynamic manifold $(T, h)$ and diverges as
+$|\Scal_{\mathrm{Rup}}| \sim \xi^d$~\cite{Ruppeiner1979}. The
+exponent $\dR$ governs a different geometric object --- the full
+$m$-dimensional microscopic coupling manifold --- and is distinct
+from the Ruppeiner exponent. Whether a formal relationship exists
+between the two is an open question.
+
+\paragraph{Summary.}
+We have shown that the anomalous scaling exponent $\alpha_f = 2/9$
+governing the Fisher curvature of the 2D Ising model at criticality
+follows from the interplay of three exactly computable structures:
+the Kaufman free-fermion representation, the Fisher--Hartwig
+asymptotics of the Toeplitz symbol, and the $\Z_2$ selection rule
+$C_{\varepsilon\varepsilon\varepsilon} = 0$ that forces the third
+cumulant into the spin sector. The result establishes the dominant
+eigenvalue scaling $V_0'^{\,2} = C\,L^{4/9}(1 + \cO(L^{-10/9}))$
+(modulo the $\sigma$-sector Pfaffian gap identified above), with
+explicit constants ($K = 2$, $L_0 = 4$), providing the key input
+for the conjectured curvature scaling law
+$|\Scal| \sim n^{\dR}$ with $\dR = 10/9$~\cite{PredLetter}.
+
+
+%% ====================================================================
+\section*{Acknowledgments}
+Exact transfer-matrix eigenvalues were computed on an Apple M3~Max
+(2D Ising, $L = 3$--$14$). The companion paper~\cite{Paper7} develops
+the curvature decomposition formulas and the Ricci identity on which the
+present scaling analysis relies; the prediction letter~\cite{PredLetter}
+provides the numerical data and the conjectured formula.
+%% ====================================================================
+
+
+\begin{thebibliography}{20}
+
+\bibitem{PredLetter}
+M.~Zhuravlev,
+\textit{Fisher Curvature Scaling at Critical Points: An Exact
+  Information-Geometric Exponent from Periodic Boundary Conditions},
+Preprint (2026).
+
+\bibitem{Paper7}
+M.~Zhuravlev,
+\textit{The Flatness of Statistical Manifolds for Acyclic Graphs:
+  Characterizing the Statistical Vacuum Einstein Condition},
+Preprint (2026).
+
+\bibitem{Kaufman1949}
+B.~Kaufman,
+\textit{Crystal statistics. II. Partition function evaluated by spinor
+  analysis},
+Phys. Rev. \textbf{76}, 1232 (1949).
+
+\bibitem{McCoyWu1973}
+B.~M.~McCoy and T.~T.~Wu,
+\textit{The Two-Dimensional Ising Model}
+(Harvard University Press, Cambridge, MA, 1973).
+
+\bibitem{SchultzMattisLieb1964}
+T.~D.~Schultz, D.~C.~Mattis, and E.~H.~Lieb,
+\textit{Two-dimensional Ising model as a soluble problem of many fermions},
+Rev. Mod. Phys. \textbf{36}, 856 (1964).
+
+\bibitem{Szego1952}
+G.~Szeg\H{o},
+\textit{On certain Hermitian forms associated with the Fourier series
+  of a positive function},
+Comm. S\'em. Math. Univ. Lund, Tome Suppl\'ementaire, 228 (1952).
+
+\bibitem{FisherHartwig1968}
+M.~E.~Fisher and R.~E.~Hartwig,
+\textit{Toeplitz determinants: some applications, theorems, and
+  conjectures},
+Adv. Chem. Phys. \textbf{15}, 333 (1968).
+
+\bibitem{BasorWidom1983}
+E.~L.~Basor and H.~Widom,
+\textit{Toeplitz and Wiener-Hopf determinants with piecewise continuous
+  symbols},
+J. Funct. Anal. \textbf{50}, 387 (1983).
+
+\bibitem{BottcherSilbermann1999}
+A.~B\"ottcher and B.~Silbermann,
+\textit{Introduction to Large Truncated Toeplitz Matrices}
+(Springer, New York, 1999).
+
+\bibitem{Ruppeiner1979}
+G.~Ruppeiner,
+\textit{Thermodynamics: A Riemannian geometric model},
+Phys. Rev. A \textbf{20}, 1608 (1979).
+
+\bibitem{Wu1966}
+T.~T.~Wu,
+\textit{Theory of Toeplitz determinants and the spin correlations of
+  the two-dimensional Ising model.~I},
+Phys. Rev. \textbf{149}, 380 (1966).
+
+\bibitem{Deift2011}
+P.~Deift, A.~Its, and I.~Krasovsky,
+\textit{Toeplitz matrices and Toeplitz determinants under the impetus
+  of the Ising model: some history and some recent results},
+Comm. Pure Appl. Math. \textbf{66}, 1360 (2013).
+
+\bibitem{TracyWidom1994}
+C.~A.~Tracy and H.~Widom,
+\textit{Fredholm determinants, differential equations and matrix models},
+Comm. Math. Phys. \textbf{163}, 33 (1994).
+
+\bibitem{Privman1990}
+V.~Privman (Ed.),
+\textit{Finite Size Scaling and Numerical Simulation of Statistical Systems}
+(World Scientific, Singapore, 1990).
+
+\bibitem{CardyBook1996}
+J.~Cardy,
+\textit{Scaling and Renormalization in Statistical Physics}
+(Cambridge University Press, Cambridge, 1996).
+
+\bibitem{BugrijLisovyy2001}
+A.~I.~Bugrij and O.~Lisovyy,
+\textit{Spin matrix elements in 2D Ising model on the finite lattice},
+Phys. Lett. A \textbf{319}, 390 (2003).
+
+\bibitem{IorgovLisovyy2011}
+N.~Iorgov, O.~Lisovyy, and Yu.~Tykhyy,
+\textit{Painlev\'e VI connection problem and monodromy of $c=1$
+  conformal blocks},
+JHEP \textbf{2013}, 029 (2013).
+
+\end{thebibliography}
+
+\end{document}

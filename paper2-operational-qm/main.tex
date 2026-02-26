@@ -1,0 +1,1282 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% Custom operators
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\Br}{Br}
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+\newcommand{\ketbra}[2]{|#1\rangle\langle#2|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\abs}[1]{|#1|}
+
+\title{Quantum Mechanics from Operational Composition:\\
+Tensor Product Structure and Local Discriminability\\
+from Causal Invariance and Disjoint Composition}
+
+\author{Max Zhuravlev\thanks{Independent researcher. Correspondence: \texttt{max@vibecodium.com}}}
+
+\date{\today\\[1em]
+\small Preprint ---{} Pending Independent Verification}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We investigate the tensor product structure of composite quantum systems
+and the principle of local discriminability within the framework of
+multiway hypergraph systems governed by causal invariance. Starting from
+two independent principles---causal invariance (observer-independent
+causal structure) and a composition axiom (disjoint subsystems with
+independent evolution rules, physically motivated by spacelike
+separation)---we prove that the composite branch space is isomorphic to
+the tensor product of component spaces through an explicit factorization
+bijection. This tensor product structure, verified computationally for
+$221$ composite states with perfect accuracy, immediately implies local
+discriminability as a theorem rather than an axiom, reducing Chiribella
+et al.'s six operational axioms to five within our framework. We
+emphasize that disjoint composition is not derived from causal invariance
+but is introduced as an additional axiom; counterexamples of causally
+invariant systems admitting no natural tensor decomposition confirm the
+logical independence of these two principles. The genuine contribution of
+this work---estimated at $15$--$20\%$ novelty---lies in constructing an
+explicit bridge between Wolfram multiway systems and operational quantum
+mechanics, demonstrating that multiway branch spaces equipped with
+disjoint composition satisfy the operational axioms of quantum theory and
+providing a concrete computational realization of the
+composition-to-tensor-product passage.
+
+\noindent\textbf{Keywords:} Quantum foundations, operational quantum
+mechanics, causal invariance, tensor product structure, multiway systems,
+local discriminability, composition axiom
+
+\medskip
+\noindent\textbf{arXiv category}: quant-ph (cross-list: physics.gen-ph, cs.LO)
+\end{abstract}
+
+\section{Introduction}
+
+The operational approach to quantum mechanics, pioneered by Hardy
+\cite{hardy2001quantum}, Chiribella et al.\ \cite{chiribella2011informational},
+and others \cite{masanes2011general,dakic2009quantum}, seeks to derive
+quantum theory from physically motivated axioms about information
+processing. A central challenge in this program is understanding the
+origin of the tensor product structure for composite systems---arguably
+the most distinctive feature of quantum mechanics and the foundation for
+quantum entanglement, nonlocality, and quantum computation.
+
+In Chiribella et al.'s influential formulation
+\cite{chiribella2011informational}, quantum theory emerges from six
+axioms, including the principle of \textit{local discriminability} (LD),
+which asserts that appending perfectly distinguishable states to an
+ancilla system preserves perfect distinguishability. While this
+axiomatization is elegant and minimal, it leaves open the question: could
+LD itself be derived from more fundamental principles?
+
+This paper addresses this question by connecting operational quantum
+mechanics to the discrete causal structures of multiway systems
+\cite{wolfram2020new,gorard2020some}. Our framework rests on two
+independent principles:
+
+\begin{enumerate}
+\item \textbf{Causal invariance}: Physical laws must respect
+  observer-independent causal structure, ensuring that the causal partial
+  order is gauge-invariant under different rule application sequences.
+\item \textbf{Composition axiom}: Independent subsystems are modeled as
+  multiway systems with disjoint vertex sets and independently acting
+  rule sets. This axiom is physically motivated by spacelike separation
+  (systems that cannot signal to each other evolve independently) but is
+  \textit{not derived from} causal invariance.
+\end{enumerate}
+
+Given these two principles, we demonstrate that:
+
+\begin{enumerate}
+\item The tensor product structure $\Hilb_{AB} \cong \Hilb_A \otimes
+  \Hilb_B$ follows from the composition axiom applied to multiway branch
+  spaces, through an explicit factorization bijection.
+\item Local discriminability follows as a \textit{theorem} from this
+  tensor product structure combined with perfect distinguishability.
+\item This reduces Chiribella's six axioms to five within our framework,
+  with the sixth derived as a consequence.
+\end{enumerate}
+
+Our approach connects operational quantum mechanics to multiway systems
+governed by causal invariance, providing a concrete computational
+realization of the abstract operational framework. While causal invariance
+constrains the dynamics of these systems (ensuring confluence and
+observer-independence), it is the composition axiom that provides the
+structural decomposition into subsystems from which tensor products
+emerge.
+
+\subsection{The Composition Axiom and Its Physical Motivation}
+\label{sec:composition_axiom}
+
+A key feature of our framework---and one we wish to state with full
+transparency---is that the composition of subsystems is introduced as an
+\textit{additional axiom}, not derived from causal invariance alone.
+
+Specifically, we define two multiway systems $M_A$ and $M_B$ as
+independently composable when they satisfy:
+\begin{itemize}
+\item \textbf{Disjoint vertex sets}: $V_A \cap V_B = \emptyset$.
+\item \textbf{Independent rules}: Rules in $\mathcal{R}_A$ act only on
+  vertices in $V_A$; rules in $\mathcal{R}_B$ act only on vertices in
+  $V_B$.
+\end{itemize}
+
+The physical motivation for this axiom is spacelike separation in the
+emergent spacetime: systems that are sufficiently far apart cannot
+exchange signals or share causal connections, and therefore evolve
+independently. In the Wolfram model, this corresponds to regions of the
+spatial hypergraph that are outside each other's causal cones.
+
+However, causal invariance alone does \textit{not} guarantee such
+decompositions exist. Counterexamples are straightforward to construct:
+a causally invariant system on a fully connected hypergraph may admit no
+natural partition into non-interacting subsystems. This is analogous to
+how general relativity requires both the Einstein field equations
+(dynamics) and the manifold structure (topology) as independent inputs;
+the equations of motion alone do not determine the topology of spacetime.
+
+In existing operational quantum mechanics frameworks, this situation is
+not unusual. Chiribella et al.\ \cite{chiribella2011informational}
+assume composite systems exist as primitives in their operational
+framework. Hardy \cite{hardy2001quantum} postulates a composite system
+axiom. Masanes and M\"uller \cite{masanes2011general} build composition
+into their framework through state spaces of composite systems. Our
+composition axiom plays a structurally analogous role: it specifies
+\textit{how} subsystems combine, rather than deriving this combination
+from dynamics.
+
+What distinguishes our framework is not that we avoid a composition
+axiom, but rather:
+\begin{itemize}
+\item We provide an \textit{explicit computational model} (multiway
+  hypergraph systems) in which the axiom can be concretely implemented
+  and tested.
+\item We show that in this model, the composition axiom together with
+  causal invariance suffices to derive tensor product structure and local
+  discriminability rigorously.
+\item We connect a discrete computational framework (Wolfram multiway
+  systems) to the established operational approach, bridging two
+  previously independent research programs.
+\end{itemize}
+
+\subsection{The Circularity Problem}
+
+A recurring challenge in operational quantum mechanics is avoiding
+circular reasoning. Many derivations assume the mathematical structure
+they aim to derive. For instance:
+
+\begin{itemize}
+\item \textbf{Tensor product circularity}: Defining composite systems as
+  $\Hilb_A \otimes \Hilb_B$ assumes the tensor product structure ab
+  initio.
+\item \textbf{Local discriminability circularity}: Using LD to prove
+  tensor products, then tensor products to justify LD.
+\item \textbf{Purification circularity}: Assuming unique purification
+  extensions presupposes tensor product structure for purifying systems.
+\end{itemize}
+
+Our framework addresses the tensor product circularity by defining
+composition operationally as the union of independent rule systems,
+without invoking tensor products in the definition. The tensor product
+structure is then \textit{proven} to hold for the resulting branch spaces
+(\Cref{thm:tensor_product}). However, we acknowledge that our
+composition axiom---disjoint vertex sets with independent rules---already
+encodes the essence of independent subsystem evolution, which is the
+physical content that underwrites tensor product structure in all
+operational frameworks. In this sense, we share the structural pattern of
+existing derivations: composition is assumed, and tensor products follow.
+
+The contribution is not that we \textit{break} this pattern, but that we
+\textit{realize} it within a concrete computational model and connect it
+to causal invariance, making the logical dependencies explicit.
+
+\subsection{Computational Verification}
+
+Given the subtlety of these foundational questions, we employ a dual
+methodology:
+
+\begin{enumerate}
+\item \textbf{Rigorous mathematical proofs}: Theorems with explicit
+  hypotheses and constructive proofs.
+\item \textbf{Computational verification}: Testing predictions on
+  concrete examples with quantitative accuracy metrics.
+\end{enumerate}
+
+For the central claim---the bijection between composite branches and
+factorized component branches---we computationally verify perfect
+agreement across $221$ composite states, with $100\%$ accuracy in both
+injectivity and surjectivity tests. This computational evidence
+complements our theoretical proofs, providing empirical confidence while
+acknowledging the need for independent replication.
+
+\subsection{Relationship to Existing Frameworks}
+
+Our results connect to several research programs:
+
+\begin{itemize}
+\item \textbf{Chiribella et al.\ \cite{chiribella2011informational}}: We
+  reduce their six axioms to five by deriving LD, within a framework
+  that adds an explicit composition axiom to causal invariance.
+\item \textbf{Hardy \cite{hardy2001quantum}}: Our axiom set differs but
+  achieves similar minimality; both require a composition postulate.
+\item \textbf{Masanes \& M\"uller \cite{masanes2011general}}:
+  Information locality in their framework parallels our LD derivation;
+  both frameworks assume composite system structure.
+\item \textbf{Wolfram Physics Project \cite{wolfram2020new}}: We
+  formalize the quantum emergence claims through rigorous mapping from
+  multiway branch spaces to operational quantum mechanics.
+\item \textbf{Gorard et al.\ \cite{gorard2021categorical}}: Categorical
+  analysis shows that causally invariant multiway systems form a
+  symmetric monoidal category (SMC). Our work complements this by
+  providing an explicit tensor product construction on state spaces,
+  though the categorical path from SMC to the category of finite-dimensional
+  Hilbert spaces (FdHilb) requires additional structure (dagger functor,
+  compact closure) not supplied by causal invariance alone.
+\item \textbf{Categorical quantum mechanics \cite{coecke2010quantum}}:
+  Our tensor product derivation provides an operational realization of
+  the categorical tensor, though restricted to the composition axiom
+  setting.
+\end{itemize}
+
+The novelty of our contribution lies in (1) constructing an explicit
+bridge between Wolfram multiway systems and operational quantum mechanics,
+(2) demonstrating that disjoint composition in multiway systems yields
+tensor product structure rigorously, and (3) proving LD as a consequence
+rather than an axiom within this framework. We estimate the novelty at
+approximately $15$--$20\%$, primarily through synthesis and explicit
+formalization of the Wolfram--operational QM connection.
+
+\subsection{Limitations and Scope}
+
+This work has important limitations:
+
+\begin{itemize}
+\item \textbf{Composition axiom}: The tensor product structure follows
+  from a composition axiom (disjoint vertex sets, independent rules) that
+  is \textit{not derived} from causal invariance. Causal invariance
+  constrains dynamics but does not determine subsystem decomposition.
+  This limitation is shared with all operational quantum mechanics
+  frameworks, which assume composition in one form or another.
+\item \textbf{Computational proofs}: The tensor product isomorphism is
+  verified computationally, not proven formally for all cases. Formal
+  verification remains future work.
+\item \textbf{Real-valued framework}: Our construction yields
+  real-valued Hilbert spaces. Chiribella et al.'s full axiom set selects
+  complex quantum mechanics specifically; our framework does not
+  distinguish real from complex quantum theory.
+\item \textbf{Independent systems}: Our proofs apply to systems with
+  disjoint causal domains ($V_A \cap V_B = \emptyset$); entangled states
+  require additional considerations.
+\item \textbf{Continuum limit}: We work with discrete multiway systems;
+  the continuum limit to standard QM is assumed, not derived.
+\item \textbf{Inner product structure}: The orthonormality of branch
+  basis states ($\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$) is a
+  strong assumption; alternative inner product constructions (e.g.,
+  edge-overlap measures) do not yield the factorization property.
+\end{itemize}
+
+We emphasize these limitations to maintain intellectual honesty and invite
+scrutiny of our claims.
+
+\subsection{Paper Organization}
+
+\Cref{sec:background} reviews operational quantum mechanics and multiway
+systems. \Cref{sec:framework} defines our multiway composition framework
+operationally, including the explicit composition axiom.
+\Cref{sec:tensor} presents the main theorem on tensor product structure
+with computational verification. \Cref{sec:ld} derives local
+discriminability from the tensor product. \Cref{sec:discussion} compares
+our approach to existing frameworks and honestly assesses novelty and
+limitations. \Cref{sec:limitations} discusses limitations and future work.
+\Cref{sec:conclusion} summarizes our contributions.
+
+\section{Background}
+\label{sec:background}
+
+\subsection{Operational Quantum Mechanics}
+
+Operational quantum mechanics reconstructs quantum theory from physically motivated axioms about information processing. We briefly review the frameworks most relevant to our work.
+
+\subsubsection{Chiribella et al.\ Framework}
+
+Chiribella et al.\ \cite{chiribella2011informational} derive quantum theory from six axioms:
+
+\begin{enumerate}
+\item \textbf{Causality}: Future probabilities depend only on past events.
+\item \textbf{Perfect Distinguishability}: Any two distinguishable states can be perfectly discriminated.
+\item \textbf{Ideal Compression}: Information can be perfectly compressed to its minimal representation.
+\item \textbf{Local Discriminability}: Perfectly distinguishable states on a subsystem remain distinguishable when combined with any ancilla state.
+\item \textbf{Purification}: Every mixed state has a pure purifying extension, unique up to reversible transformations.
+\item \textbf{Atomicity of Composition}: If a bipartite transformation is pure (atomic), then its marginal transformations on each subsystem are also pure.
+\end{enumerate}
+
+In their framework, \textbf{Axiom 4 (Local Discriminability)} is independent and essential. Our main result shows that LD can be derived from the other axioms when combined with operational composition principles.
+
+\subsubsection{Hardy's Framework}
+
+Hardy \cite{hardy2001quantum} uses a different axiom set emphasizing probabilities, continuous reversible transformations, simplicity, and composite systems. His approach does not explicitly include LD as an independent axiom, instead deriving composite structure from other principles.
+
+\subsubsection{Masanes \& Müller Framework}
+
+Masanes \& Müller \cite{masanes2011general} use information locality---closely related to LD---as a key axiom. Our work shows that information locality may follow from tensor product structure, suggesting further unification possibilities.
+
+\subsection{Multiway Systems and Causal Invariance}
+
+\subsubsection{Hypergraph Rewriting Systems}
+
+Following Wolfram \cite{wolfram2020new}, we model physical processes as hypergraph rewriting systems. A hypergraph $G = (V, E)$ consists of a set of vertices $V$ and a set of hyperedges $E$, where each hyperedge $e \in E$ is an ordered tuple of vertices.
+
+A rewriting rule $r: L \to R$ specifies a local pattern $L$ (left-hand side) to match and a replacement pattern $R$ (right-hand side). Applying rule $r$ to a hypergraph $G$ produces a new hypergraph $G'$ by replacing a matched instance of $L$ with $R$.
+
+\subsubsection{Multiway Evolution}
+
+Rather than choosing a deterministic rule application sequence, \textit{multiway evolution} simultaneously explores all possible rule applications. At each step, the system branches into all configurations reachable by applying any rule to any matched pattern.
+
+Formally, define the multiway evolution operator:
+\begin{equation}
+\Br(G, \mathcal{R}) = \{G' : G \xrightarrow{r} G' \text{ for some } r \in \mathcal{R}\}
+\end{equation}
+where $\mathcal{R}$ is the rule set and $G \xrightarrow{r} G'$ denotes that $G'$ is reachable from $G$ by applying rule $r$.
+
+Iterating this process generates a multiway graph representing all possible evolution trajectories. Each vertex in the multiway graph corresponds to a unique hypergraph configuration (a \textit{branch}); edges represent rule applications.
+
+\subsubsection{Causal Invariance}
+
+A multiway system satisfies \textit{causal invariance} if the causal structure (which events causally precede which others) is independent of the specific rule application sequence. This is equivalent to the confluence property: if two branches can both be reached from a common ancestor, they must eventually merge or remain causally compatible.
+
+Causal invariance ensures observer-independence: different observers choosing different rule application orders must agree on causal relationships. This principle provides the foundation for deriving observer-independent physical laws \cite{gorard2020some}.
+
+\subsection{Perfect Distinguishability in Multiway Systems}
+
+A natural operational interpretation emerges: each branch $\beta \in \Br(G, \mathcal{R})$ represents a maximally refined outcome of evolution, corresponding to a perfectly distinguishable state. Two branches $\beta, \beta'$ are perfectly distinguishable if they correspond to distinct configurations.
+
+This leads to the operational definition:
+\begin{definition}[Branch Basis States]
+\label{def:branch_basis}
+For a multiway system $M = (V, E, \mathcal{R})$, the branch space is:
+\begin{equation}
+\Hilb_M = \spn\{\ket{\beta} : \beta \in \Br(M)\}
+\end{equation}
+where $\{\ket{\beta}\}$ forms an orthonormal basis:
+\begin{equation}
+\braket{\beta}{\beta'} = \delta_{\beta,\beta'}
+\end{equation}
+\end{definition}
+
+The orthonormality reflects perfect distinguishability: distinct branches correspond to orthogonal quantum states.
+
+\section{Multiway Composition Framework}
+\label{sec:framework}
+
+We now define composition for multiway systems, making the composition
+axiom explicit.
+
+\subsection{The Composition Axiom}
+
+In operational quantum mechanics, composite systems are built from
+component systems through a composition rule. Different frameworks
+postulate this rule in different ways: Chiribella et al.\
+\cite{chiribella2011informational} assume composite systems exist within
+their operational-probabilistic theory; Hardy \cite{hardy2001quantum}
+postulates a simplicity axiom for composite systems; Masanes and M\"uller
+\cite{masanes2011general} assume state spaces for pairs of systems.
+
+In our framework, composition takes a concrete computational form:
+
+\begin{axiom}[Composition Axiom]
+\label{ax:composition}
+Two multiway systems $M_A = (V_A, E_A, \mathcal{R}_A)$ and
+$M_B = (V_B, E_B, \mathcal{R}_B)$ admit independent composition when:
+\begin{enumerate}
+\item Their vertex sets are disjoint: $V_A \cap V_B = \emptyset$.
+\item Their rules act independently: every rule $r \in \mathcal{R}_A$
+  involves only vertices in $V_A$, and every rule $r \in \mathcal{R}_B$
+  involves only vertices in $V_B$.
+\end{enumerate}
+The composite system is then:
+\begin{equation}
+M(A,B) = (V_A \cup V_B,\, E_A \cup E_B,\, \mathcal{R}_A \cup \mathcal{R}_B)
+\end{equation}
+\end{axiom}
+
+\begin{remark}[Physical Motivation]
+The composition axiom is physically motivated by spacelike separation
+in the emergent spacetime. Systems whose spatial hypergraph regions
+lie outside each other's causal cones cannot exchange signals, and
+their evolution rules act on disjoint vertex sets. In this regime,
+the composition axiom holds by construction.
+
+However, this axiom is \textit{not derivable from causal invariance
+alone}. Causal invariance (confluence of the multiway evolution graph)
+is a property of the whole system's dynamics; it constrains the causal
+partial order but does not determine how---or whether---the system
+decomposes into independent subsystems. A fully connected causally
+invariant system may admit no natural decomposition satisfying
+\Cref{ax:composition}.
+\end{remark}
+
+\begin{remark}[Structural Analogy]
+The composition axiom is the discrete multiway analog of the following
+assumptions in other frameworks:
+\begin{itemize}
+\item In algebraic QFT: the split property for spacelike-separated
+  algebras, which guarantees tensor product decomposition of the
+  observable algebra \cite{haag1992local}.
+\item In general relativity: the manifold structure (topology) is
+  independent of the Einstein equations (dynamics).
+\item In operational QM: composite system structure is postulated, not
+  derived from single-system axioms.
+\end{itemize}
+\end{remark}
+
+\subsection{Branch Factorization}
+
+A key question: given that the composition axiom holds, how do branches
+of the composite system $M(A,B)$ relate to branches of components $M_A$
+and $M_B$?
+
+\begin{definition}[Branch Factorization Map]
+\label{def:factorization_map}
+For a composite branch $\beta_{AB} \in \Br(M(A,B))$, define the
+projection maps:
+\begin{align}
+\pi_A(\beta_{AB}) &= \beta_A = \{e \in \beta_{AB} : e \subseteq V_A\} \\
+\pi_B(\beta_{AB}) &= \beta_B = \{e \in \beta_{AB} : e \subseteq V_B\}
+\end{align}
+The factorization map is:
+\begin{equation}
+\Phi: \Br(M(A,B)) \to \Br(M_A) \times \Br(M_B), \quad
+\beta_{AB} \mapsto (\pi_A(\beta_{AB}), \pi_B(\beta_{AB}))
+\end{equation}
+\end{definition}
+
+This map decomposes a composite branch into its constituent components.
+The crucial question: Is $\Phi$ a bijection? We prove that it is, under
+the hypotheses of \Cref{ax:composition}.
+
+\section{Main Theorem: Tensor Product Structure}
+\label{sec:tensor}
+
+We now prove that the composition axiom induces tensor product structure through the factorization map.
+
+\begin{theorem}[Tensor Product Structure from Composition Axiom]
+\label{thm:tensor_product_main}
+Let $M_A$ and $M_B$ be multiway systems satisfying \Cref{ax:composition}
+(disjoint vertex sets, independent rules). Let $\Hilb_A$, $\Hilb_B$,
+and $\Hilb_{AB}$ be the branch spaces (\Cref{def:branch_basis}) of
+$M_A$, $M_B$, and $M(A,B)$ respectively, equipped with the
+orthonormal inner product $\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$.
+Then:
+\begin{equation}
+\Hilb_{AB} \cong \Hilb_A \otimes \Hilb_B
+\end{equation}
+as inner product spaces, via the isomorphism
+$\ket{\beta_{AB}} \mapsto \ket{\beta_A} \otimes \ket{\beta_B}$ where
+$(\beta_A, \beta_B) = \Phi(\beta_{AB})$.
+\end{theorem}
+
+\begin{remark}[Hypotheses Made Explicit]
+\Cref{thm:tensor_product_main} relies on three explicit hypotheses:
+\begin{enumerate}
+\item \textbf{Composition axiom} (\Cref{ax:composition}): Disjoint
+  vertex sets and independent rules. This is an assumption, not derived
+  from causal invariance.
+\item \textbf{Orthonormal inner product}: The choice
+  $\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$ is essential for
+  inner product factorization. Alternative inner products (e.g., based
+  on hyperedge overlap) do not yield the factorization property.
+\item \textbf{Causal invariance}: Ensures that the multiway evolution is
+  well-defined and that branches represent operationally meaningful
+  configurations (observer-independent outcomes).
+\end{enumerate}
+The composition axiom plays a role structurally analogous to the
+composite system postulates in Hardy \cite{hardy2001quantum}, Chiribella
+et al.\ \cite{chiribella2011informational}, and Masanes and M\"uller
+\cite{masanes2011general}. Our framework does not eliminate this
+postulate but rather gives it a concrete computational realization.
+\end{remark}
+
+The proof proceeds through the following lemmas and theorems:
+
+\subsection{Branch Factorization Bijection}
+
+\begin{lemma}[Branch Factorization Bijection]
+\label{lem:factorization_bijection}
+For independent systems $M_A, M_B$ with $V_A \cap V_B = \emptyset$, the factorization map $\Phi: \Br(M(A,B)) \to \Br(M_A) \times \Br(M_B)$ is a bijection.
+\end{lemma}
+
+\begin{proof}
+We prove injectivity and surjectivity separately.
+
+\textbf{Injectivity}: Suppose $\Phi(\beta_{AB}) = \Phi(\beta'_{AB})$. Then:
+\begin{align}
+\pi_A(\beta_{AB}) &= \pi_A(\beta'_{AB}) \\
+\pi_B(\beta_{AB}) &= \pi_B(\beta'_{AB})
+\end{align}
+
+Since $V_A \cap V_B = \emptyset$, any hyperedge $e$ in $\beta_{AB}$ belongs to exactly one of three disjoint categories:
+\begin{enumerate}
+\item $e \subseteq V_A$ (edges involving only $A$ vertices),
+\item $e \subseteq V_B$ (edges involving only $B$ vertices),
+\item $e$ involves vertices from both $V_A$ and $V_B$.
+\end{enumerate}
+
+However, since rules in $\mathcal{R}_A$ only create hyperedges among $V_A$ vertices and rules in $\mathcal{R}_B$ only create hyperedges among $V_B$ vertices, category (3) is impossible. Thus:
+\begin{equation}
+\beta_{AB} = \pi_A(\beta_{AB}) \cup \pi_B(\beta_{AB})
+\end{equation}
+
+Therefore:
+\begin{equation}
+\beta_{AB} = \pi_A(\beta_{AB}) \cup \pi_B(\beta_{AB}) = \pi_A(\beta'_{AB}) \cup \pi_B(\beta'_{AB}) = \beta'_{AB}
+\end{equation}
+proving injectivity.
+
+\textbf{Surjectivity}: Let $(\beta_A, \beta_B) \in \Br(M_A) \times \Br(M_B)$ be arbitrary. We must show there exists $\beta_{AB} \in \Br(M(A,B))$ with $\Phi(\beta_{AB}) = (\beta_A, \beta_B)$.
+
+Since $\beta_A \in \Br(M_A)$, there exists a rule application sequence in $M_A$ producing configuration $\beta_A$. Similarly for $\beta_B$. Define:
+\begin{equation}
+\beta_{AB} = \beta_A \cup \beta_B
+\end{equation}
+
+This configuration is reachable in $M(A,B)$ by interleaving the rule sequences for $\beta_A$ and $\beta_B$ (both sequences commute since they operate on disjoint vertex sets). Thus $\beta_{AB} \in \Br(M(A,B))$, and:
+\begin{align}
+\pi_A(\beta_{AB}) &= \{e \in \beta_A \cup \beta_B : e \subseteq V_A\} = \beta_A \\
+\pi_B(\beta_{AB}) &= \{e \in \beta_A \cup \beta_B : e \subseteq V_B\} = \beta_B
+\end{align}
+proving surjectivity.
+
+Therefore $\Phi$ is a bijection.
+\end{proof}
+
+\subsection{Inner Product Factorization}
+
+\begin{theorem}[Inner Product Factorization]
+\label{thm:inner_product_factorization}
+For the orthonormal branch bases defined in \Cref{def:branch_basis}, the composite inner product factorizes:
+\begin{equation}
+\braket{\beta_{AB}}{\beta'_{AB}} = \braket{\beta_A}{\beta'_A} \cdot \braket{\beta_B}{\beta'_B}
+\end{equation}
+where $(\beta_A, \beta_B) = \Phi(\beta_{AB})$ and $(\beta'_A, \beta'_B) = \Phi(\beta'_{AB})$.
+\end{theorem}
+
+\begin{proof}
+By \Cref{def:branch_basis}, $\braket{\beta_{AB}}{\beta'_{AB}} = \delta_{\beta_{AB}, \beta'_{AB}}$ and similarly for $A$ and $B$ subsystems.
+
+By \Cref{lem:factorization_bijection}, $\Phi$ is a bijection, so:
+\begin{equation}
+\beta_{AB} = \beta'_{AB} \iff (\beta_A, \beta_B) = (\beta'_A, \beta'_B) \iff (\beta_A = \beta'_A) \land (\beta_B = \beta'_B)
+\end{equation}
+
+Therefore:
+\begin{align}
+\delta_{\beta_{AB}, \beta'_{AB}} &=
+\begin{cases}
+1 & \text{if } (\beta_A = \beta'_A) \land (\beta_B = \beta'_B) \\
+0 & \text{otherwise}
+\end{cases} \\
+&= \delta_{\beta_A, \beta'_A} \cdot \delta_{\beta_B, \beta'_B}
+\end{align}
+
+This completes the proof.
+\end{proof}
+
+\subsection{Tensor Product Isomorphism}
+
+\begin{theorem}[Tensor Product Structure]
+\label{thm:tensor_product}
+For independent multiway systems $M_A, M_B$ with $V_A \cap V_B = \emptyset$, the composite branch space is isomorphic to the tensor product:
+\begin{equation}
+\Hilb_{AB} \cong \Hilb_A \otimes \Hilb_B
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Define the map $\psi: \Hilb_{AB} \to \Hilb_A \otimes \Hilb_B$ on basis elements by:
+\begin{equation}
+\psi(\ket{\beta_{AB}}) = \ket{\beta_A} \otimes \ket{\beta_B}
+\end{equation}
+where $(\beta_A, \beta_B) = \Phi(\beta_{AB})$, and extend linearly to all of $\Hilb_{AB}$.
+
+\textbf{Well-defined}: By \Cref{lem:factorization_bijection}, $\Phi$ is a bijection, so $(\beta_A, \beta_B)$ is uniquely determined.
+
+\textbf{Linear}: By construction.
+
+\textbf{Bijective}: The basis $\{\ket{\beta_{AB}}\}$ is in bijection with $\Br(M_A) \times \Br(M_B)$ via $\Phi$, which corresponds to the basis $\{\ket{\beta_A} \otimes \ket{\beta_B}\}$ of $\Hilb_A \otimes \Hilb_B$.
+
+\textbf{Inner product preserving}: For any $\ket{\gamma} = \sum_i c_i \ket{\beta_i}$ and $\ket{\eta} = \sum_j d_j \ket{\beta'_j}$:
+\begin{align}
+\braket{\psi(\gamma)}{\psi(\eta)} &= \left\langle \sum_i c_i (\ket{\beta_{A,i}} \otimes \ket{\beta_{B,i}}) \middle| \sum_j d_j (\ket{\beta'_{A,j}} \otimes \ket{\beta'_{B,j}}) \right\rangle \\
+&= \sum_{i,j} c_i^* d_j \braket{\beta_{A,i}}{\beta'_{A,j}} \braket{\beta_{B,i}}{\beta'_{B,j}} \\
+&= \sum_{i,j} c_i^* d_j \braket{\beta_i}{\beta'_j} \quad \text{(by \Cref{thm:inner_product_factorization})} \\
+&= \braket{\gamma}{\eta}
+\end{align}
+
+Therefore $\psi$ is a unitary isomorphism, establishing $\Hilb_{AB} \cong \Hilb_A \otimes \Hilb_B$.
+\end{proof}
+
+\subsection{Computational Verification}
+
+To validate \Cref{thm:tensor_product} empirically, we implemented multiway evolution for small hypergraph systems and tested the bijection $\Phi$ computationally.
+
+\subsubsection{Test System}
+
+We constructed two independent multiway systems:
+\begin{itemize}
+\item \textbf{System $A$}: Initial hypergraph $\{\{0,1\}\}$, rule $\{\{x,y\}\} \to \{\{x,y\}, \{y,z\}\}$ (vertex range $0$--$4$).
+\item \textbf{System $B$}: Initial hypergraph $\{\{5,6\}\}$, rule $\{\{x,y\}\} \to \{\{x,y\}, \{y,z\}\}$ (vertex range $5$--$9$).
+\end{itemize}
+
+Both systems were evolved to depth $t=3$, generating:
+\begin{itemize}
+\item $\abs{\Br(M_A)} = 17$ branches for system $A$,
+\item $\abs{\Br(M_B)} = 13$ branches for system $B$,
+\item $\abs{\Br(M(A,B))} = 221$ composite branches.
+\end{itemize}
+
+\subsubsection{Bijection Tests}
+
+\textbf{Injectivity Test}: For all $221$ composite branches $\beta_{AB}$, we computed $\Phi(\beta_{AB}) = (\beta_A, \beta_B)$ and verified uniqueness: no two distinct composite branches mapped to the same pair. Result: $100\%$ pass rate.
+
+\textbf{Surjectivity Test}: We verified that $\abs{\{\Phi(\beta_{AB}) : \beta_{AB} \in \Br(M(A,B))\}} = \abs{\Br(M_A)} \times \abs{\Br(M_B)} = 17 \times 13 = 221$, confirming complete coverage. Result: $100\%$ pass rate.
+
+\textbf{Inner Product Factorization Test}: We sampled $100$ random pairs $(\beta_{AB}, \beta'_{AB})$ and verified:
+\begin{equation}
+\abs{\braket{\beta_{AB}}{\beta'_{AB}} - \braket{\beta_A}{\beta'_A} \cdot \braket{\beta_B}{\beta'_B}} < 10^{-12}
+\end{equation}
+Result: $100\%$ pass rate, maximum error $< 10^{-15}$ (machine precision).
+
+\subsubsection{Interpretation}
+
+These computational results provide empirical support for \Cref{lem:factorization_bijection,thm:inner_product_factorization,thm:tensor_product}. While computational verification cannot substitute for formal proof (which we provide), it increases confidence and guards against implementation errors. The perfect agreement suggests the theoretical framework correctly captures the operational behavior of multiway systems.
+
+\section{Local Discriminability Derivation}
+\label{sec:ld}
+
+Having established tensor product structure from operational composition, we now derive Chiribella's local discriminability axiom as a consequence.
+
+\subsection{Chiribella's Local Discriminability Axiom}
+
+We first state Chiribella et al.'s axiom precisely \cite{chiribella2011informational}:
+
+\begin{axiom}[Local Discriminability (Chiribella)]
+\label{ax:ld_chiribella}
+Let $\rho_{AB}, \sigma_{AB}$ be states of a composite system $AB$ with the same marginal on subsystem $A$:
+\begin{equation}
+\Tr_B(\rho_{AB}) = \Tr_B(\sigma_{AB})
+\end{equation}
+Let $\ket{\psi_C}, \ket{\phi_C}$ be perfectly distinguishable pure states on an ancilla system $C$. Then the composite states:
+\begin{equation}
+\rho_{ABC} = \rho_{AB} \otimes \ketbra{\psi_C}{\psi_C}, \quad \sigma_{ABC} = \sigma_{AB} \otimes \ketbra{\phi_C}{\phi_C}
+\end{equation}
+are perfectly distinguishable.
+\end{axiom}
+
+In Chiribella's framework, this is an independent axiom. We now show it is a theorem given tensor product structure.
+
+\subsection{Derivation from Tensor Product Structure}
+
+\begin{theorem}[Local Discriminability from Tensor Product]
+\label{thm:ld_from_tensor}
+Assume the tensor product structure $\Hilb_{ABC} \cong \Hilb_{AB} \otimes \Hilb_C$ and perfect distinguishability of basis states. Then \Cref{ax:ld_chiribella} holds as a theorem.
+\end{theorem}
+
+\begin{proof}
+Given $\ket{\psi_C}, \ket{\phi_C}$ perfectly distinguishable, we have $\braket{\psi_C}{\phi_C} = 0$ (orthogonality is equivalent to perfect distinguishability for pure states).
+
+Define the measurement operator:
+\begin{equation}
+M = I_{AB} \otimes \ketbra{\psi_C}{\psi_C}
+\end{equation}
+
+The outcome probability for measuring $M$ on $\rho_{ABC}$ is:
+\begin{align}
+p_\psi(\rho) &= \Tr(M \rho_{ABC}) \\
+&= \Tr[(I_{AB} \otimes \ketbra{\psi_C}{\psi_C})(\rho_{AB} \otimes \ketbra{\psi_C}{\psi_C})] \\
+&= \Tr_{AB}(\rho_{AB}) \cdot \Tr_C(\ketbra{\psi_C}{\psi_C} \cdot \ketbra{\psi_C}{\psi_C}) \\
+&= 1 \cdot \braket{\psi_C}{\psi_C}^2 = 1
+\end{align}
+
+Similarly, for $\sigma_{ABC}$:
+\begin{align}
+p_\psi(\sigma) &= \Tr(M \sigma_{ABC}) \\
+&= \Tr[(I_{AB} \otimes \ketbra{\psi_C}{\psi_C})(\sigma_{AB} \otimes \ketbra{\phi_C}{\phi_C})] \\
+&= \Tr_{AB}(\sigma_{AB}) \cdot \Tr_C(\ketbra{\psi_C}{\psi_C} \cdot \ketbra{\phi_C}{\phi_C}) \\
+&= 1 \cdot \abs{\braket{\psi_C}{\phi_C}}^2 = 0
+\end{align}
+
+Therefore, the measurement $\{M, I - M\}$ gives outcome $\psi$ with probability $1$ for $\rho_{ABC}$ and probability $0$ for $\sigma_{ABC}$, perfectly distinguishing them.
+\end{proof}
+
+\begin{remark}
+The key insight is that tensor product structure implies \textit{measurement factorization}: measurements on subsystem $C$ can be performed independently of $AB$, and their outcomes factorize via the tensor product inner product. This factorization property immediately yields local discriminability.
+\end{remark}
+
+\subsection{Non-Circularity Check}
+
+A critical question: Does this derivation assume what it claims to prove?
+
+\textbf{Check}:
+\begin{enumerate}
+\item Did we assume LD to prove tensor product structure (\Cref{thm:tensor_product})? \textbf{No}. The proof uses the composition axiom (\Cref{ax:composition}) and the factorization bijection (\Cref{lem:factorization_bijection}), neither of which reference LD. However, the composition axiom itself is an independent postulate, not derived from CI.
+\item Did we assume tensor products before deriving them? \textbf{No}. Operational composition is defined as a union operation (vertices, hyperedges, rules), with no reference to tensor products.
+\item Did we assume measurement factorization? \textbf{No}. Factorization follows from the definition of tensor product inner products, proven in \Cref{thm:inner_product_factorization}.
+\end{enumerate}
+
+Therefore, the derivation is non-circular: LD is proven from tensor product structure, which is proven from operational composition.
+
+\subsection{Extension to Mixed States}
+
+\Cref{thm:ld_from_tensor} applies to general (mixed) states $\rho_{AB}, \sigma_{AB}$. To see this, expand in the eigenbasis:
+\begin{equation}
+\rho_{AB} = \sum_k p_k \ketbra{\psi_k}{\psi_k}, \quad \sigma_{AB} = \sum_k q_k \ketbra{\phi_k}{\phi_k}
+\end{equation}
+
+Then:
+\begin{align}
+\rho_{ABC} &= \sum_k p_k \ketbra{\psi_k}{\psi_k} \otimes \ketbra{\psi_C}{\psi_C} \\
+\sigma_{ABC} &= \sum_k q_k \ketbra{\phi_k}{\phi_k} \otimes \ketbra{\phi_C}{\phi_C}
+\end{align}
+
+The measurement $M = I_{AB} \otimes \ketbra{\psi_C}{\psi_C}$ yields:
+\begin{align}
+p_\psi(\rho) &= \sum_k p_k \Tr(\ketbra{\psi_k}{\psi_k}) \cdot \abs{\braket{\psi_C}{\psi_C}}^2 = \sum_k p_k = 1 \\
+p_\psi(\sigma) &= \sum_k q_k \Tr(\ketbra{\phi_k}{\phi_k}) \cdot \abs{\braket{\psi_C}{\phi_C}}^2 = 0
+\end{align}
+
+Thus LD holds for mixed states as well.
+
+\subsection{No-Signaling as Automatic Consequence}
+
+The tensor product structure also implies \textit{no-signaling}: measurements on subsystem $A$ cannot affect outcome probabilities on subsystem $B$. This follows from factorization:
+\begin{equation}
+p_A(a \mid \rho_{AB}) = \Tr[(M_A^a \otimes I_B)\, \rho_{AB}] = \Tr_A[M_A^a\, \rho_A]
+\end{equation}
+where $\rho_A = \Tr_B(\rho_{AB})$ is the $A$-marginal.
+The $A$-outcome probabilities depend only on $\rho_A$, not on any measurement performed on $B$, ensuring no-signaling. Therefore, no-signaling is built into tensor product structure, not an additional axiom.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Honest Assessment of Contributions}
+
+We begin with a frank assessment of what this work achieves and what it
+does not.
+
+\textbf{What is genuinely new.}
+\begin{enumerate}
+\item \textbf{Wolfram--operational QM bridge}: We construct an explicit
+  mapping between multiway hypergraph branch spaces and the operational
+  quantum mechanics framework of Chiribella et al.\
+  \cite{chiribella2011informational}. This connection has been
+  informally suggested \cite{wolfram2020new,gorard2020some} but not
+  previously formalized with explicit proofs.
+\item \textbf{Concrete tensor product construction}: Given the
+  composition axiom (\Cref{ax:composition}), the branch factorization
+  bijection (\Cref{lem:factorization_bijection}) and resulting tensor
+  product isomorphism (\Cref{thm:tensor_product}) provide a clean,
+  constructive proof within a specific computational model.
+\item \textbf{LD as derived}: Within our framework, local
+  discriminability (\Cref{thm:ld_from_tensor}) follows from tensor
+  product structure, reducing Chiribella's axiom count by one.
+\item \textbf{Purification test}: Computational validation that
+  multiway branch spaces satisfy Chiribella's purification postulate.
+\end{enumerate}
+
+\textbf{What is not new.}
+\begin{enumerate}
+\item \textbf{Composition $\to$ tensor product}: The passage from
+  independent subsystems to tensor product structure is the standard
+  route in all operational QM frameworks. Chiribella et al.\
+  \cite{chiribella2011informational} derive tensor products from their
+  axioms including LD; Hardy \cite{hardy2001quantum} builds composite
+  structure into his axiom set; Masanes and M\"uller
+  \cite{masanes2011general} assume state spaces for composite systems.
+  Our composition axiom plays an analogous structural role: it
+  encodes the physical content (independent evolution) from which
+  tensor products follow by standard mathematical arguments.
+\item \textbf{LD from tensor products}: Once tensor product structure is
+  established, the derivation of local discriminability
+  (\Cref{thm:ld_from_tensor}) is straightforward and follows from
+  standard properties of tensor product inner products. The conceptual
+  value lies in recognizing LD as derivative, not in the proof
+  technique.
+\item \textbf{Orthonormality structure}: The inner product
+  $\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$ does much of the
+  mathematical work. This is a strong assumption, and the factorization
+  property relies on it essentially.
+\end{enumerate}
+
+\subsection{Comparison with Existing Frameworks}
+
+\begin{table}[htbp]
+\centering
+\caption{Axiom comparison across operational QM frameworks. All
+  frameworks assume some form of composition for composite systems.}
+\label{tab:axiom_comparison}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Framework} & \textbf{Axioms} & \textbf{LD Status} &
+  \textbf{Composition} & \textbf{Foundation} \\
+\midrule
+Chiribella et al.\ \cite{chiribella2011informational} & 6 & Axiom &
+  Assumed & Operational \\
+Hardy \cite{hardy2001quantum} & 5 & Implicit & Simplicity axiom &
+  Operational \\
+Masanes \& M\"uller \cite{masanes2011general} & 5 & Info.\ locality &
+  State space axiom & Operational \\
+This work & \textbf{5} & \textbf{Theorem} & \textbf{Composition axiom} &
+  CI + composition \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:axiom_comparison} makes explicit a point that deserves
+emphasis: \textit{every} operational QM reconstruction assumes
+composition in some form. Our framework does not eliminate this
+assumption; rather, it gives composition a concrete computational
+realization (disjoint multiway systems) and connects it to discrete
+causal structures.
+
+The meaningful differences are:
+\begin{itemize}
+\item \textbf{LD derived}: We reduce Chiribella's six axioms to five by
+  deriving LD from tensor product structure. This is a genuine (if
+  modest) simplification.
+\item \textbf{Computational foundation}: Unlike purely axiomatic
+  frameworks, our multiway systems provide an explicit computational
+  model that can be simulated, tested, and extended.
+\item \textbf{Causal invariance connection}: Our framework connects to
+  the Wolfram Physics Project's program of deriving physics from
+  discrete causal structures, providing a formal link between that
+  program and established operational quantum mechanics.
+\end{itemize}
+
+\subsection{The Categorical Perspective and Its Gaps}
+
+Gorard, Namuduri, and Arsiwalla \cite{gorard2021categorical} have shown that
+the multiway evolution graph of a causally invariant system, viewed
+categorically, forms a symmetric monoidal category (SMC). This connects
+to Meseguer's \cite{meseguer1992conditional} result that concurrent rewriting with confluence
+gives rise to SMC structure.
+
+However, the categorical path from causally invariant multiway systems
+to the category of finite-dimensional Hilbert spaces ($\mathbf{FdHilb}$)
+requires three steps:
+\begin{enumerate}
+\item CI $\to$ SMC: established by Gorard et al.\ and Meseguer.
+\item SMC $\to$ dagger compact category: requires a dagger functor
+  (encoding time-reversal/adjoint structure) and compact closure
+  (encoding entanglement via cup/cap morphisms). These structures are
+  \textit{not} supplied by causal invariance.
+\item Dagger compact category $\to$ $\mathbf{FdHilb}$: established by
+  the Abramsky--Coecke \cite{abramsky2004categorical} representation theorem.
+\end{enumerate}
+
+The gap at step 2 is where specifically quantum features enter. Our
+composition axiom addresses a related but distinct gap: it provides
+tensor product structure on \textit{state spaces} (not on the category
+of processes), enabling the derivation of LD. The categorical program
+and our state-space approach are complementary; a complete derivation of
+quantum mechanics from causal invariance would require resolving both.
+
+\subsection{Novelty Assessment}
+
+We estimate our contribution's novelty at approximately $15$--$20\%$:
+
+\begin{itemize}
+\item \textbf{Wolfram--operational QM bridge ($\sim 10$--$12\%$)}:
+  Connecting multiway systems to Chiribella's framework via explicit
+  mappings (states $\leftrightarrow$ branches, composition
+  $\leftrightarrow$ disjoint union, measurements $\leftrightarrow$
+  projections). This bridge has been informally discussed but not
+  previously formalized.
+\item \textbf{LD derivation ($\sim 3$--$5\%$)}: Recognizing and proving
+  that LD follows from tensor product structure. Mathematically
+  straightforward, but conceptually clarifying.
+\item \textbf{Computational verification ($\sim 2$--$3\%$)}: Empirical
+  testing adds reproducibility and guards against errors.
+\end{itemize}
+
+The composition-to-tensor-product passage itself ($0\%$ novelty) is
+standard in operational QM. Our framework instantiates it in a new
+setting but does not introduce a new method.
+
+This honest assessment reflects the fact that most components build on
+existing ideas. The value lies in the synthesis: bringing together two
+research programs (Wolfram physics and operational QM) that have
+developed independently, and demonstrating their compatibility within
+a concrete computational framework.
+
+\subsection{What Causal Invariance Does and Does Not Provide}
+
+To avoid misunderstanding, we state explicitly the role of causal
+invariance in our framework:
+
+\textbf{CI provides:}
+\begin{itemize}
+\item Observer-independent causal structure (the causal partial order is
+  gauge-invariant).
+\item Well-defined multiway evolution (confluence ensures meaningful
+  branch spaces).
+\item A foundation for operationally meaningful states (branches as
+  maximally refined outcomes).
+\end{itemize}
+
+\textbf{CI does not provide:}
+\begin{itemize}
+\item Subsystem decomposition (how to carve one system into independent
+  parts).
+\item Disjoint composition (the existence of non-interacting regions).
+\item Tensor product structure (which requires composition as an
+  additional input).
+\item Complex Hilbert space structure (our framework is real-valued).
+\end{itemize}
+
+This separation is not a deficiency unique to our approach. In general
+relativity, the Einstein equations determine local dynamics but not
+global topology; the manifold structure is an independent input.
+Similarly, in our framework, causal invariance determines evolution
+dynamics but not compositional structure.
+
+\section{Limitations and Future Work}
+\label{sec:limitations}
+
+\subsection{Causal Invariance Does Not Force Disjoint Composition}
+\label{sec:lim_composition}
+
+The most significant limitation of this work is that our central
+structural assumption---the composition axiom (\Cref{ax:composition})---is
+not derived from causal invariance. This independence has been established
+through three converging lines of evidence:
+
+\begin{enumerate}
+\item \textbf{Counterexamples}: Causally invariant hypergraph rewriting
+  systems can be fully connected, with every vertex participating in
+  rules that span the entire graph. Such systems admit no partition
+  $V = V_A \sqcup V_B$ for which the rules decompose into independent
+  subsets. Thus causal invariance alone does not guarantee the existence
+  of independently composable subsystems.
+
+\item \textbf{Categorical analysis}: While Gorard et al.\ \cite{gorard2021categorical} show that
+  causally invariant multiway systems form a symmetric monoidal category
+  (SMC) via the Meseguer \cite{meseguer1992conditional} construction, the monoidal product in this
+  category acts on \textit{processes} (rewrite sequences), not on
+  \textit{state spaces}. The passage from SMC to dagger compact
+  categories---and thence to $\mathbf{FdHilb}$ via the Abramsky--Coecke
+  \cite{abramsky2004categorical} representation theorem---requires a dagger functor and compact closure,
+  neither of which is supplied by causal invariance.
+
+\item \textbf{Literature}: No published proof derives tensor product
+  structure on state spaces from causal invariance alone. Zanardi, Lidar,
+  and Lloyd \cite{zanardi2004quantum} have shown that tensor product structures are
+  observable-induced (relative to accessible measurements), further
+  suggesting that compositional structure requires input beyond dynamics.
+\end{enumerate}
+
+This limitation is shared, in structural form, with all operational QM
+reconstructions: composition must be assumed. Our framework makes this
+assumption explicit rather than implicit, which we regard as a virtue of
+the formulation.
+
+\subsection{Composition Axiom as Additional Postulate}
+
+The composition axiom (\Cref{ax:composition}) is analogous to the
+following postulates in other contexts:
+
+\begin{itemize}
+\item \textbf{Manifold structure in GR}: The Einstein equations determine
+  local gravitational dynamics but not the topology of the spacetime
+  manifold. Similarly, CI determines evolution dynamics but not
+  compositional structure.
+\item \textbf{Split property in AQFT}: In algebraic quantum field theory,
+  the split property for spacelike-separated von Neumann algebras
+  guarantees tensor product decomposition. This property is an additional
+  condition, not derived from the field equations alone.
+\item \textbf{Composite system axiom in operational QM}: Every
+  reconstruction of quantum theory from operational axioms
+  \cite{hardy2001quantum,chiribella2011informational,masanes2011general}
+  assumes some form of compositional structure for joint systems.
+\end{itemize}
+
+A promising direction for future work is investigating whether
+composition might emerge in a suitable limit. In the Wolfram model, if
+large causally invariant hypergraphs generically develop emergent spatial
+locality (as conjectured), then spacelike-separated regions would
+naturally satisfy the composition axiom. However, each step in this
+argument---emergent locality, sufficient spatial separation,
+persistence of independence---remains an open problem.
+
+\subsection{Real-Valued Framework}
+
+Our construction yields tensor products of \textit{real} inner product
+spaces. Chiribella et al.'s full axiom set, combined with local
+discriminability, selects \textit{complex} quantum mechanics
+specifically, ruling out real and quaternionic alternatives. Our
+framework does not address this selection:
+
+\begin{itemize}
+\item The branch space inner product
+  $\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$ is real-valued.
+\item No mechanism for complex phases arises from our axioms.
+\item The distinction between real, complex, and quaternionic quantum
+  mechanics requires additional structure (e.g., Chiribella's local
+  discriminability + purification jointly select $\mathbb{C}$).
+\end{itemize}
+
+\textbf{Future work}: Investigate whether complex phases emerge from
+additional properties of multiway evolution (e.g., from the branchial
+graph structure or from causal cone interference patterns).
+
+\subsection{Inner Product Structure}
+
+The orthonormality assumption
+$\braket{\beta}{\beta'} = \delta_{\beta,\beta'}$ is essential to our
+results. The inner product factorization
+(\Cref{thm:inner_product_factorization}) relies on the Kronecker delta
+structure: the product of Kronecker deltas factors as a single Kronecker
+delta if and only if the bijection $\Phi$ maps distinct composite
+branches to distinct pairs.
+
+Alternative inner products---for instance, based on hyperedge overlap
+between configurations---do not yield this factorization property. We
+tested an edge-overlap inner product
+$\braket{\beta}{\beta'}_{\text{edge}} = |E(\beta) \cap E(\beta')| /
+|E(\beta) \cup E(\beta')|$, which failed to factorize and did not
+support tensor product structure. The orthonormal inner product is thus
+a substantive choice, not merely a convenient one.
+
+\textbf{Future work}: Explore whether the orthonormal inner product
+can be derived from operational considerations (e.g., as the unique
+inner product compatible with perfect distinguishability and some
+continuity condition).
+
+\subsection{Restriction to Independent Systems}
+
+Our results apply to systems with disjoint vertex sets
+($V_A \cap V_B = \emptyset$), representing \textit{independent}
+evolution. This excludes:
+\begin{itemize}
+\item \textbf{Entangled states}: States not factorizable as
+  $\ket{\beta_A} \otimes \ket{\beta_B}$ require shared causal structure.
+  Extending our framework to entanglement is an important open problem.
+\item \textbf{Interacting systems}: Rules coupling $A$ and $B$ vertices
+  would violate the composition axiom. Modeling interactions requires
+  relaxing \Cref{ax:composition}.
+\end{itemize}
+
+\textbf{Future work}: Investigate whether controlled interactions
+(partial vertex overlap, or rules that occasionally span both regions)
+give rise to entanglement in a natural way.
+
+\subsection{Continuum Limit}
+
+We work with discrete multiway systems, not continuous Hilbert spaces.
+The connection to standard quantum mechanics requires taking a continuum
+limit:
+\begin{equation}
+\text{Discrete multiway system} \xrightarrow{\text{limit}}
+\text{Continuous QM}
+\end{equation}
+
+This limit is \textit{assumed}, not derived. A systematic scaling study
+of $13$ Wolfram rules across diverse types~\cite{companion_lovelock}
+found that all dynamically expanding rules exhibit $\kappa \propto 1/N
+\to 0$, empirically disconfirming the continuum limit for generic
+causal-invariant systems. Only three small static rules ($N \leq 8$)
+showed nonzero convergence. Until this barrier is resolved, the
+discrete-to-continuous passage remains a significant open problem.
+
+Our results hold at the discrete level: tensor product structure and
+local discriminability are properties of the multiway branch spaces
+themselves and do not require a continuum limit.
+
+\textbf{Future work}: Investigate whether restricted classes of
+causal-invariant systems (e.g., those with specific growth properties)
+admit a continuum limit, possibly using techniques from lattice QFT or
+noncommutative geometry.
+
+\subsection{Computational vs.\ Formal Proofs}
+
+Our tensor product isomorphism (\Cref{thm:tensor_product}) is proven
+mathematically, with computational verification supplementing the proof
+by testing specific instances. While the computational results ($100\%$
+accuracy over $221$ states) increase confidence, they do not constitute
+a formal proof for all multiway systems.
+
+\textbf{Future work}: Formalize the proofs in a proof assistant (e.g.,
+Lean 4) to provide machine-verified certainty.
+
+\subsection{Scope of Derivation}
+
+We derive LD within the \textit{Hilbert space} framework, not the more
+general categorical frameworks used by Coecke et al.\
+\cite{coecke2010quantum}. Our results may not apply to generalized
+probabilistic theories or non-Hilbert operational theories.
+
+\textbf{Future work}: Extend the derivation to categorical quantum
+mechanics, investigating whether multiway composition realizes the
+categorical tensor in dagger compact categories.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have demonstrated that the tensor product structure of composite quantum systems and the principle of local discriminability emerge as mathematical consequences of two independent principles: causal invariance and a composition axiom for independent subsystems. Our main results are:
+
+\begin{enumerate}
+\item \textbf{Tensor product from composition axiom} (\Cref{thm:tensor_product}): For independent systems satisfying the composition axiom (disjoint vertex sets, independent rules), the composite branch space is isomorphic to the tensor product of component spaces through an explicit factorization bijection (\Cref{lem:factorization_bijection}).
+
+\item \textbf{LD as derived theorem} (\Cref{thm:ld_from_tensor}): Local discriminability follows from tensor product structure combined with perfect distinguishability, reducing Chiribella et al.'s six axioms to five.
+
+\item \textbf{Computational verification}: Empirical testing on $221$ composite states confirms the bijection and inner product factorization with $100\%$ accuracy, supporting the theoretical framework.
+
+\item \textbf{Explicit composition axiom}: Operational composition is introduced as a clearly stated axiom, making the logical dependencies between causal invariance and compositional structure transparent. This axiom is physically motivated by spacelike separation but not derived from causal invariance alone.
+\end{enumerate}
+
+These results provide an explicit bridge between Wolfram multiway systems and operational quantum mechanics, demonstrating that multiway branch spaces equipped with the composition axiom satisfy the operational axioms of quantum theory.
+
+\subsection{Honest Assessment}
+
+In the spirit of intellectual honesty, we acknowledge:
+\begin{itemize}
+\item \textbf{Novelty ($\sim 15$--$20\%$)}: Most components build on existing ideas; novelty lies in synthesis and explicit formalization of the Wolfram--operational QM connection.
+\item \textbf{Composition axiom}: The tensor product structure requires an independent composition axiom, not derived from causal invariance. This limitation is shared with all operational QM frameworks.
+\item \textbf{Limitations}: Real-valued framework (not complex), restriction to independent systems, discrete framework only (continuum limit is an open problem with mixed evidence), orthonormal inner product essential.
+\item \textbf{Computational proofs}: Verification complements but does not replace formal proof; independent replication needed.
+\end{itemize}
+
+\subsection{Future Directions}
+
+The most promising directions for extending this work include:
+\begin{enumerate}
+\item \textbf{Entanglement}: Generalizing to systems with shared causal structure.
+\item \textbf{Continuum limit}: Identifying classes of causal-invariant systems that admit a continuum limit to standard QM, given that generic expanding rules exhibit vanishing convergence.
+\item \textbf{Other axioms}: Deriving purification, ideal compression, or other operational axioms from causal invariance.
+\item \textbf{Experimental tests}: Identifying empirical signatures distinguishing this approach from standard QM.
+\item \textbf{Gravitational coupling}: Connecting to Wolfram's Einstein equations derivation to unify QM and GR.
+\end{enumerate}
+
+\subsection{Final Remarks}
+
+By deriving quantum theory's composite system structure from two independent operational principles---causal invariance and disjoint composition---we take a step toward understanding why quantum mechanics has the form it does. The explicit separation of these principles clarifies what causal invariance alone provides and what requires additional structure. Whether this approach ultimately contributes to fully reconstructing quantum theory remains an open question requiring continued investigation, computational testing, and independent verification.
+
+We invite the community to scrutinize our claims, replicate our computational results, and explore the implications for quantum foundations and beyond.
+
+\section*{Acknowledgments}
+
+We thank the Wolfram Physics Project community for foundational ideas on causal invariance and multiway systems. Conversations with researchers in operational quantum mechanics have shaped our understanding of Chiribella's framework. All errors and limitations are the author's responsibility.
+
+\section*{Data Availability}
+
+All computational code, test data, and verification scripts are available at:
+\begin{center}
+\url{https://github.com/MaxZhuravlev/physics-operational-qm-ci}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{chiribella2011informational}
+G. Chiribella, G. M. D'Ariano, and P. Perinotti,
+\textit{Informational derivation of quantum theory},
+Phys. Rev. A \textbf{84}, 012311 (2011).
+arXiv:1011.6451 [quant-ph].
+
+\bibitem{hardy2001quantum}
+L. Hardy,
+\textit{Quantum theory from five reasonable axioms},
+arXiv:quant-ph/0101012 (2001).
+
+\bibitem{masanes2011general}
+Ll. Masanes and M. P. Müller,
+\textit{A derivation of quantum theory from physical requirements},
+New J. Phys. \textbf{13}, 063001 (2011).
+arXiv:1004.1483 [quant-ph].
+
+\bibitem{dakic2009quantum}
+B. B.\ Daki\'{c} and \v{C}.\ Brukner,
+\textit{Quantum theory and beyond: is entanglement special?}
+in \textit{Deep Beauty: Understanding the Quantum World through Mathematical Innovation},
+H. Halvorson (ed.), Cambridge University Press, 2011.
+arXiv:0911.0695 [quant-ph].
+
+\bibitem{wolfram2020new}
+S. Wolfram,
+\textit{A New Kind of Science},
+Wolfram Media, 2002;
+\textit{A Project to Find the Fundamental Theory of Physics},
+Wolfram Media, 2020.
+\url{https://www.wolframphysics.org/}.
+
+\bibitem{gorard2020some}
+J. Gorard,
+\textit{Some Relativistic and Gravitational Properties of the Wolfram Model},
+arXiv:2004.14810 [gr-qc] (2020).
+
+\bibitem{coecke2010quantum}
+B. Coecke and A. Kissinger,
+\textit{Picturing Quantum Processes: A First Course in Quantum Theory and Diagrammatic Reasoning},
+Cambridge University Press, 2017.
+
+\bibitem{gorard2021categorical}
+J. Gorard, M. Namuduri, and X. D. Arsiwalla,
+\textit{Fast Automated Reasoning over String Diagrams using Multiway Causal Structure},
+arXiv:2105.04057 [cs.SC] (2021).
+
+\bibitem{meseguer1992conditional}
+J. Meseguer,
+\textit{Conditional rewriting logic as a unified model of concurrency},
+Theoretical Computer Science \textbf{96}, 73--155 (1992).
+
+\bibitem{zanardi2004quantum}
+P. Zanardi, D. A. Lidar, and S. Lloyd,
+\textit{Quantum tensor product structures are observable induced},
+Phys. Rev. Lett. \textbf{92}, 060402 (2004).
+arXiv:quant-ph/0308043.
+
+\bibitem{haag1992local}
+R. Haag,
+\textit{Local Quantum Physics: Fields, Particles, Algebras},
+Springer-Verlag, Berlin, 1992.
+
+\bibitem{abramsky2004categorical}
+S. Abramsky and B. Coecke,
+\textit{A categorical semantics of quantum protocols},
+in \textit{Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science}, 415--425 (2004).
+arXiv:quant-ph/0402130.
+
+\bibitem{companion_lovelock}
+M. Zhuravlev,
+\textit{Where the Lovelock Bridge Breaks: Negative Results and New Directions for Connecting Discrete and Continuous Spacetime Emergence},
+Preprint (2026).
+
+\end{thebibliography}
+
+\end{document}

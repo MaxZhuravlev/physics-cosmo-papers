@@ -1,0 +1,24 @@
+# This is a PUBLICATION-ONLY repository
+# No development artifacts belong here
+
+# AI agent infrastructure
+CLAUDE.md
+VALUE-TRACKS.yaml
+.cw/
+.gemini/
+.codex/
+.grok/
+.qwen/
+
+# Development files
+experience/
+session-exchange/
+archive/
+*.py
+*.sh
+*.json
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

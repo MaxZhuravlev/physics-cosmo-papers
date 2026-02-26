@@ -1,0 +1,104 @@
+\begin{thebibliography}{99}
+
+\bibitem{Tegmark1997}
+Max Tegmark.
+\newblock On the dimensionality of spacetime.
+\newblock {\em Classical and Quantum Gravity}, 14:L69--L75, 1997.
+\newblock arXiv:gr-qc/9702052.
+
+\bibitem{Greensite1993}
+Jeff Greensite.
+\newblock Dynamical origin of the {Lorentzian} signature of spacetime.
+\newblock {\em Physics Letters B}, 300:34--37, 1993.
+
+\bibitem{Sorkin1991}
+Rafael~D. Sorkin.
+\newblock Spacetime and causal sets.
+\newblock In {\em Relativity and Gravitation: Classical and Quantum}, pages
+  150--173. World Scientific, 1991.
+
+\bibitem{Bombelli1987}
+Luca Bombelli, Joohan Lee, David Meyer, and Rafael~D. Sorkin.
+\newblock Space-time as a causal set.
+\newblock {\em Physical Review Letters}, 59:521--524, 1987.
+
+\bibitem{Ruppeiner1979}
+George Ruppeiner.
+\newblock Thermodynamics: A {Riemannian} geometric model.
+\newblock {\em Physical Review A}, 20:1608--1613, 1979.
+
+\bibitem{Ruppeiner1995}
+George Ruppeiner.
+\newblock {Riemannian} geometry in thermodynamic fluctuation theory.
+\newblock {\em Reviews of Modern Physics}, 67:605--659, 1995.
+
+\bibitem{Janke2004}
+Wolfhard Janke, David~A. Johnston, and Ralph Kenna.
+\newblock Information geometry and phase transitions.
+\newblock {\em Physica A: Statistical Mechanics and its Applications},
+  336:181--186, 2004.
+
+\bibitem{BrodyRitz2003}
+Dorje~C. Brody and Adam Ritz.
+\newblock Information geometry of finite {Ising} models.
+\newblock {\em Journal of Geometry and Physics}, 47:207--220, 2003.
+
+\bibitem{Vanchurin2020}
+Vitaly Vanchurin.
+\newblock The world as a neural network.
+\newblock {\em Entropy}, 22(11):1210, 2020.
+
+\bibitem{Vanchurin2022}
+Vitaly Vanchurin.
+\newblock Towards a theory of quantum gravity from neural networks.
+\newblock {\em Entropy}, 24(1):7, 2022.
+
+\bibitem{Paper1}
+Max Zhuravlev.
+\newblock Where the {Lovelock} bridge breaks: Negative results and new
+  directions for connecting discrete and continuous spacetime emergence.
+\newblock {\em arXiv preprint}, 2026.
+\newblock Companion paper.
+
+\bibitem{Kato1995}
+Tosio Kato.
+\newblock {\em Perturbation Theory for Linear Operators}.
+\newblock Classics in Mathematics. Springer, 2nd edition, 1995.
+
+\bibitem{Bhatia1997}
+Rajendra Bhatia.
+\newblock {\em Matrix Analysis}, volume 169 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer, 1997.
+
+\bibitem{Dobrushin1985}
+R.~L. Dobrushin and S.~B. Shlosman.
+\newblock Constructive criterion for the uniqueness of {Gibbs} field.
+\newblock {\em Statistical Physics and Dynamical Systems}, pages 347--370,
+  1985.
+
+\bibitem{AmbjornLoll1998}
+Jan Ambj{\o}rn and Renate Loll.
+\newblock Non-perturbative {Lorentzian} quantum gravity, causality and topology
+  change.
+\newblock {\em Nuclear Physics B}, 536:407--434, 1998.
+\newblock arXiv:hep-th/9805108.
+
+\bibitem{AmbjornJurkiewiczLoll2004}
+Jan Ambj{\o}rn, Jerzy Jurkiewicz, and Renate Loll.
+\newblock Emergence of a {4D} world from causal quantum gravity.
+\newblock {\em Physical Review Letters}, 93:131301, 2004.
+\newblock arXiv:hep-th/0404156.
+
+\bibitem{Weinberg1995QTF1}
+Steven Weinberg.
+\newblock {\em The Quantum Theory of Fields, Volume I: Foundations}.
+\newblock Cambridge University Press, 1995.
+
+\bibitem{Greenberg2002}
+O.~W. Greenberg.
+\newblock {$CPT$ violation implies violation of {Lorentz} invariance}.
+\newblock {\em Physical Review Letters}, 89:231602, 2002.
+\newblock arXiv:hep-ph/0201258.
+
+\end{thebibliography}

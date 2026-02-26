@@ -1,0 +1,1121 @@
+\documentclass[11pt,a4paper]{article}
+
+% =========================================================================
+% PACKAGES
+% =========================================================================
+
+% Mathematics
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Formatting
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{enumitem}
+
+% Bibliography
+\usepackage[style=numeric,sorting=none,backend=bibtex]{biblatex}
+\addbibresource{references.bib}
+
+% =========================================================================
+% THEOREM ENVIRONMENTS
+% =========================================================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% =========================================================================
+% CUSTOM COMMANDS
+% =========================================================================
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Exp}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sn}{S^{n-1}}
+\newcommand{\SigmaQC}{\Sigma_{\mathrm{QC}}}
+\newcommand{\alphav}{\alpha(v)}
+\newcommand{\alphac}{\alpha_{\mathrm{c}}}
+\newcommand{\alphaopt}{\alpha_{\mathrm{opt}}}
+\newcommand{\lammin}{\lambda_{\min}}
+\newcommand{\lammax}{\lambda_{\max}}
+\newcommand{\lamc}{\lambda_{\mathrm{c}}}
+\newcommand{\Ocal}{\mathcal{O}}
+
+% =========================================================================
+% METADATA
+% =========================================================================
+
+\title{\textbf{The Anisotropic Quantum-Classical Boundary:} \\[0.3em]
+\large Directional Regime Parameter from Observer Information Geometry}
+
+\author{
+Max Zhuravlev\thanks{Independent researcher. Email: \texttt{max@vibecodium.ai}} \\
+\small \textit{Cosmological Unification Program}
+}
+
+\date{\today}
+
+% =========================================================================
+% DOCUMENT
+% =========================================================================
+
+\begin{document}
+
+\maketitle
+
+% =========================================================================
+% ABSTRACT
+% =========================================================================
+
+\begin{abstract}
+The quantum-classical boundary is standardly treated as a global property
+of an observer: either quantum or classical.  Motivated by the observation
+that Fisher information matrices of physical observers are generically
+anisotropic---different directions in parameter space carry very different
+amounts of Fisher information---we ask whether the quantum-classical
+distinction itself should be direction-dependent.
+In Vanchurin's neural network cosmology, the scalar regime parameter
+$\alpha \in [0,1)$ classifies observers as quantum or classical.
+We extend $\alpha$ to a direction-dependent function $\alpha(v)$ on
+the unit sphere in the observer's parameter space, defined through
+the spectral decomposition of the Fisher information matrix $F$,
+and derive all topological properties of the resulting boundary
+via eigenvalue analysis and differential geometry of the unit sphere.
+The key result: within Vanchurin's Type~II framework,
+a single observer can be simultaneously quantum
+along some Fisher eigendirections and classical along others,
+with the quantum-classical boundary forming a hypersurface
+$\SigmaQC \subset \Sn$ whose topology is determined by the
+Fisher eigenvalue spectrum.  When the Fisher matrix has $n_+$
+eigenvalues above and $n_-$ below a critical threshold,
+$\SigmaQC$ is homeomorphic to $S^{n_+-1} \times S^{n_--1}$.
+The directional alpha is uniform (direction-independent)
+if and only if the Fisher matrix is a scalar multiple of the
+identity---spectral purity.  These results have no analog
+in standard decoherence theory or existing information-geometric
+approaches to the quantum-classical transition.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Directional regime parameter, quantum-classical
+boundary, Fisher information, information geometry, observer anisotropy,
+Vanchurin cosmology
+
+\vspace{1em}
+\noindent\textbf{arXiv category:} quant-ph (cross-list: math-ph)
+
+% =========================================================================
+% 1. INTRODUCTION
+% =========================================================================
+
+\section{Introduction}
+\label{sec:intro}
+
+When does a physical observer behave quantum-mechanically, and when
+classically?  Standard decoherence theory~\cite{zurek2003decoherence,
+joos1985emergence, schlosshauer2005decoherence} answers this through
+environment-induced superselection: pointer states survive interaction
+with the environment, and the off-diagonal elements of the density
+matrix decay at rates determined by the system-environment coupling.
+The quantum-classical transition is treated as a property of the system
+\emph{as a whole}---the entire density matrix decoheres on a
+single timescale.
+
+In Vanchurin's neural network cosmology~\cite{vanchurin2020world,
+vanchurin2025covariant}, a different mechanism operates.  The Type~II
+framework defines a metric on the observer's parameter space:
+\begin{equation}
+\label{eq:type2metric}
+g_{\mu\nu} = M_{\mu\nu} + \beta F_{\mu\nu},
+\end{equation}
+where $M_{\mu\nu}$ is a mass tensor encoding structural inertia,
+$F_{\mu\nu}$ is the Fisher information matrix, and
+$\beta = \alpha^2/(1-\alpha)$ with $\alpha \in [0,1)$ the
+\emph{regime parameter}.  When $\alpha \approx 0$, the mass tensor
+dominates (classical regime); when $\alpha \approx 1$, Fisher
+information dominates (quantum regime).
+
+A companion paper~\cite{companion_amari} (Paper~\#3 of this program)
+verifies that persistent observers in causally invariant hypergraph
+substrates satisfy Good Regulator conditions, forcing natural gradient
+learning via Amari's uniqueness theorem~\cite{amari1998natural}.
+Under the ansatz $M = F^2$ for exponential family observers,
+Paper~\#3 derives a scalar $\alpha$ determined by the Fisher
+eigenvalue spectrum, with a quantum-classical threshold at
+condition number $\kappa(F) = 2$.
+
+The present work addresses a fundamental limitation of the scalar
+treatment.  The Fisher information matrix $F$ is generically
+\emph{anisotropic}: its eigenvalues $\lambda_1, \ldots, \lambda_n$
+are not all equal.  Different directions in parameter space carry
+different amounts of information.  This simple observation has a
+profound consequence: \emph{a single observer can be simultaneously
+quantum along some parameter directions and classical along others}.
+
+We formalize this through the \emph{directional regime parameter}
+$\alpha(v)$, a function on the unit sphere $\Sn$ in parameter space.
+The quantum-classical boundary is not a single threshold but a
+\emph{hypersurface} $\SigmaQC \subset \Sn$.  We prove that:
+\begin{enumerate}[noitemsep]
+\item $\alpha(v)$ depends only on direction, not on scale
+      (\Cref{thm:scale_invariance}).
+\item The range of $\alpha(v)$ is determined by the spread of Fisher
+      eigenvalues (\Cref{thm:alpha_range}).
+\item The boundary $\SigmaQC$ is a smooth submanifold whose topology
+      is completely determined by the eigenvalue spectrum
+      (\Cref{thm:sigma_topology}).
+\item $\alpha(v)$ is direction-independent if and only if the Fisher
+      matrix has spectral purity: $F = \lambda_0 I$
+      (\Cref{thm:uniform_alpha}).
+\end{enumerate}
+
+\textbf{Novelty.}  The concept of a direction-dependent regime
+parameter has no analog in:
+\begin{itemize}[noitemsep]
+\item Standard decoherence theory~\cite{zurek2003decoherence}, where
+      the system decoheres as a whole;
+\item Quantum Darwinism~\cite{zurek2009quantum}, where classicality
+      is measured by information redundancy without directional
+      structure;
+\item Information-geometric approaches to quantum mechanics
+      (Amari~\cite{amari1985differential, amari2016information},
+      Cencov~\cite{cencov1982statistical}), which study the geometry
+      of statistical manifolds but do not define a directional
+      quantum-classical boundary;
+\item The Free Energy Principle~\cite{friston2010free}, which
+      treats prediction error minimization without directional
+      decomposition of the information metric.
+\end{itemize}
+
+\textbf{Scope.}  This is a theoretical framework within Vanchurin's
+Type~II cosmology.  All results are conditional on the $M = F^2$
+ansatz for exponential family observers (see \Cref{sec:setup}).
+We do not claim experimental predictions; we identify what
+numerical experiments would distinguish this framework from
+standard decoherence (\Cref{sec:predictions}).
+
+\textbf{Organization.}  \Cref{sec:setup} reviews the Fisher matrix
+and Type~II metric.  \Cref{sec:directional} defines $\alpha(v)$
+and proves its main properties.  \Cref{sec:physical} gives the
+physical interpretation.  \Cref{sec:spectral} connects uniform
+alpha to spectral purity.  \Cref{sec:predictions} discusses
+testable predictions.  \Cref{sec:discussion} concludes.
+
+
+% =========================================================================
+% 2. SETUP
+% =========================================================================
+
+\section{Setup: Fisher Matrix and Type II Metric}
+\label{sec:setup}
+
+\subsection{Setting}
+
+We work within the framework of Paper~\#3~\cite{companion_amari}.
+An observer $\Ocal$ in a causally invariant hypergraph
+substrate~\cite{wolfram2020ruliad} maintains an internal model
+$M_\theta$ parameterized by $\theta \in \Theta \subset \R^n$.
+By the Good Regulator verification (Paper~\#3, Good Regulator Proposition),
+the observer minimizes prediction error at its boundary, which
+induces a Fisher information matrix on the parameter space:
+\begin{equation}
+\label{eq:fisher_def}
+F_{ij}(\theta) = \Exp\!\left[
+  \frac{\partial \log p_\theta}{\partial \theta^i}\,
+  \frac{\partial \log p_\theta}{\partial \theta^j}
+\right].
+\end{equation}
+
+We assume throughout that $F$ is positive definite (the observer has
+no redundant parameters).  The spectral decomposition is:
+\begin{equation}
+\label{eq:spectral}
+F = U \Lambda U^\top, \qquad
+\Lambda = \diag(\lambda_1, \ldots, \lambda_n),
+\end{equation}
+with eigenvalues $0 < \lambda_1 \leq \lambda_2 \leq \cdots \leq
+\lambda_n$ and orthonormal eigenvectors $\{e_1, \ldots, e_n\}$
+(columns of $U$).  The condition number is
+$\kappa(F) = \lambda_n / \lambda_1$.
+
+\subsection{The \texorpdfstring{$M = F^2$}{M = F-squared} Ansatz}
+
+Under the ansatz that the mass tensor satisfies $M = F^2$ for
+exponential family observers (Paper~\#3, Mass Tensor Remark), the Type~II
+metric~\eqref{eq:type2metric} becomes:
+\begin{equation}
+\label{eq:gmetric}
+g(\alpha) = F^2 + \beta\, F, \qquad
+\beta = \frac{\alpha^2}{1 - \alpha},
+\end{equation}
+with eigenvalues $\mu_k = \lambda_k(\lambda_k + \beta)$ for
+$k = 1, \ldots, n$.
+
+\begin{remark}[Status of the ansatz]
+\label{rem:ansatz}
+The $M = F^2$ relation is an \emph{ansatz} motivated by the
+structure of exponential family partition functions, not an
+independently verified empirical claim.  All results in this
+paper are conditional on this ansatz.  Independent numerical
+verification of $M = F^2$ against direct computation of the
+mass tensor remains open.  See Paper~\#3,
+Mass Tensor Remark, for discussion.
+\end{remark}
+
+% =========================================================================
+% 3. DIRECTIONAL ALPHA
+% =========================================================================
+
+\section{The Directional Regime Parameter}
+\label{sec:directional}
+
+\subsection{Definition}
+
+\begin{definition}[Directional regime parameter]
+\label{def:alpha_v}
+For a unit vector $v \in \R^n$ with $v^\top F\, v > 0$, define the
+\emph{directional regime parameter}:
+\begin{equation}
+\label{eq:alpha_v}
+\alpha(v) = \frac{v^\top F^2 v}{v^\top F^2 v + \beta\, v^\top F\, v\,}.
+\end{equation}
+This quantifies the relative contribution of the mass tensor
+$M = F^2$ versus the Fisher tensor $F$ to the Type~II metric
+along direction~$v$.
+\end{definition}
+
+\begin{remark}[Convention warning]
+\label{rem:convention}
+The directional $\alpha(v)$ measures the \emph{mass fraction} of
+the metric along direction~$v$: large $\alpha(v)$ means the mass
+tensor dominates (classical), small $\alpha(v)$ means Fisher
+dominates (quantum).  This is the \textbf{opposite convention} from
+Vanchurin's scalar~$\alpha$, where $\alpha \approx 1$ means
+$\beta \to \infty$ (Fisher dominates, quantum regime).  The two
+quantities are related but distinct: the scalar~$\alpha$ determines
+the global coupling strength~$\beta$; the directional~$\alpha(v)$
+resolves how that coupling manifests along each direction.
+When the Fisher matrix is isotropic ($F \propto I$), $\alpha(v)$
+reduces to a direction-independent constant, recovering the scalar theory.
+\end{remark}
+
+\subsection{Scale Invariance}
+
+\begin{theorem}[Scale invariance]
+\label{thm:scale_invariance}
+The directional regime parameter $\alpha(v)$ depends only on the
+direction of $v$, not on its magnitude: for any $c > 0$,
+$\alpha(cv) = \alpha(v)$.
+\end{theorem}
+
+\begin{proof}
+Both the numerator and denominator of~\eqref{eq:alpha_v} are
+quadratic forms in $v$.  Replacing $v$ by $cv$ multiplies both
+by $c^2$, which cancels:
+\[
+\alpha(cv) = \frac{c^2\, v^\top F^2 v}
+                  {c^2\, v^\top F^2 v + \beta\, c^2\, v^\top F\, v}
+           = \alpha(v). \qedhere
+\]
+\end{proof}
+
+By \Cref{thm:scale_invariance}, $\alpha$ is well-defined as a function
+$\alpha \colon \Sn \to (0,1)$ on the unit sphere in parameter space.
+
+\subsection{Values Along Eigendirections}
+
+\begin{proposition}[Eigendirection alpha]
+\label{prop:eigendirection}
+For the $k$-th Fisher eigenvector $e_k$ with eigenvalue
+$\lambda_k > 0$:
+\begin{equation}
+\label{eq:alpha_k}
+\alpha_k \coloneqq \alpha(e_k)
+  = \frac{\lambda_k}{\lambda_k + \beta}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Since $F\, e_k = \lambda_k e_k$, we have $F^2 e_k =
+\lambda_k^2 e_k$.  Therefore $e_k^\top F^2 e_k = \lambda_k^2$
+and $e_k^\top F\, e_k = \lambda_k$.  Substituting
+into~\eqref{eq:alpha_v}:
+\[
+\alpha(e_k)
+  = \frac{\lambda_k^2}{\lambda_k^2 + \beta\,\lambda_k}
+  = \frac{\lambda_k}{\lambda_k + \beta}. \qedhere
+\]
+\end{proof}
+
+\subsection{Range of the Directional Alpha}
+
+\begin{theorem}[Range of $\alpha(v)$]
+\label{thm:alpha_range}
+The directional regime parameter satisfies:
+\begin{equation}
+\label{eq:alpha_bounds}
+\alpha_{\min}
+  = \frac{\lambda_1}{\lambda_1 + \beta}
+  \;\leq\;
+  \alpha(v)
+  \;\leq\;
+  \frac{\lambda_n}{\lambda_n + \beta}
+  = \alpha_{\max}
+\end{equation}
+for all unit vectors $v$.  The minimum is attained at $v = e_1$
+(smallest eigenvalue direction, most quantum) and the maximum at
+$v = e_n$ (largest eigenvalue direction, most classical).
+\end{theorem}
+
+\begin{proof}
+Write $v = \sum_k c_k e_k$ with $\sum_k c_k^2 = 1$ in the
+eigenbasis of $F$.  Then:
+\begin{align}
+\alpha(v)
+  &= \frac{\sum_k c_k^2 \lambda_k^2}
+          {\sum_k c_k^2 \lambda_k^2 + \beta \sum_k c_k^2 \lambda_k}
+  \label{eq:alpha_expansion} \\
+  &= \frac{\sum_k c_k^2 \lambda_k^2}
+          {\sum_k c_k^2 \lambda_k(\lambda_k + \beta)}.
+  \nonumber
+\end{align}
+Define weights $w_k = c_k^2 \lambda_k / (\sum_j c_j^2 \lambda_j)$,
+which satisfy $w_k \geq 0$ and $\sum_k w_k = 1$.  Then:
+\[
+\alpha(v) = \sum_k w_k \cdot \frac{\lambda_k}{\lambda_k + \beta}.
+\]
+This is a weighted average of the values
+$\lambda_k/(\lambda_k + \beta)$ with non-negative weights summing
+to~1.  Since $f(x) = x/(x+\beta)$ is strictly increasing for
+$x > 0$ and $\beta > 0$:
+\[
+\frac{\lambda_1}{\lambda_1 + \beta}
+\leq \alpha(v) \leq
+\frac{\lambda_n}{\lambda_n + \beta}.
+\]
+Equality holds at the left when all weight concentrates on
+$k = 1$ (i.e., $v = e_1$) and at the right when $v = e_n$.
+\end{proof}
+
+\begin{definition}[Alpha spread]
+\label{def:alpha_spread}
+The \emph{alpha spread} measures directional inhomogeneity:
+\begin{equation}
+\label{eq:spread}
+\Delta\alpha
+  \coloneqq \alpha_{\max} - \alpha_{\min}
+  = \frac{\beta(\lambda_n - \lambda_1)}
+         {(\lambda_n + \beta)(\lambda_1 + \beta)}.
+\end{equation}
+\end{definition}
+
+\begin{corollary}[Spread bounds]
+\label{cor:spread_bounds}
+$0 \leq \Delta\alpha < 1 - 1/\kappa(F)$, with
+$\Delta\alpha = 0$ if and only if $\kappa(F) = 1$
+(spectral purity).
+\end{corollary}
+
+\begin{proof}
+The lower bound is immediate: $\Delta\alpha = 0$ if and only if
+$\lambda_n = \lambda_1$.  For the upper bound, write
+$\kappa = \lambda_n/\lambda_1$ and compute from~\eqref{eq:spread}:
+\[
+\Delta\alpha
+  = \frac{\beta\,\lambda_1(\kappa - 1)}
+         {(\kappa\,\lambda_1 + \beta)(\lambda_1 + \beta)}.
+\]
+Expanding the inequality $\beta\,\lambda_1\,\kappa <
+(\kappa\,\lambda_1 + \beta)(\lambda_1 + \beta)$ gives
+$0 < \kappa\,\lambda_1^2 + \beta\,\lambda_1 + \beta^2$,
+which holds for all positive quantities.  Hence
+$\Delta\alpha < (\kappa-1)/\kappa = 1 - 1/\kappa$.
+\end{proof}
+
+
+\subsection{The Quantum-Classical Boundary Surface}
+
+\begin{definition}[Critical Fisher eigenvalue]
+\label{def:critical}
+Given a threshold $\alphac \in (0,1)$ delineating quantum
+($\alpha > \alphac$) from classical ($\alpha < \alphac$) regimes,
+define the \emph{critical Fisher eigenvalue}:
+\begin{equation}
+\label{eq:lambda_c}
+\lamc = \frac{\beta\,\alphac}{1 - \alphac}.
+\end{equation}
+An eigendirection $e_k$ is quantum if $\lambda_k > \lamc$ and
+classical if $\lambda_k < \lamc$.
+\end{definition}
+
+\begin{definition}[Quantum-classical boundary surface]
+\label{def:sigma_qc}
+The \emph{quantum-classical boundary surface} is:
+\begin{equation}
+\label{eq:sigma_qc}
+\SigmaQC = \bigl\{ v \in \Sn : \alpha(v) = \alphac \bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Topology of $\SigmaQC$]
+\label{thm:sigma_topology}
+Assume the Fisher matrix $F$ has positive definite eigenvalues and
+$\alphac \in (0,1)$.
+\begin{enumerate}[label=(\alph*)]
+\item $\SigmaQC$ is the level set of a smooth function on $\Sn$.
+
+\item In the eigenbasis of $F$, $\SigmaQC$ is defined by:
+\begin{equation}
+\label{eq:sigma_equation}
+\sum_{k=1}^n c_k^2\,\lambda_k(\lambda_k - \lamc) = 0,
+\end{equation}
+where $v = \sum_k c_k\, e_k$ with $\sum_k c_k^2 = 1$.
+
+\item If $\lamc$ lies strictly between $\lambda_1$ and $\lambda_n$
+(the observer has both quantum and classical eigendirections),
+let $n_+ = |\{k : \lambda_k > \lamc\}|$ and
+$n_- = |\{k : \lambda_k < \lamc\}|$.  Then $\SigmaQC$ is a
+smooth $(n-2)$-dimensional submanifold of $\Sn$, homeomorphic to
+$S^{n_+-1} \times S^{n_--1}$.
+
+\item If all $\lambda_k > \lamc$: $\SigmaQC = \emptyset$ (entirely
+quantum in every direction).
+
+\item If all $\lambda_k < \lamc$: $\SigmaQC = \emptyset$ (entirely
+classical in every direction).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{Part (a).}
+The function $\alpha \colon \Sn \to (0,1)$ is a ratio of
+quadratic forms with strictly positive denominator (since $F$ is
+positive definite and $\beta > 0$).  Both numerator and denominator
+are smooth, so $\alpha$ is smooth on $\Sn$.
+
+\textbf{Part (b).}
+Setting $\alpha(v) = \alphac$ in~\eqref{eq:alpha_expansion} and
+rearranging:
+\begin{align*}
+\sum_k c_k^2 \lambda_k^2 \,(1 - \alphac)
+  &= \alphac\,\beta \sum_k c_k^2 \lambda_k.
+\end{align*}
+Defining $\lamc = \beta\,\alphac/(1-\alphac)$ gives:
+\[
+\sum_k c_k^2 \lambda_k^2 / \lamc = \sum_k c_k^2 \lambda_k,
+\]
+which rearranges to~\eqref{eq:sigma_equation}.
+
+\textbf{Part (c).}
+Partition the index set into $I_+ = \{k : \lambda_k > \lamc\}$
+and $I_- = \{k : \lambda_k < \lamc\}$.
+Equation~\eqref{eq:sigma_equation} becomes:
+\begin{equation}
+\label{eq:balance}
+\sum_{k \in I_+} c_k^2\,\lambda_k(\lambda_k - \lamc)
+= \sum_{k \in I_-} c_k^2\,\lambda_k(\lamc - \lambda_k).
+\end{equation}
+Both sides are non-negative.  Introduce rescaled coordinates
+$u_k = c_k \sqrt{\lambda_k\,|\lambda_k - \lamc|}$.
+Then~\eqref{eq:balance} becomes $\|u_+\|^2 = \|u_-\|^2$,
+which we can write as $r_+^2 = r_-^2$, i.e., $r_+ = r_-$.
+
+The constraint $\sum_k c_k^2 = 1$ becomes an ellipsoid condition
+on the $u$-coordinates: $\sum_k u_k^2 / (\lambda_k\,|\lambda_k - \lamc|)
+= 1$.  For generic eigenvalues (no $\lambda_k = \lamc$), the
+surface is smooth.  To see the product topology, write
+$\hat{u}_+ = u_+/\|u_+\|$ and $\hat{u}_- = u_-/\|u_-\|$ for the
+directions in the $I_+$- and $I_-$-subspaces.  Given any pair
+$(\hat{u}_+, \hat{u}_-)$, the balance condition $\|u_+\| = \|u_-\|$
+together with the ellipsoid constraint determines a unique positive
+scale $R(\hat{u}_+, \hat{u}_-)$ via
+$R^2 = 1/[\sum_{k \in I_+} \hat{p}_k^2/a_k^{+} +
+\sum_{k \in I_-} \hat{q}_k^2/a_k^{-}]$,
+where $a_k^{\pm} = \lambda_k\,|\lambda_k - \lamc|$ are positive
+constants.  The map $(\hat{u}_+, \hat{u}_-) \mapsto
+(R\,\hat{u}_+,\, R\,\hat{u}_-)$ is a continuous bijection from
+$S^{n_+-1} \times S^{n_--1}$ onto $\SigmaQC$ with continuous
+inverse (since $R$ is positive, finite, and continuous in the
+direction variables).  Hence $\SigmaQC$ is homeomorphic to
+$S^{n_+-1} \times S^{n_--1}$.
+
+Its dimension is $(n_+-1) + (n_--1) = n_+ + n_- - 2 = n - 2$
+(since $n_+ + n_- = n$ when no eigenvalue equals $\lamc$ exactly).
+
+\textbf{Parts (d)--(e).}
+If all $\lambda_k > \lamc$, every term in~\eqref{eq:sigma_equation}
+is positive, so the sum is strictly positive for any
+$v \neq 0$---no solution exists on $\Sn$.  The case
+$\lambda_k < \lamc$ for all $k$ is analogous (sum strictly
+negative).
+\end{proof}
+
+\begin{remark}
+The boundary $\SigmaQC$ divides $\Sn$ into a ``quantum cap''
+(directions where $\alpha(v) > \alphac$) and a ``classical cap''
+(where $\alpha(v) < \alphac$).  For an observer with $n_+ = 1$
+quantum eigendirection and $n_- = n-1$ classical eigendirections,
+$\SigmaQC \cong S^0 \times S^{n-2} \cong S^{n-2} \sqcup S^{n-2}$,
+a pair of antipodal $(n-2)$-spheres.  The quantum region is a
+narrow cone around the single quantum eigenvector.
+\end{remark}
+
+
+% =========================================================================
+% 4. PHYSICAL INTERPRETATION
+% =========================================================================
+
+\section{Physical Interpretation}
+\label{sec:physical}
+
+\subsection{Direction-Dependent Quantum Effects}
+
+The directional alpha $\alpha(v)$ answers a concrete question:
+\emph{how does the observer respond to perturbations along
+direction $v$ in parameter space?}
+
+The parameter $\theta$ encodes the observer's internal model of
+its environment (per the Good Regulator verification of
+Paper~\#3~\cite{companion_amari}).  Different components encode
+different environmental features.  The Fisher eigenvectors $e_k$
+are the \emph{independent information channels}:
+
+\begin{itemize}[noitemsep]
+\item \textbf{Large $\lambda_k$} (large $\alpha_k$, near~1):
+  High sensitivity to environmental signals along $e_k$.
+  Under $M = F^2$, the mass eigenvalue scales as $\lambda_k^2$
+  while the Fisher eigenvalue scales as $\lambda_k$, so for
+  large $\lambda_k$ the mass term dominates the metric:
+  $\lambda_k^2 \gg \beta\,\lambda_k$.  High inertia, precise
+  measurements, slow adaptation.  This is the \emph{classical}
+  regime.
+
+\item \textbf{Small $\lambda_k$} (small $\alpha_k$, near~0):
+  Low sensitivity along $e_k$.  The Fisher term dominates---low
+  inertia, imprecise measurements, rapid adaptation.  This is the
+  \emph{quantum} regime.
+\end{itemize}
+
+A single observer is therefore analogous to a measurement
+apparatus with direction-dependent sensitivity.  Along some
+directions it behaves classically (high inertia, precise
+readings); along others it behaves quantum-mechanically
+(low inertia, uncertain readings).
+
+\begin{example}[Triangle graph $K_3$]
+\label{ex:K3}
+For the $K_3$ Ising observer at coupling $J = 0.5$
+(Paper~\#3, verified across 91 configurations), the Fisher
+matrix has eigenvalues $\lambda_1 = 0.385$ (multiplicity~2,
+differential modes) and $\lambda_2 = 1.095$ (multiplicity~1,
+uniform mode).  At $\beta = 0.5$:
+\begin{align*}
+\alpha_1 &= 0.385/(0.385 + 0.5) = 0.435
+  &&\text{(more quantum)}, \\
+\alpha_2 &= 1.095/(1.095 + 0.5) = 0.687
+  &&\text{(more classical)}.
+\end{align*}
+The observer is more classical when measuring the overall
+correlation level (high sensitivity, high inertia, single
+uniform mode) and more quantum along the two differential
+modes (low sensitivity, low inertia).
+\end{example}
+
+\begin{example}[Complete graph $K_5$]
+\label{ex:K5}
+For $K_5$ at $J = 0.5$ with $\beta = 0.5$: $\kappa(F) = 21.4$,
+$\Delta\alpha = 0.536$.  The observer simultaneously spans:
+\begin{itemize}[noitemsep]
+\item Along the most quantum direction: $\alpha_{\min} = 0.067$
+  (deep quantum regime),
+\item Along the most classical direction: $\alpha_{\max} = 0.603$
+  (efficient learning regime).
+\end{itemize}
+This single observer occupies Vanchurin's quantum regime along
+some directions and efficient learning regime along others.
+No scalar parameter can capture this structure.
+\end{example}
+
+
+\subsection{Comparison with Decoherence Theory}
+
+Standard decoherence~\cite{zurek2003decoherence, joos1985emergence}
+operates through environment-induced superselection: pointer
+states survive decoherence, and off-diagonal density matrix elements
+decay at a rate $\Gamma \sim \gamma\,(\Delta x/\lambda_{\mathrm{dB}})^2$.
+The quantum-to-classical transition concerns the system \emph{as a
+whole}.
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Aspect} & \textbf{Decoherence} & \textbf{Directional $\alpha$} \\
+\hline
+Mechanism & Environment coupling & Information geometry \\
+Preferred basis & Pointer states & Fisher eigenvectors \\
+QC boundary & Decoherence rate $\Gamma$ & $\alpha(v) = \alphac$ \\
+Directionality & Not explicitly directional & Explicitly directional \\
+Mathematical object & Density matrix $\rho$ & Fisher metric $F$ \\
+Observer role & System decoheres passively & Observer structure matters \\
+\hline
+\end{tabular}
+\end{center}
+
+Three key differences deserve emphasis:
+
+\begin{enumerate}[noitemsep]
+\item \textbf{Directionality.}  Decoherence theory selects a
+  preferred basis (pointer states) via the interaction Hamiltonian,
+  but does not assign direction-dependent decoherence rates
+  within that basis.  The directional alpha assigns each direction
+  its own quantum-classical character.
+
+\item \textbf{Observer topology.}  In decoherence theory, the
+  transition depends on the system-environment coupling strength.
+  In the directional alpha framework, the transition depends
+  additionally on the observer's \emph{internal topology}
+  (connectivity of the underlying graph), which determines the
+  Fisher eigenvalue spectrum.
+
+\item \textbf{Simultaneous multi-regime.}  Decoherence produces a
+  (rapid) transition: a system is either coherent or decohered.
+  Directional alpha allows a single observer to be simultaneously
+  in different Vanchurin regimes along different directions, with
+  no analog in the density-matrix framework.
+\end{enumerate}
+
+\begin{remark}[Honest comparison]
+These frameworks operate on different mathematical objects
+(density matrix vs.\ Fisher metric on parameter space) and
+cannot be directly equated.  In particular, Fisher eigenvectors
+live in parameter space while pointer states live in Hilbert
+space.  A formal mapping between the two---if one exists---has
+not been established and would require showing that Fisher
+eigenvectors correspond to pointer observables in an appropriate
+limit.  We treat this as an open question, not a result.
+\end{remark}
+
+
+\subsection{Connection to Paper \#3: Scalar Alpha as Average}
+
+The scalar regime parameter $\alpha$ of Paper~\#3 can be
+understood as an effective average over directions.  Specifically,
+the convergence-time optimal $\alphaopt$ from
+Paper~\#3, Optimal Alpha Theorem, minimizes a global functional
+$T(\alpha) = \kappa(g(\alpha)) \cdot \mu_{\max}(g(\alpha))$ that
+depends on the \emph{extreme} eigenvalues of the combined metric.
+The directional alpha reveals the fine structure hidden by this
+optimization: even when the optimal scalar $\alpha$ places the
+observer in the ``efficient learning'' regime on average, individual
+eigendirections may be deep in the quantum or classical regime.
+
+For tree-topology observers ($P_n$, $S_n$), the Fisher matrix
+satisfies $F = \text{sech}^2(J) \cdot I$ (Tree Fisher Identity,
+Paper~\#1~\cite{companion_lovelock}), so all eigenvalues are
+equal, $\alpha(v)$ is constant, and the scalar theory is exact.
+The directional framework adds content only for observers with
+nontrivial topology ($\kappa(F) > 1$).
+
+
+% =========================================================================
+% 5. SPECTRAL PURITY AND UNIFORM ALPHA
+% =========================================================================
+
+\section{Spectral Purity and Uniform Alpha}
+\label{sec:spectral}
+
+\begin{theorem}[Uniform alpha if and only if spectral purity]
+\label{thm:uniform_alpha}
+The directional regime parameter $\alpha(v)$ is independent of
+direction $v$ (i.e., constant on $\Sn$) if and only if $F$ has a
+single distinct nonzero eigenvalue: $F = \lambda_0 I$ for some
+$\lambda_0 > 0$.
+\end{theorem}
+
+\begin{proof}
+$(\Longrightarrow)$ Assume $\alpha(v)$ is constant.  In
+particular, for any two eigenvectors $e_i$ and $e_j$
+with eigenvalues $\lambda_i, \lambda_j > 0$:
+\[
+\frac{\lambda_i}{\lambda_i + \beta}
+  = \frac{\lambda_j}{\lambda_j + \beta}.
+\]
+Cross-multiplying:
+$\lambda_i(\lambda_j + \beta) = \lambda_j(\lambda_i + \beta)$,
+which simplifies to $\lambda_i\,\beta = \lambda_j\,\beta$.
+Since $\beta > 0$, this forces $\lambda_i = \lambda_j$.
+As $i, j$ were arbitrary, all eigenvalues are equal.
+
+$(\Longleftarrow)$ If $F = \lambda_0 I$, then for any unit $v$:
+$v^\top F^2 v = \lambda_0^2$ and $v^\top F\, v = \lambda_0$.
+Hence:
+\[
+\alpha(v) = \frac{\lambda_0^2}{\lambda_0^2 + \beta\,\lambda_0}
+          = \frac{\lambda_0}{\lambda_0 + \beta},
+\]
+independent of $v$.
+\end{proof}
+
+\begin{corollary}[Consequences of spectral purity]
+\label{cor:spectral_purity}
+When $F = \lambda_0 I$ (spectral purity):
+\begin{enumerate}[label=(\roman*)]
+\item $\alpha(v) = \lambda_0/(\lambda_0 + \beta)$ for all $v$.
+\item The mass tensor satisfies $M = F^2 = \lambda_0 F$
+  (proportional to $F$).
+\item The deviation tensor $\Delta = M - \kappa F$ vanishes
+  identically.
+\item $\SigmaQC$ is either empty or all of $\Sn$---no intermediate
+  boundary exists.
+\item The observer is a perfect Good Regulator in the spectral
+  sense: its internal structure is proportionally matched to its
+  information geometry in every direction.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Parts (i)--(ii) follow directly from $F = \lambda_0 I$ and
+$M = F^2 = \lambda_0^2 I = \lambda_0 F$.  For (iii),
+$\kappa = \tr(M)/\tr(F) = n\lambda_0^2/(n\lambda_0) = \lambda_0$,
+so $\Delta = M - \lambda_0 F = 0$.  Part (iv) follows because
+$\alpha(v)$ is constant: either $\alpha(v) > \alphac$ for all $v$
+(quantum everywhere, $\SigmaQC = \emptyset$), or
+$\alpha(v) < \alphac$ for all $v$ (classical everywhere,
+$\SigmaQC = \emptyset$), or $\alpha(v) = \alphac$ for all $v$
+($\SigmaQC = \Sn$, a non-generic case).
+Part (v) restates the connection between $M \propto F$ and
+perfect Good Regulator geometry established in
+Paper~\#3~\cite{companion_amari}.
+\end{proof}
+
+\subsection{Connection to the Tree Fisher Identity}
+
+Paper~\#1~\cite{companion_lovelock} proves the \emph{Tree Fisher
+Identity}: for any Ising model on a tree graph $G$ with uniform
+coupling $J$, the Fisher matrix is diagonal with a single
+eigenvalue:
+\[
+F = \text{sech}^2(J) \cdot I.
+\]
+By \Cref{thm:uniform_alpha}, tree-topology observers automatically
+have uniform directional alpha.  This is a strong structural
+result: regardless of the tree's shape (path, star, binary tree,
+caterpillar, etc.), the observer is informationally isotropic.
+
+The physical meaning is clear: tree-structured observers have no
+``preferred'' information direction---they are equally sensitive
+in all parameter directions.  Anisotropy requires loops in the
+observer topology (cycles, complete graphs), which create
+correlations between different parameter directions and break the
+spectral degeneracy of $F$.
+
+
+\subsection{The Deviation Tensor Perspective}
+
+The spectral purity condition can be reformulated through the
+\emph{deviation tensor} introduced in
+Paper~\#3~\cite{companion_amari}:
+
+\begin{definition}[Deviation tensor]
+\label{def:deviation}
+Let $\kappa_{\tr} = \tr(M)/\tr(F)$.  The deviation tensor is:
+\begin{equation}
+\label{eq:deviation}
+\Delta_{\mu\nu} = M_{\mu\nu} - \kappa_{\tr}\,F_{\mu\nu}.
+\end{equation}
+It is trace-free by construction: $\tr(\Delta) = 0$.
+\end{definition}
+
+\begin{theorem}[Directional alpha determines deviation sign]
+\label{thm:alpha_delta}
+For $M = F^2$ and the deviation tensor
+$\Delta = M - \kappa_{\tr} F$, an eigendirection $e_k$ has:
+\begin{itemize}[noitemsep]
+\item $\delta_k > 0$ (over-massive) if and only if
+  $\alpha_k > \alpha_{\mathrm{mean}}$,
+\item $\delta_k < 0$ (under-massive) if and only if
+  $\alpha_k < \alpha_{\mathrm{mean}}$,
+\item $\delta_k = 0$ if and only if
+  $\alpha_k = \alpha_{\mathrm{mean}}$,
+\end{itemize}
+where $\delta_k = \lambda_k(\lambda_k - \kappa_{\tr})$ are the
+eigenvalues of $\Delta$ and
+$\alpha_{\mathrm{mean}} = \kappa_{\tr}/(\kappa_{\tr} + \beta)$.
+\end{theorem}
+
+\begin{proof}
+Under $M = F^2$, the eigenvalues of $\Delta$ are
+$\delta_k = \lambda_k^2 - \kappa_{\tr}\,\lambda_k =
+\lambda_k(\lambda_k - \kappa_{\tr})$.
+So $\delta_k > 0$ if and only if $\lambda_k > \kappa_{\tr}$.
+
+Meanwhile, $\alpha_k > \alpha_{\mathrm{mean}}$ means
+$\lambda_k/(\lambda_k + \beta) > \kappa_{\tr}/(\kappa_{\tr}+\beta)$.
+Cross-multiplying (all terms positive):
+$\lambda_k(\kappa_{\tr} + \beta) > \kappa_{\tr}(\lambda_k + \beta)$,
+which simplifies to $\lambda_k\,\beta > \kappa_{\tr}\,\beta$,
+i.e., $\lambda_k > \kappa_{\tr}$.  This is the same condition.
+\end{proof}
+
+The deviation tensor and directional alpha are thus complementary
+views of the same phenomenon: ``over-massive'' directions (excess
+structural inertia relative to information content) are precisely
+the ``more classical than average'' directions.  An observer with
+$\Delta = 0$ has uniform $\alpha(v)$---every direction is equally
+quantum or classical.
+
+
+% =========================================================================
+% 6. TESTABLE PREDICTIONS
+% =========================================================================
+
+\section{Testable Predictions and Falsifiability}
+\label{sec:predictions}
+
+The directional alpha framework generates specific predictions
+that are in principle falsifiable through numerical experiment.
+We emphasize that these are predictions about the mathematical
+framework, testable through computation, not claims about
+laboratory experiments.
+
+\subsection{Computational Predictions}
+
+The following can be tested by computing Fisher matrices for
+Ising/Boltzmann observers on various graph topologies and coupling
+strengths.
+
+\begin{enumerate}[label=(P\arabic*)]
+\item \textbf{Tree isotropy} (consequence of Tree Fisher Identity).
+  All tree-topology observers must have $\Delta\alpha = 0$.
+  This follows mathematically from the Tree Fisher Identity
+  ($F = \mathrm{sech}^2(J) \cdot I$, Paper~\#1) and
+  \Cref{thm:uniform_alpha}.  A counterexample would falsify
+  the Tree Fisher Identity itself.
+
+  \emph{Status:} Verified for all tree topologies in the
+  91-configuration catalogue (Paper~\#3).
+
+\item \textbf{Complete graph anisotropy.}
+  Complete graph observers $K_n$ with $n \geq 3$ must have
+  $\Delta\alpha > 0$, with the spread increasing with $n$.
+
+  \emph{Status:} Verified for $K_3$, $K_4$, $K_5$ at $\beta = 0.5$
+  ($\Delta\alpha = 0.252, 0.397, 0.536$ respectively).
+
+\item \textbf{Topology determines boundary.}
+  Two observers with identical total coupling strength but
+  different internal topologies (e.g., $P_5$ vs.\ $K_5$, both
+  with the same mean coupling $J$) must have qualitatively
+  different quantum-classical boundaries: $P_5$ has
+  $\SigmaQC = \emptyset$ while $K_5$ has a nontrivial $\SigmaQC$.
+
+\item \textbf{Condition number threshold} (consequence of Paper~\#3).
+  Under Model~A convergence (Paper~\#3), only observers with
+  $\kappa(F) > 2$ have nonzero optimal $\alphaopt$ (and
+  therefore nontrivial directional structure at optimal beta).
+  This is a theorem of Paper~\#3, not a new prediction.
+
+\item \textbf{Boundary topology.}
+  For the two-eigenvalue-group case (e.g., $K_n$ with eigenvalue
+  multiplicities $n_-$ and $n_+$), $\SigmaQC$ must be
+  homeomorphic to $S^{n_+-1} \times S^{n_--1}$.  This can
+  be verified by explicit parameterization of the boundary.
+\end{enumerate}
+
+\subsection{Distinguishing from Standard Decoherence}
+
+To distinguish directional alpha from standard decoherence theory,
+one would need to identify a physical system where:
+
+\begin{enumerate}[label=(D\arabic*)]
+\item The decoherence rate is \emph{direction-dependent} in a way
+  that correlates with Fisher eigenvalue ordering (not with the
+  system-environment interaction Hamiltonian).
+
+\item The pattern of direction-dependent decoherence rates changes
+  with the observer's \emph{internal topology} while holding the
+  total coupling strength fixed.
+
+\item A single system simultaneously exhibits coherent behavior
+  along some measurement directions and classical behavior along
+  others, with the boundary matching the predicted $\SigmaQC$.
+\end{enumerate}
+
+These are criteria for what a decisive experiment would look like,
+not claims that such experiments currently exist.
+
+\subsection{Falsifiability}
+
+\begin{enumerate}[label=(F\arabic*)]
+\item \textbf{Spectral purity violation.}  If a tree-structured
+  observer is found with $\Delta\alpha \neq 0$, this falsifies
+  the Tree Fisher Identity and the framework built on it.
+
+\item \textbf{Isotropic structured observers.}  If a
+  complete-graph observer is found with $\Delta\alpha = 0$
+  (isotropic decoherence despite structured topology), this
+  contradicts the prediction that topology determines anisotropy.
+
+\item \textbf{Wrong eigenvalue ordering.}  If the most rapidly
+  decohering direction does not correspond to the largest Fisher
+  eigenvalue, this falsifies the connection between Fisher
+  spectrum and quantum-classical character.
+
+\item \textbf{Universal scalar alpha.}  If all physical observers
+  are found to have direction-independent $\alpha$ regardless of
+  topology, the directional framework is unnecessary.
+
+\item \textbf{Non-positive-definite Fisher matrices.}  If
+  physical observers commonly have singular Fisher matrices in
+  relevant parameter directions, the framework requires
+  modification.
+\end{enumerate}
+
+
+% =========================================================================
+% 7. DISCUSSION
+% =========================================================================
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Summary of Results}
+
+We have extended Vanchurin's scalar regime parameter $\alpha$ to a
+direction-dependent function $\alpha(v)$ on the unit sphere in
+observer parameter space.  The main results are:
+
+\begin{enumerate}[noitemsep]
+\item \textbf{\Cref{thm:scale_invariance}:} $\alpha(v)$ depends
+  only on direction (scale-invariant).
+
+\item \textbf{\Cref{thm:alpha_range}:} The range
+  $[\alpha_{\min}, \alpha_{\max}]$ is determined by the Fisher
+  eigenvalue spread.
+
+\item \textbf{\Cref{thm:sigma_topology}:} The quantum-classical
+  boundary $\SigmaQC$ is a smooth $(n-2)$-dimensional submanifold
+  of $\Sn$, homeomorphic to $S^{n_+-1} \times S^{n_--1}$.
+
+\item \textbf{\Cref{thm:uniform_alpha}:} Uniform $\alpha(v)$ if
+  and only if spectral purity ($F = \lambda_0 I$).
+
+\item \textbf{\Cref{thm:alpha_delta}:} The deviation tensor sign
+  matches the directional alpha ordering.
+\end{enumerate}
+
+All five results are proven (mathematical certainty, conditional
+on the $M = F^2$ ansatz).
+
+\subsection{What This Does Not Explain}
+
+We are explicit about the boundaries of this framework:
+
+\begin{itemize}[noitemsep]
+\item We do \emph{not} derive the $M = F^2$ ansatz from first
+  principles.  It is an assumption.
+
+\item We do \emph{not} establish a formal mapping between Fisher
+  eigenvectors and Zurek's pointer states.  The analogy is
+  suggestive but unproven.
+
+\item We do \emph{not} predict specific experimental outcomes.
+  The predictions are computational (testable by simulation),
+  not laboratory-based.
+
+\item We do \emph{not} explain why the critical threshold
+  $\alphac$ takes any particular value.  It is a parameter of
+  the framework.
+
+\item We do \emph{not} address how $\alpha(v)$ transforms under
+  observer composition or coupling.  This is an open problem
+  (see \Cref{sec:open}).
+\end{itemize}
+
+
+\subsection{Connection to Paper \#5}
+
+Paper~\#5~\cite{companion_spectral} of this program develops
+spectral gap selection for observer Fisher matrices.  The
+directional alpha framework is complementary: Paper~\#5 addresses
+\emph{which} eigenvalue spectrum an observer develops, while this
+paper addresses the \emph{consequences} of a given spectrum for
+the quantum-classical boundary.  Together, they predict that
+observers under selective pressure develop specific spectral
+gap structures, which in turn determine the geometry of their
+quantum-classical boundaries.
+
+\subsection{Open Problems}
+\label{sec:open}
+
+\begin{enumerate}[noitemsep]
+\item \textbf{Observer composition.}
+  How does $\SigmaQC$ change when two observers are coupled?
+  Can coupling create new quantum directions in a composite
+  system where both components are individually classical?
+  (Conjectured to be possible---analogous to entanglement
+  generation---but not proven.)
+
+\item \textbf{RG flow of directional alpha.}
+  As the observer coarse-grains (renormalization group flow),
+  the Fisher eigenvalue spectrum changes.  Does $\SigmaQC$
+  shrink, expand, or change topology under coarse-graining?
+
+\item \textbf{Continuous-variable extension.}
+  The current framework is developed for discrete (Ising/Boltzmann)
+  observers.  Extension to continuous-variable models (Gaussian
+  graphical models, field theories) is needed.  Preliminary
+  results suggest that tree-structured Gaussian observers do
+  \emph{not} have diagonal Fisher matrices, so the spectral
+  purity results may be model-dependent.
+
+\item \textbf{Fisher--pointer state correspondence.}
+  Establishing (or refuting) a formal mapping between Fisher
+  eigenvectors in parameter space and pointer states in Hilbert
+  space would either strengthen or weaken the physical
+  interpretation of this framework.
+
+\item \textbf{Boundary phenomenology.}
+  What happens dynamically at $\SigmaQC$?  Critical slowing
+  down, enhanced fluctuations, and spontaneous symmetry breaking
+  are conjectured but not derived.
+\end{enumerate}
+
+
+\subsection{Conclusion}
+
+The quantum-classical boundary is not a single threshold.
+Within Vanchurin's Type~II framework and the $M = F^2$ ansatz,
+the boundary is a hypersurface $\SigmaQC$ in the observer's
+parameter space whose topology is determined by the Fisher
+eigenvalue spectrum.  A single observer can be simultaneously
+quantum along some information channels and classical along
+others.  This anisotropic structure---absent from standard
+decoherence theory---arises directly from the spectral properties
+of the Fisher information matrix and provides a new perspective
+on the quantum-classical transition as a per-direction,
+topology-dependent spectral phenomenon.
+
+\vspace{1em}
+\noindent\textbf{Acknowledgments.}  This work was developed using
+Claude Code (Anthropic) for formalization and verification.
+The author thanks the Wolfram Physics Project and Vitaly Vanchurin
+for foundational contributions that made this framework possible.
+
+% =========================================================================
+% BIBLIOGRAPHY
+% =========================================================================
+
+\printbibliography
+
+\end{document}
