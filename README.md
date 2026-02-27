@@ -12,21 +12,21 @@ Research papers investigating the geometry of Fisher information manifolds on la
 
 ### Core Program
 
-| # | Title | Scope |
-|---|-------|-------|
-| 1 | **Where the Lovelock Bridge Breaks** | Negative results on discrete-to-continuous spacetime emergence + constructive Type II contributions |
-| 2 | **Quantum Mechanics from Operational Composition** | CI + composition axiom → tensor product → local distinguishability |
-| 3 | **Verifying Good Regulator Conditions for Hypergraph Observers** | Good Regulator verification in Vanchurin's framework |
-| 5 | **Spectral Gap Selection of Lorentzian Signature** | Why sparse Fisher matrices prefer Lorentzian signature |
-| 6 | **The Anisotropic Quantum-Classical Boundary** | Direction-dependent regime parameter from observer information geometry |
-| 7 | **Flatness of Statistical Manifolds for Acyclic Graphs** | Exact curvature formulas; vacuum Einstein condition on trees |
-| 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | Analytical derivation of the d_R exponent |
+| # | Title | DOI |
+|---|-------|-----|
+| 1 | **Where the Lovelock Bridge Breaks** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807265.svg)](https://doi.org/10.5281/zenodo.18807265) |
+| 2 | **Quantum Mechanics from Operational Composition** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807267.svg)](https://doi.org/10.5281/zenodo.18807267) |
+| 3 | **Verifying Good Regulator Conditions for Hypergraph Observers** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807269.svg)](https://doi.org/10.5281/zenodo.18807269) |
+| 5 | **Spectral Gap Selection of Lorentzian Signature** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807271.svg)](https://doi.org/10.5281/zenodo.18807271) |
+| 6 | **The Anisotropic Quantum-Classical Boundary** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807273.svg)](https://doi.org/10.5281/zenodo.18807273) |
+| 7 | **Flatness of Statistical Manifolds for Acyclic Graphs** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807275.svg)](https://doi.org/10.5281/zenodo.18807275) |
+| 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807277.svg)](https://doi.org/10.5281/zenodo.18807277) |
 
 ### Prediction Letter
 
-| Title | Scope |
-|-------|-------|
-| **Fisher Curvature Scaling at Statistical Critical Points** | New information-geometric exponent d_R = (dν+2η)/(dν+η), confirmed to 4 digits |
+| Title | DOI |
+|-------|-----|
+| **Fisher Curvature Scaling at Statistical Critical Points** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807279.svg)](https://doi.org/10.5281/zenodo.18807279) |
 
 ---
 
