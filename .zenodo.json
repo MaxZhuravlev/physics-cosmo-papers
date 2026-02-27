@@ -1,0 +1,76 @@
+{
+  "title": "Fisher Information Geometry at Statistical Critical Points — Paper Collection",
+  "creators": [
+    {
+      "name": "Zhuravlev, Max",
+      "affiliation": "Independent Researcher",
+      "orcid": ""
+    }
+  ],
+  "description": "Research papers investigating the geometry of Fisher information manifolds on lattice models near criticality. Includes 7 research papers and 1 prediction letter presenting a new information-geometric exponent d_R = (d*nu + 2*eta)/(d*nu + eta) at statistical critical points. Collection covers theoretical foundations, explicit calculations on Ising and Potts models, curvature scaling analysis, and experimental validation via exact transfer matrix and MCMC methods.",
+  "keywords": [
+    "Fisher information",
+    "information geometry",
+    "statistical mechanics",
+    "critical phenomena",
+    "lattice models",
+    "curvature scaling",
+    "Ising model",
+    "Potts model",
+    "causal invariance",
+    "operational quantum mechanics"
+  ],
+  "license": {
+    "id": "CC-BY-4.0"
+  },
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "10.1103/PhysRevA.20.1608",
+      "relation": "references",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1016/j.physa.2003.12.066",
+      "relation": "references",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.21468/SciPostPhys.8.5.073",
+      "relation": "references",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    }
+  ],
+  "references": [
+    "Ruppeiner, G. (1979). Thermodynamics: A Riemannian geometric model. Phys. Rev. A 20, 1608–1613.",
+    "Janke, W., Johnston, D. A., & Kenna, R. (2004). Information geometry and phase transitions. Physica A 336, 181–186.",
+    "Erdmenger, J., Grosvenor, K. T., & Jefferson, R. (2020). Information geometry in quantum field theory: lessons from simple examples. SciPost Phys. 8, 073.",
+    "Amari, S. (2016). Information Geometry and Its Applications. Applied Mathematical Sciences, vol. 194, Springer-Verlag."
+  ],
+  "language": "en",
+  "communities": [
+    {
+      "identifier": "zenodo"
+    }
+  ],
+  "subjects": [
+    {
+      "term": "Physics",
+      "identifier": "http://www.yso.fi/onto/yso/p7312"
+    },
+    {
+      "term": "Theoretical Physics",
+      "identifier": "http://www.yso.fi/onto/yso/p8906"
+    },
+    {
+      "term": "Statistical Mechanics",
+      "identifier": "http://www.yso.fi/onto/yso/p3286"
+    }
+  ],
+  "contributors": []
+}
