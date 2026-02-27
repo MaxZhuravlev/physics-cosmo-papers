@@ -1,0 +1,286 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{wolfram2020ruliad}{book}{}
+    \name{author}{1}{}{%
+      {{hash=WS}{%
+         family={Wolfram},
+         familyi={W\bibinitperiod},
+         given={Stephen},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Wolfram Media}%
+    }
+    \field{labeltitlesource}{title}
+    \field{note}{Available at: \url{https://www.wolframphysics.org/}}
+    \field{title}{A Project to Find the Fundamental Theory of Physics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{lovelock1971}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LD}{%
+         family={Lovelock},
+         familyi={L\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {AIP}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1063/1.1665613
+    \endverb
+    \field{number}{3}
+    \field{pages}{498\bibrangedash 501}
+    \field{title}{The Einstein Tensor and Its Generalizations}
+    \field{volume}{12}
+    \field{journaltitle}{Journal of Mathematical Physics}
+    \field{year}{1971}
+  \endentry
+
+  \entry{vanchurin2020world}{article}{}
+    \name{author}{1}{}{%
+      {{hash=VV}{%
+         family={Vanchurin},
+         familyi={V\bibinitperiod},
+         given={Vitaly},
+         giveni={V\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {MDPI}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.3390/e22111210
+    \endverb
+    \verb{eprint}
+    \verb 2008.01540
+    \endverb
+    \field{number}{11}
+    \field{pages}{1210}
+    \field{title}{The World as a Neural Network}
+    \field{volume}{22}
+    \field{journaltitle}{Entropy}
+    \field{eprinttype}{arXiv}
+    \field{eprintclass}{physics.gen-ph}
+    \field{year}{2020}
+  \endentry
+
+  \entry{vanchurin2025covariant}{article}{}
+    \name{author}{1}{}{%
+      {{hash=VV}{%
+         family={Vanchurin},
+         familyi={V\bibinitperiod},
+         given={Vitaly},
+         giveni={V\bibinitperiod},
+      }}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{eprint}
+    \verb 2504.05279
+    \endverb
+    \field{note}{Type II framework: metric on parameter space}
+    \field{title}{Covariant Gradient Descent in Trainable Neural Networks}
+    \field{journaltitle}{arXiv preprint}
+    \field{eprinttype}{arXiv}
+    \field{eprintclass}{hep-th}
+    \field{year}{2025}
+  \endentry
+
+  \entry{companion_lovelock}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ZM}{%
+         family={Zhuravlev},
+         familyi={Z\bibinitperiod},
+         given={Max},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \field{labeltitlesource}{title}
+    \field{note}{Paper \#1 of Cosmological Unification Program (in
+  preparation)}
+    \field{title}{Where the Lovelock Bridge Breaks: Negative Results and New
+  Directions for Connecting Discrete and Continuous Spacetime Emergence}
+    \field{journaltitle}{arXiv preprint}
+    \field{year}{2026}
+  \endentry
+
+  \entry{virgo2025good}{article}{}
+    \name{author}{4}{}{%
+      {{hash=VN}{%
+         family={Virgo},
+         familyi={V\bibinitperiod},
+         given={Nathaniel},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=BM}{%
+         family={Biehl},
+         familyi={B\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=BM}{%
+         family={Baltieri},
+         familyi={B\bibinitperiod},
+         given={Manuel},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=CM}{%
+         family={Capucci},
+         familyi={C\bibinitperiod},
+         given={Matteo},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \field{labeltitlesource}{title}
+    \field{note}{Presented at ALIFE 2025, Kyoto, Japan}
+    \field{title}{A 'Good Regulator Theorem' for Embodied Agents}
+    \field{journaltitle}{arXiv preprint arXiv:2508.06326}
+    \field{year}{2025}
+  \endentry
+
+  \entry{amari1998natural}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ASi}{%
+         family={Amari},
+         familyi={A\bibinitperiod},
+         given={Shun-ichi},
+         giveni={S\bibinithyphendelim i\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {MIT Press}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1162/089976698300017746
+    \endverb
+    \field{number}{2}
+    \field{pages}{251\bibrangedash 276}
+    \field{title}{Natural Gradient Works Efficiently in Learning}
+    \field{volume}{10}
+    \field{journaltitle}{Neural Computation}
+    \field{year}{1998}
+  \endentry
+
+  \entry{amari2016information}{book}{}
+    \name{author}{1}{}{%
+      {{hash=ASi}{%
+         family={Amari},
+         familyi={A\bibinitperiod},
+         given={Shun-ichi},
+         giveni={S\bibinithyphendelim i\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1007/978-4-431-55978-8
+    \endverb
+    \field{series}{Applied Mathematical Sciences}
+    \field{title}{Information Geometry and Its Applications}
+    \field{volume}{194}
+    \field{year}{2016}
+  \endentry
+
+  \entry{conant1970every}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CRC}{%
+         family={Conant},
+         familyi={C\bibinitperiod},
+         given={Roger\bibnamedelima C},
+         giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=AWR}{%
+         family={Ashby},
+         familyi={A\bibinitperiod},
+         given={W\bibnamedelima Ross},
+         giveni={W\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Taylor \& Francis}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1080/00207727008920220
+    \endverb
+    \field{number}{2}
+    \field{pages}{89\bibrangedash 97}
+    \field{title}{Every Good Regulator of a System Must Be a Model of That
+  System}
+    \field{volume}{1}
+    \field{journaltitle}{International Journal of Systems Science}
+    \field{year}{1970}
+  \endentry
+
+  \entry{friston2010free}{article}{}
+    \name{author}{1}{}{%
+      {{hash=FK}{%
+         family={Friston},
+         familyi={F\bibinitperiod},
+         given={Karl},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Nature Publishing Group}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1038/nrn2787
+    \endverb
+    \field{number}{2}
+    \field{pages}{127\bibrangedash 138}
+    \field{title}{The Free-Energy Principle: A Unified Brain Theory?}
+    \field{volume}{11}
+    \field{journaltitle}{Nature Reviews Neuroscience}
+    \field{year}{2010}
+  \endentry
+
+  \entry{matsueda2013emergent}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MH}{%
+         family={Matsueda},
+         familyi={M\bibinitperiod},
+         given={Hiroaki},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \field{labeltitlesource}{title}
+    \verb{eprint}
+    \verb 1310.1831
+    \endverb
+    \field{note}{Published in Progress of Theoretical Physics 130(4), 2013}
+    \field{title}{Emergent General Relativity from Fisher Information Metric}
+    \field{journaltitle}{arXiv preprint}
+    \field{eprinttype}{arXiv}
+    \field{eprintclass}{hep-th}
+    \field{year}{2013}
+  \endentry
+\enddatalist
+\endinput
