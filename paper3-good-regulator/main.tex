@@ -108,7 +108,7 @@ We verify that persistent observers in causally invariant hypergraph substrates 
 \section{Introduction}
 \label{sec:intro}
 
-Can all of physics emerge from a single axiom? This foundational question drives the cosmological unification program, which seeks to demonstrate that causal invariance---the substrate-independent consistency of causal structure---constrains physical law through established uniqueness theorems.
+Can causal invariance constrain physical law? This foundational question drives the cosmological unification program, which investigates whether causal invariance---the substrate-independent consistency of causal structure---constrains specific physical structures through established uniqueness theorems.
 
 Two independent cosmological research programs have recently converged on causal substrates:
 \begin{itemize}[noitemsep]
@@ -117,7 +117,7 @@ Two independent cosmological research programs have recently converged on causal
 \item \textbf{Vanchurin Neural Network Cosmology}~\cite{vanchurin2020world,vanchurin2020ml,vanchurin2022qg,vanchurin2025covariant,vanchurin2025geometric}: The universe as a learning system, with dynamics governed by natural gradient descent on a Fisher-like metric (Eq.~3.4).\footnote{We reference Vanchurin's Type II framework~\cite{vanchurin2022qg,vanchurin2025covariant,vanchurin2025geometric}, where the metric is defined on trainable parameter space (Q-space), not his earlier Type I framework~\cite{vanchurin2020world} with metrics on neuron state space (X-space). The statistical-learning formulation in~\cite{vanchurin2020ml} provides the Good-Regulator-compatible thermodynamic scaffold used by our verification chain. The structural similarity to our Fisher metric-based natural gradient is noted in \Cref{sec:amari}, though full equivalence is not claimed.}
 \end{itemize}
 
-A companion paper~\cite{companion_lovelock} establishes the \emph{Lovelock bridge}: if the continuum limit holds, causal invariance constrains Vanchurin's Onsager tensor symmetries to produce Einstein's field equations. This synthesis demonstrates that \emph{geometry forces gravity} through uniqueness.
+A companion paper~\cite{companion_lovelock} examines the \emph{Lovelock bridge}: whether, if the continuum limit holds, causal invariance constrains Vanchurin's Onsager tensor symmetries to produce Einstein's field equations. That paper finds the bridge fails numerically for generic dynamically nontrivial rules, but identifies constructive Type~II contributions including exact critical-coupling formulas and a diagonal Lorentzian dominance theorem.
 
 The present work completes the second pillar by verifying that the Amari chain applies to hypergraph observers. We demonstrate that persistent observers in causally invariant substrates satisfy Good Regulator conditions, and therefore must use natural gradient descent (via standard results from information geometry), consistent with Vanchurin's learning dynamics.
 
@@ -955,7 +955,7 @@ The novelty is approximately 25--30\%, residing in the \emph{application and ver
 \subsection{Unresolved Technical Issues}
 
 \begin{enumerate}[noitemsep]
-\item \textbf{Continuum Limit:} Like Paper \#1 (Lovelock Bridge), we assume the continuum limit of hypergraph evolution exists and is well-behaved. This is unproven and may not hold rigorously.
+\item \textbf{Continuum Limit:} Like Paper \#1 (Lovelock Bridge), we assume the continuum limit of hypergraph evolution exists and is well-behaved. Paper~\#1 empirically disconfirms the continuum limit for all 500 dynamically nontrivial rules tested; thus this assumption may not hold for generic substrates.
 
 \item \textbf{Fisher = Onsager:} We have not verified in detail that Vanchurin's Onsager tensor $L^{ij}$ (Eq.~3.4) is mathematically identical to the Fisher metric $g^{ij}$. This requires careful analysis of his Section~3 derivation.
 
@@ -993,7 +993,7 @@ We have verified that persistent observers in causally invariant substrates sati
 
 This completes the second pillar of the cosmological unification program:
 \begin{itemize}[noitemsep]
-\item \textbf{Paper \#1 (Lovelock Bridge):} Causal invariance $\to$ Einstein equations (via Lovelock uniqueness)
+\item \textbf{Paper \#1 (Lovelock Bridge):} Examines whether causal invariance $\to$ Einstein equations (via Lovelock uniqueness); the bridge fails numerically, but yields constructive Type~II results
 \item \textbf{Paper \#3 (Amari Chain):} Causal invariance $\to$ Natural gradient learning (via Good Regulator + Amari uniqueness)
 \item \textbf{Computational Prediction (Conditional):} Under Model A convergence with isotropic loss, regime parameter $\alpha$ determined by Fisher spectrum (\Cref{thm:optimal_alpha}), with threshold $\kappa(F) = 2$ for regime transition. Model dependence and loss Hessian sensitivity are open limitations (\Cref{sec:limitations}).
 \item \textbf{Directional Alpha and Deviation Tensor:} The directional regime parameter $\alpha_{v_k}$ (\Cref{def:directional_alpha}) and trace-free deviation tensor $\Delta_{\mu\nu}$ (\Cref{def:deviation_tensor}) reveal that the quantum--classical transition is a spectral phenomenon: a single observer can simultaneously occupy all three Vanchurin regimes along different Fisher eigendirections. Observers with vanishing deviation ($\delta = 0$) are spectrally pure, corresponding to perfect Good Regulator geometry.
