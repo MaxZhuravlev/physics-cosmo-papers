@@ -1,5 +1,7 @@
 # Fisher Information Geometry at Statistical Critical Points
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18806742.svg)](https://doi.org/10.5281/zenodo.18806742)
+
 Research papers investigating the geometry of Fisher information manifolds on lattice models near criticality.
 
 **Author:** Max Zhuravlev (max@vibecodium.ai)
