@@ -7,7 +7,7 @@
       "orcid": ""
     }
   ],
-  "description": "Research papers investigating the geometry of Fisher information manifolds on lattice models near criticality. Includes 7 research papers and 1 prediction letter presenting a new information-geometric exponent d_R = (d*nu + 2*eta)/(d*nu + eta) at statistical critical points. Collection covers theoretical foundations, explicit calculations on Ising and Potts models, curvature scaling analysis, and experimental validation via exact transfer matrix and MCMC methods.",
+  "description": "Research papers investigating the geometry of Fisher information manifolds on lattice models near criticality. Includes 9 research papers and 1 prediction letter presenting a new information-geometric exponent d_R = (d*nu + 2*eta)/(d*nu + eta) at statistical critical points. Collection covers theoretical foundations, explicit calculations on Ising and Potts models, curvature scaling analysis, alpha-power deformed metrics, and experimental validation via exact transfer matrix and MCMC methods.",
   "keywords": [
     "Fisher information",
     "information geometry",
