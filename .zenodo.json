@@ -1,5 +1,5 @@
 {
-  "title": "Fisher Information Geometry at Statistical Critical Points — Paper Collection",
+  "title": "Fisher Information Geometry at Statistical Critical Points \u2014 Paper Collection",
   "creators": [
     {
       "name": "Zhuravlev, Max",
@@ -76,6 +76,12 @@
       "scheme": "doi"
     },
     {
+      "identifier": "10.5281/zenodo.18815955",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
       "identifier": "10.1103/PhysRevA.20.1608",
       "relation": "references",
       "resource_type": "publication-article",
@@ -95,8 +101,8 @@
     }
   ],
   "references": [
-    "Ruppeiner, G. (1979). Thermodynamics: A Riemannian geometric model. Phys. Rev. A 20, 1608–1613.",
-    "Janke, W., Johnston, D. A., & Kenna, R. (2004). Information geometry and phase transitions. Physica A 336, 181–186.",
+    "Ruppeiner, G. (1979). Thermodynamics: A Riemannian geometric model. Phys. Rev. A 20, 1608\u20131613.",
+    "Janke, W., Johnston, D. A., & Kenna, R. (2004). Information geometry and phase transitions. Physica A 336, 181\u2013186.",
     "Erdmenger, J., Grosvenor, K. T., & Jefferson, R. (2020). Information geometry in quantum field theory: lessons from simple examples. SciPost Phys. 8, 073.",
     "Amari, S. (2016). Information Geometry and Its Applications. Applied Mathematical Sciences, vol. 194, Springer-Verlag."
   ],
