@@ -21,6 +21,7 @@ Research papers investigating the geometry of Fisher information manifolds on la
 | 6 | **The Anisotropic Quantum-Classical Boundary** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807273.svg)](https://doi.org/10.5281/zenodo.18807273) |
 | 7 | **Flatness of Statistical Manifolds for Acyclic Graphs** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807275.svg)](https://doi.org/10.5281/zenodo.18807275) |
 | 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807277.svg)](https://doi.org/10.5281/zenodo.18807277) |
+| 9 | **A Linear Exponent Law for Alpha-Power Fisher Curvature at the 2D Ising Critical Point** | DOI pending |
 
 ### Prediction Letter
 
@@ -42,6 +43,7 @@ paper5-spectral-selection/
 paper6-directional-alpha/
 paper7-curvature/
 paper8-asymptotics/
+paper9-alpha-regime/
 prediction-letter/
 ```
 
