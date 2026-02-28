@@ -28,6 +28,54 @@
   "access_right": "open",
   "related_identifiers": [
     {
+      "identifier": "10.5281/zenodo.18807265",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807267",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807269",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807271",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807273",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807275",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807277",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18807279",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
       "identifier": "10.1103/PhysRevA.20.1608",
       "relation": "references",
       "resource_type": "publication-article",
