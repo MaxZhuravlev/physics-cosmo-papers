@@ -40,8 +40,8 @@
 
 \begin{document}
 
-\title{Exact Asymptotics of the Fisher Information Metric\\
-for the 2D Ising Model on the Torus}
+\title{Fisher Metric Asymptotics for the 2D Ising Model:\\
+A Physics Derivation of the $d_{\mathcal{R}}$ Exponent}
 
 \author{Max Zhuravlev%
 \thanks{Independent researcher. Email: \texttt{max@vibecodium.ai}}}
@@ -51,8 +51,8 @@ for the 2D Ising Model on the Torus}
 \maketitle
 
 \begin{abstract}
-We derive the exact large-$L$ asymptotics of the scalar curvature
-of the Fisher information metric on the microscopic coupling space of
+We derive the large-$L$ asymptotics of the dominant eigenvalue of the
+Fisher information metric on the microscopic coupling space of
 the two-dimensional Ising model on the $L \times L$ torus at the
 critical coupling $\Jc = \frac{1}{2}\ln(1+\sqrt{2})$.
 
@@ -60,20 +60,22 @@ Using the Kaufman free-fermion representation, we express the Fisher
 matrix entries as derivatives of Pfaffian determinants admitting a
 $2 \times 2$ block Toeplitz structure over the Brillouin zone.
 Applying the Szeg\H{o}--Fisher--Hartwig asymptotic expansion with
-uniform remainder estimates, we prove that the dominant eigenvalue
+uniform remainder estimates, we derive (conditional on a standard
+finite-size RG assumption for the $\sigma$-sector vertex function;
+see Remark~\ref{rem:proof-status}) that the dominant eigenvalue
 $V_0'$ of the Fisher metric satisfies
 \[
   V_0'^{\,2} = C \cdot L^{4/9}\bigl(1 + \cO(L^{-10/9})\bigr),
 \]
 where $C > 0$ is an explicit constant involving
 Onsager--Yang amplitudes. This establishes the exponent
-$\alpha_f = 2/9$ rigorously, providing the dominant eigenvalue
+$\alpha_f = 2/9$ and provides the dominant eigenvalue
 scaling that enters the curvature scaling law
 $|\Scal(\Jc)| \sim n^{\dR}$ with $\dR = 10/9$.
 
-Numerical verification against exact transfer-matrix data for
-$L = 3$--$14$ confirms the asymptotic formula to within the
-predicted remainder.
+Numerical verification of the asymptotic formula for $V_0'(L)$
+against exact transfer-matrix data for $L = 3$--$14$ confirms the
+prediction to $< 0.1\%$ residuals.
 \end{abstract}
 
 \noindent\textbf{arXiv category:} math-ph (cross-list: cond-mat.stat-mech)
@@ -122,7 +124,7 @@ exactly solvable model:
 \end{enumerate}
 
 \paragraph{Main result.}
-We prove (\cref{thm:main}):
+We derive (conditional on Assumption~A of \cref{rem:proof-status}; see \cref{thm:main}):
 \[
   V_0'^{\,2}(L) = C \cdot L^{4/9}\bigl(1 + \cO(L^{-10/9})\bigr),
 \]
@@ -176,8 +178,6 @@ $\nu = 1$, $\eta = 1/4$ (exact, 2D Ising universality class).
 
 \subsection{Kaufman representation}
 \label{subsec:kaufman}
-
-% STATUS: P1 CONTENT — explicit eigenvalue formulas
 
 The partition function~\eqref{eq:partition} admits the Kaufman
 spinorial representation~\cite{Kaufman1949,SchultzMattisLieb1964}
@@ -251,8 +251,6 @@ not the bare dispersion.
 
 \subsection{Block Toeplitz and Pfaffian structures}
 \label{subsec:toeplitz-intro}
-
-% STATUS: P2 CONTENT — Fourier block decomposition
 
 The bond-bond correlator $\Fish_{ab}$ at the uniform point inherits
 the translational invariance of the torus: $\Fish_{ab}$ depends only
@@ -331,8 +329,6 @@ $J$-derivative of the vertex function~$C$.
 \subsection{Wick decomposition of the Fisher block}
 \label{subsec:wick}
 
-% STATUS: P2 CONTENT — fermion bubble derivation of F̂(k)
-
 At the critical point, the 2D Ising model is exactly equivalent to a
 free Majorana fermion theory~\cite{Kaufman1949,SchultzMattisLieb1964}.
 The bond observable $\phi_e = s_i s_j$ for edge $e = (i,j)$ is
@@ -394,8 +390,6 @@ $10^{-15}$ relative error for $L = 3$--$6$~\cite{PredLetter}.
 
 \subsection{Spin-structure decomposition and $\kappa_3$}
 \label{subsec:spin-structure}
-
-% STATUS: P2 CONTENT — spin-structure sectors and C_{eee}=0 mechanism
 
 The four spin-structure sectors of the Kaufman
 representation~\eqref{eq:kaufman-sectors} correspond to
@@ -520,8 +514,6 @@ contributing to $C'$ without parametric suppression.
 \label{sec:leading}
 %% ====================================================================
 
-% STATUS: P3 CONTENT — proof via Toeplitz/FH chain
-
 The central technical step is the extraction of the leading
 $L$-dependence of $V_0'(L)$, the Amari trace vector common value
 at the uniform critical point. We first state the main result, then
@@ -531,9 +523,14 @@ assemble the proof.
 
 \subsection{Statement of the main result}
 
-\begin{theorem}[Main result]
+\begin{theorem}[Main result (Conditional on Assumption~A)]
 \label{thm:main}
-For the 2D Ising model on the $L \times L$ torus at $J = \Jc$,
+Assume that the $\sigma$-sector vertex function $C(J,L)$ defined
+in~\eqref{eq:vertex-bubble} satisfies the finite-size RG scaling
+$C(J,L) \sim L^{-2\gamma_\phi}$ with anomalous dimension
+$\gamma_\phi$ given by standard Ising CFT data
+\textnormal{(Assumption~A; see Remark~\ref{rem:proof-status})}.
+Then for the 2D Ising model on the $L \times L$ torus at $J = \Jc$,
 the Amari trace vector satisfies
 \begin{equation}
   V_0'^{\,2}(L) = C \cdot L^{4/9}\bigl(1 + \cO(L^{-\omega})\bigr)
@@ -948,6 +945,28 @@ susceptibility normalization. At $k_{\min} = 2\pi/L$:
 \end{equation}
 so $\lambda_2 \sim L^{-(d\nu + \eta)} = L^{-9/4}$.
 
+\begin{remark}[Reconciling the two $\lambda_2$ scalings]
+\label{rem:lambda2-reconciliation}
+Two distinct scalings of $\lambda_2(k_{\min})$ appear in this paper
+and should not be confused.
+Equation~\eqref{eq:lambda2-dispersion} gives $\lambda_2(k_{\min})
+= C(J)\cdot\gamma(k_{\min})^2$, where the bare dispersion
+$\gamma(k_{\min}) \sim 2\pi/L$ yields the geometric factor
+$\lambda_2^{(0)} \sim L^{-2}$.
+Equation~\eqref{eq:lambda2-full-scaling} gives $\lambda_2(k_{\min})
+\propto k_{\min}^{d\nu+\eta} = (2\pi/L)^{d\nu+\eta}$, hence
+$\lambda_2 \sim L^{-9/4}$.
+These are consistent: the second scaling \emph{incorporates}
+the critical enhancement of the vertex function $C(J)$ at $\Jc$,
+which itself scales as $C(\Jc) \sim L^{-1/4}$ due to the anomalous
+dimension $\eta = 1/4$.
+Equation~\eqref{eq:lambda2-dispersion} records the leading geometric
+factor; equation~\eqref{eq:lambda2-full-scaling} is the full
+finite-size scaling result from RG theory (standard finite-size
+scaling~\cite{Privman1990,CardyBook1996}), an input from critical
+RG theory rather than a consequence of the bare dispersion alone.
+\end{remark}
+
 The $\sigma$-sector numerator
 $n\,\hat{\kappa}_3^{(-+)}|_{\mathrm{long}}$ at
 $k_{\min}$ receives one factor of $\chi_\sigma \sim
@@ -985,9 +1004,17 @@ and the energy-sector baseline:
 \end{equation}
 so the entire signal comes from the $\sigma$-sector.
 
-The $\sigma$-sector contribution to $C'/C$ is best
-understood through the Callan--Symanzik equation for the
-vertex function. At the critical point, $C(J,L)$ satisfies
+\medskip
+\noindent\textit{Physics Argument (Callan--Symanzik extraction).}
+The $\sigma$-sector contribution to $C'/C$ is extracted via the
+Callan--Symanzik equation for the vertex function. This is a
+standard heuristic RG argument in critical phenomena; a fully
+rigorous treatment would require deriving equation~\eqref{eq:RG-exponent}
+directly from the $(-+)$-sector six-fermion Pfaffian asymptotics
+(Gap~A; see Remark~\ref{rem:proof-status}).
+
+At the critical point, $C(J,L)$ satisfies the finite-size
+Callan--Symanzik equation
 \begin{equation}
   \Bigl[L\,\frac{\partial}{\partial L}
     + \beta(J)\,\frac{\partial}{\partial J}
@@ -995,9 +1022,13 @@ vertex function. At the critical point, $C(J,L)$ satisfies
   \label{eq:callan-symanzik}
 \end{equation}
 where $\beta(\Jc) = 0$ and $\gamma_\phi$ is the anomalous
-dimension of the bond field. At $J = \Jc$, the
-$\beta$-function vanishes and $L\,\partial_L C = -2\gamma_\phi\,C$,
-giving $C \sim L^{-2\gamma_\phi}$. The $J$-derivative adds
+dimension of the bond field. The applicability of this equation to
+the composite finite-size quantity $C(J,L)$ is the content of
+Assumption~A (see Remark~\ref{rem:proof-status}): it assumes
+$C(J,L)$ is RG-covariant in the standard sense.
+At $J = \Jc$, the $\beta$-function vanishes and
+$L\,\partial_L C = -2\gamma_\phi\,C$, giving
+$C \sim L^{-2\gamma_\phi}$. The $J$-derivative adds
 one power of $\partial\beta/\partial J = 1/\nu$ (the
 inverse correlation-length exponent), and the $\sigma$-sector
 response introduces the anomalous dimension $\eta$:
@@ -1057,7 +1088,7 @@ The spin-spin correlator on the Ising cylinder is a Toeplitz
 determinant (\cref{prop:toeplitz-fh}) whose symbol at $\Jc$
 has Fisher--Hartwig parameters $\alpha = 0$, $\beta = -1/2$.
 The FH asymptotics~\eqref{eq:fh-asymptotics} yield
-$\eta = 1 - 4(\alpha^2 - \beta^2) = 1/4$
+$\eta = \beta^2 - \alpha^2 = 1/4$
 (\cref{cor:eta-from-fh}).
 
 \textbf{Step 3} ($\sigma$-sector dominance).
@@ -1120,17 +1151,24 @@ squared introduces the \emph{compound ratio}
 $2\eta/(d\nu + \eta)$ instead of the direct $2\eta$.
 \end{remark}
 
-\begin{remark}[Status of the proof]
+\begin{remark}[Status of the proof and Assumption~A]
 \label{rem:proof-status}
-Steps~1--3 and the FH input (Step~2) are rigorous. Step~4
-uses the Callan--Symanzik equation~\eqref{eq:callan-symanzik}
-for the vertex function, which is standard in critical
-phenomena but requires the assumption that the vertex function
-$C(J,L)$ has a well-defined RG flow. A fully rigorous
-treatment would derive~\eqref{eq:RG-exponent} directly from
-the $(-+)$-sector six-fermion Pfaffian asymptotics
-(the ``Gap~A'' calculation). Three approaches are
-available:
+Steps~1--3 and the FH input (Step~2) are rigorous.
+Step~4 is a heuristic RG argument (labeled as ``Physics Argument''
+above), which is standard in critical phenomena but is \emph{not}
+a mathematical proof in the strict sense.
+
+\textbf{Assumption~A} (required for \cref{thm:main}):
+The $\sigma$-sector vertex function $C(J,L)$ defined
+in~\eqref{eq:vertex-bubble} is RG-covariant on the torus, i.e.,
+it satisfies the Callan--Symanzik equation~\eqref{eq:callan-symanzik}
+with the standard bond-field anomalous dimension $\gamma_\phi$
+of the 2D Ising CFT.
+
+This is the single analytical gap in the derivation.
+A fully rigorous closure would derive~\eqref{eq:RG-exponent}
+directly from the $(-+)$-sector six-fermion Pfaffian asymptotics.
+Three approaches are available:
 \begin{enumerate}
   \item The Bugrij--Lisovyy exact torus form factor
     expansion~\cite{BugrijLisovyy2001,IorgovLisovyy2011},
@@ -1140,6 +1178,19 @@ available:
   \item The torus conformal block expansion for the
     $c = 1/2$ minimal model.
 \end{enumerate}
+
+We note that $\tfrac{d}{dJ}\log\operatorname{Pf}(G_{6\times 6})\big|_{J=J_c} = -6$
+exactly (L-independent), as follows from the Jacobi formula applied to the
+antisymmetric propagator matrix at uniform coupling (verified by exact rational
+arithmetic using Sage).  The anomalous scaling $L^{2/9}$ therefore does not
+reside in the bare Pfaffian vertex but arises from the convolution of this
+constant vertex with the critical spectrum of $\hat{\mathrm{F}}^{-1}(k)$ in
+the Brillouin-zone sum~\eqref{eq:szego-identity}: specifically, the $\sigma$-channel
+eigenvalue $c_2(k_{\min};L)$ diverges as $\chi_\sigma \sim L^{7/4}$ while a
+large cancellation in the $c_1$ channel subtracts the naive $L^1$ behaviour,
+leaving the compound ratio $L^{2/9}$.  A self-contained replication package
+for the numerical verification is available at
+\url{https://github.com/Vibecodium/fisher-curvature-replication}.
 \end{remark}
 
 
@@ -1147,8 +1198,6 @@ available:
 \section{Uniform Remainder Bound}
 \label{sec:remainder}
 %% ====================================================================
-
-% STATUS: P4 CONTENT — remainder estimate via BW + Wegner correction
 
 The main theorem (\cref{thm:main}) asserts a correction
 $\cO(L^{-\omega})$ with $\omega \geq 10/9$. We now establish this
@@ -1335,11 +1384,11 @@ for $L \geq L_0$.
 \textbf{Step 4} (Explicit constants).
 From the exact transfer-matrix data (\cref{tab:verification}),
 the ratio $V_0'^{\,2}/(C\,L^{4/9})$ equals
-$0.683$, $0.793$, $0.846$, $0.878$, $0.900$, $0.917$
+$0.683$, $0.793$, $0.846$, $0.878$, $0.900$, $0.916$
 for $L = 4, 6, 8, 10, 12, 14$ (with $C = 66.4$).
 The product $K_{\mathrm{eff}}(L) =
 |V_0'^{\,2}/(C\,L^{4/9}) - 1|\cdot L^{10/9}$
-is $1.48$, $1.52$, $1.56$, $1.58$, $1.58$, $1.57$
+is $1.48$, $1.52$, $1.56$, $1.58$, $1.58$, $1.58$
 respectively, converging to $|2c_1| = 2 \times 0.807 = 1.61$.
 Thus $K = 2$ and $L_0 = 4$ suffice for~\eqref{eq:remainder-bound}.
 \end{proof}
@@ -1408,7 +1457,7 @@ $L$ & $V_0'(L)$ & $\alpha_\mathrm{eff}$ & Model residual \\
 8  & 11.894 & 0.334 & $< 0.1\%$ \\
 10 & 12.735 & 0.306 & $< 0.1\%$ \\
 12 & 13.428 & 0.291 & $< 0.1\%$ \\
-14 & 14.024 & 0.282 & $0.062\%$ \\
+14 & 14.020 & 0.280 & $0.050\%$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1422,8 +1471,9 @@ $\alpha_f = 2/9$ hypothesis (Akaike weight $0.9995$) over a free
 exponent~\cite{PredLetter}.
 
 The $L = 14$ row was obtained by exact transfer-matrix computation
-($V_0'(14) = 14.024$), confirming the asymptotic prediction
-$14.01 \pm 0.08$ to within the correction-to-scaling uncertainty.
+($V_0'(14) = 14.020$, all $63$ independent BZ modes), confirming the
+asymptotic prediction $14.01 \pm 0.08$ to within the
+correction-to-scaling uncertainty.
 The uniform bound from \cref{prop:remainder} is satisfied at all six
 data points: $K_{\mathrm{eff}} = |V_0'^{\,2}/(C\,L^{4/9}) - 1|
 \cdot L^{10/9} \leq 1.58 < 2$ for all $L = 4$--$14$.
@@ -1435,14 +1485,18 @@ data points: $K_{\mathrm{eff}} = |V_0'^{\,2}/(C\,L^{4/9}) - 1|
 %% ====================================================================
 
 \paragraph{Proof status and the $\sigma$-sector gap.}
-The proof of \cref{thm:main} is complete modulo a single analytical gap:
-the rigorous derivation of the $\sigma$-sector six-fermion Pfaffian
-asymptotics on the torus (\cref{prop:vertex-scaling}, Step~2).
+The derivation of \cref{thm:main} is complete modulo Assumption~A
+(see Remark~\ref{rem:proof-status}): the rigorous derivation of the
+$\sigma$-sector six-fermion Pfaffian asymptotics on the torus
+(\cref{prop:vertex-scaling}, Step~2).
 The physical argument --- $\Z_2$ fusion rules eliminating the energy
 channel, Callan--Symanzik RG at the Wilson--Fisher fixed point ---
-produces the exponent $\alpha_f = 2/9$ unambiguously, and the numerical
-verification in \cref{sec:numerics} confirms the result to sub-percent
-accuracy. Closing this gap rigorously amounts to establishing the
+produces the exponent $\alpha_f = 2/9$ unambiguously.
+The asymptotic formula for $V_0'(L)$ is verified to $< 0.1\%$
+for $L = 4$--$14$ (Table~\ref{tab:verification}).
+The $\sigma$-sector Pfaffian asymptotics (Gap~A) have \emph{not}
+been directly computed; the formula is validated as a composite
+observable (the fit of $V_0'$), not as a direct Pfaffian calculation. Closing this gap rigorously amounts to establishing the
 $L \to \infty$ asymptotics of the Pfaffian of a $6 \times 6$ matrix of
 Majorana propagators in the $(-+)$ spin-structure sector. Three
 approaches appear feasible: (i)~the Bugrij--Lisovyy form factor
@@ -1511,7 +1565,7 @@ provides the numerical data and the conjectured formula.
 \bibitem{PredLetter}
 M.~Zhuravlev,
 \textit{Fisher Curvature Scaling at Critical Points: An Exact
-  Information-Geometric Exponent from Periodic Boundary Conditions},
+  Information-Geometric Exponent},
 Preprint (2026).
 
 \bibitem{Paper7}
