@@ -1459,6 +1459,29 @@ no violations are found.
 Trees satisfy the identity trivially ($\Ric \equiv 0$).
 An analytic proof for general graphs beyond $C_n$ is not yet established.}
 
+\begin{remark}[Scalar Curvature Decomposition and Ricci Identity]
+\label{rem:scalar-ricci}
+The scalar curvature $\Scal = g^{ac}g^{bd}R_{abcd}$ inherits a natural
+four-way decomposition $\Scal = R_1 + R_2 + R_3 + R_4$, where $R_1, R_2$
+collect contractions of the \emph{linear} Riemann terms
+($\partial_c\Gamma^a_{bd} - \partial_d\Gamma^a_{bc}$) involving $0$ and $1$
+explicit inverse-metric factors in the Christoffel-symbol products,
+and $R_3, R_4$ collect the corresponding contractions of the \emph{quadratic}
+terms ($\Gamma^a_{ce}\Gamma^e_{bd} - \Gamma^a_{de}\Gamma^e_{bc}$) with
+$2$ and $3$ explicit inverse-metric factors.
+Under the verified Riemann decomposition~\eqref{eq:riem-decomp}, the scalar
+parts satisfy the \emph{scalar Ricci identity}
+\begin{equation}
+  R_3 = -\tfrac{1}{2}R_1, \qquad R_4 = -\tfrac{1}{2}R_2,
+  \label{eq:scalar-ricci-id}
+\end{equation}
+implying $\Scal = (R_1 + R_2)/2$.
+This is verified numerically to $5$--$6$ significant figures for all graphs
+in the 42-family empirical census (mean ratio $-2.000$, max deviation
+$< 5\times10^{-5}$); see the companion prediction
+letter~\cite{PredLetter} for cross-model verification.
+\end{remark}
+
 \begin{remark}[Universality beyond Ising]
 \label{rem:riem-universality}
 The decomposition \eqref{eq:riem-decomp} is not specific to the Ising model.
@@ -3521,11 +3544,12 @@ This is a sketch; the precise holographic dictionary requires further work.
   expressions for $\alpha(n, J)$, $\beta(n, J)$, and $\Scal(n, J)$ are
   now derived for $C_3$--$C_6$ as rational functions of $w = e^J$
   (\cref{app:cn-exact}). The Riemann decomposition
-  $\Riem_{\mathrm{linear}} = -2\,\Riem_{\mathrm{quad}}$ initially proved
-  for $C_n$ is now verified as universal for \emph{all} graphs
-  (Theorem~\ref{thm:riem-decomp}): cycles, complete graphs, bipartite,
-  Petersen, grids, wheels, and random graphs, with zero violations in
-  42 test cases. An analytical proof for the general case remains open.
+  $\Riem_{\mathrm{linear}} = -2\,\Riem_{\mathrm{quad}}$ is proved analytically
+  for $C_n$ (Theorem~\ref{thm:riem-decomp}) and verified empirically
+  for all graph families tested (Empirical Identity following Theorem~\ref{thm:riem-decomp}):
+  cycles, complete graphs, bipartite, Petersen, grids, wheels, and random
+  graphs, with zero violations in 42 test cases. An analytical proof for
+  the general case remains open.
   For the large-$n$ asymptotics of $C_n$: $\Scal \to 0$ as $n \to \infty$
   (consistent with absence of phase transition in 1D Ising; the Fisher
   manifold is asymptotically flat).
@@ -3873,7 +3897,7 @@ $G_{00} = -m$, $G_{01}$, $G_{12}$):
 Note: $R(J)$ changes sign at $3w^8-14w^4+3=0$, i.e., $w^4=(7\pm\sqrt{40})/3$,
 giving a critical coupling $J_c = \frac{1}{4}\log\frac{7+\sqrt{40}}{3} \approx 0.371$.
 
-\textbf{Exact formulas for $C_5$:} (abbreviated; full SageMath output in \texttt{scripts/legacy/sage\_cn\_final\_alpha\_beta.py})
+\textbf{Exact formulas for $C_5$:} (abbreviated; full SageMath output in companion code repository)
 \begin{align}
   G_{00} &= -\frac{(w^4+3)(w^2+1)(w+1)(w-1)}{w^8+10w^4+5}, \\
   R(J) &= -\frac{5(3w^{16}+3w^{12}-27w^8-55w^4-20)(w^2+1)^4(w+1)^4(w-1)^4}{2(w^8+2w^4+5)^2(3w^4+1)^3}.
