@@ -324,6 +324,11 @@ requires $L \gg 1$. The OBC data are pre-asymptotic at currently accessible
 system sizes and are not suitable for reliable extraction of $\dR$.
 PBC (torus geometry) is strongly preferred for finite-size studies of
 curvature exponents.
+As an independent cross-check in 3D, exact cumulant enumeration on seven open-BC
+3D Ising lattices ($n = 8$--$27$, aspect ratios $1.0$--$2.5$) yields a global
+power-law fit $|\Scal| \sim n^{1.024}$ ($R^2 = 0.977$), consistent with the
+PBC MCMC result ($d_\mathrm{eff}(6{\to}7) = 1.043 \pm 0.016$) and the prediction
+$\dR = 1.019$, though pre-asymptotic due to open BC and small system sizes.
 
 
 %% ====================================================================
@@ -480,6 +485,12 @@ $\dR$ at arbitrary coupling along the Baxter critical line.
 Testing $\dR$ across further universality classes will establish whether the
 Fisher manifold curvature scaling is a truly universal feature of
 second-order phase transitions.
+Importantly, 2D Potts $q = 5$ (first-order transition, no CFT fixed point)
+does \emph{not} converge to any rational $\dR$ prediction: exact TM at
+$L = 3$--$5$ gives $d_\mathrm{eff}$ values that do not decrease
+monotonically toward a CFT target, confirming that the formula's domain is
+strictly second-order transitions where scale invariance holds.
+A self-contained replication package is available at \url{https://github.com/Vibecodium/fisher-curvature-replication}.
 
 
 %% ====================================================================

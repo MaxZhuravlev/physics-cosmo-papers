@@ -20,14 +20,14 @@ Research papers investigating the geometry of Fisher information manifolds on la
 | 5 | **Spectral Gap Selection of Lorentzian Signature** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807271.svg)](https://doi.org/10.5281/zenodo.18807271) |
 | 6 | **The Anisotropic Quantum-Classical Boundary** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807273.svg)](https://doi.org/10.5281/zenodo.18807273) |
 | 7 | **Flatness of Statistical Manifolds for Acyclic Graphs** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18827211.svg)](https://doi.org/10.5281/zenodo.18827211) |
-| 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18807277.svg)](https://doi.org/10.5281/zenodo.18807277) |
+| 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18828109.svg)](https://doi.org/10.5281/zenodo.18828109) |
 | 9 | **A Linear Exponent Law for Alpha-Power Fisher Curvature at the 2D Ising Critical Point** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18827254.svg)](https://doi.org/10.5281/zenodo.18827254) |
 
 ### Prediction Letter
 
 | Title | DOI |
 |-------|-----|
-| **Fisher Curvature Scaling at Statistical Critical Points** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18827215.svg)](https://doi.org/10.5281/zenodo.18827215) |
+| **Fisher Curvature Scaling at Statistical Critical Points** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18828108.svg)](https://doi.org/10.5281/zenodo.18828108) |
 
 ---
 
