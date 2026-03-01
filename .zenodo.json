@@ -64,12 +64,6 @@
       "scheme": "doi"
     },
     {
-      "identifier": "10.5281/zenodo.18815955",
-      "relation": "hasPart",
-      "resource_type": "publication-preprint",
-      "scheme": "doi"
-    },
-    {
       "identifier": "10.5281/zenodo.18827211",
       "relation": "hasPart",
       "resource_type": "publication-preprint",
@@ -77,6 +71,12 @@
     },
     {
       "identifier": "10.5281/zenodo.18827215",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18827254",
       "relation": "hasPart",
       "resource_type": "publication-preprint",
       "scheme": "doi"
