@@ -38,7 +38,7 @@ where $\nu$ and $\eta$ are the correlation-length and anomalous-dimension
 critical exponents. For the 2D Ising universality class ($\nu = 1$, $\eta = 1/4$),
 this predicts $\dR = 10/9 = 1.1\overline{1}$, confirmed by exact transfer-matrix
 computations ($L = 6$--$9$: $\dR = 1.1115 \pm 0.0002$, $1.8\sigma$) and
-multi-seed MCMC through $L = 20$ (all effective exponents within $1.7\sigma$).
+multi-seed MCMC through $L = 24$ (all effective exponents within $1.7\sigma$).
 For 3D Ising ($\nu = 0.630$, $\eta = 0.0363$), the prediction $\dR = 1.0188$
 is consistent with MCMC results on $L^3$ tori up to $L = 7$
 ($d_\mathrm{eff}(6{\to}7) = 1.043 \pm 0.016$). Numerical evidence
@@ -48,8 +48,8 @@ exact transfer-matrix results for Potts $q = 4$ on the $6 \times 6$ torus
 confirming a negative scalar curvature ($\Scal \approx -556.35$).
 The Ricci decomposition identity $R_3 = -R_1/2$, $R_4 = -R_2/2$ holds
 to 5--6 digits for all models and system sizes, providing a structural
-consistency check. We find that the statistical manifold at criticality is
-universally hyperbolic across the Ising and Potts families under periodic
+consistency check. For all second-order transitions studied, we find the statistical manifold
+at criticality to be hyperbolic (negative scalar curvature) under periodic
 boundary conditions.
  This exponent is distinct from the Ruppeiner thermodynamic
 curvature ($|\Scal_{\mathrm{Rup}}| \sim \xi^d$) and reflects the collective geometry
@@ -98,8 +98,8 @@ conditions (tori). We find a power-law divergence
 $|\Scal(\Jc)| \sim n^{\dR}$ and derive the formula for the exponent
 $\dR = (d\nu + 2\eta)/(d\nu + \eta)$ in terms of standard critical
 exponents. The curvature formulas used here are developed in the
-companion paper~\cite{Paper7}, which also proves the Riemann tensor decomposition
-identity that underlies the scalar Ricci identity exploited throughout.
+companion paper~\cite{Paper7}, which also proves the Ricci decomposition
+identity exploited throughout.
 
 
 %% ====================================================================
@@ -116,7 +116,7 @@ Each bond observable $\sigma_e = s_i s_j \in \{-1, +1\}$ and the
 Fisher metric~\eqref{eq:fisher} is an $m \times m$ positive-definite
 matrix. We compute results via exact transfer matrix (TM) for 2D models
 ($L \leq 9$), multi-seed Wolff-cluster MCMC with FFT cumulant
-accumulation for 2D at $L = 10$--$20$, and GPU-accelerated MCMC
+accumulation for 2D at $L = 10$--$24$, and GPU-accelerated MCMC
 with translational symmetry averaging (symavg) for 3D models ($L \leq 7$).
 
 \paragraph{Curvature.}
@@ -136,11 +136,8 @@ follow directly. Explicit closed-form curvature expressions in terms of
 $F_{ab}$ and $\kappa_{abc}$ are given in~\cite{Paper7}.
 
 \paragraph{Ricci decomposition.}
-The companion paper~\cite{Paper7} establishes the Riemann tensor decomposition
-identity $R^a{}_{bcd}|_{\mathrm{lin}} = -2\,R^a{}_{bcd}|_{\mathrm{quad}}$
-for cycle graphs (analytically) and verifies it across 42 graph families
-including all single-block discrete exponential families tested.
-As a scalar consequence numerically verified throughout this work, the curvature satisfies the Ricci identity
+The companion paper~\cite{Paper7} proves for single-block discrete
+exponential families the Ricci identity
 \begin{equation}
   R_3 = -\tfrac{1}{2} R_1, \qquad R_4 = -\tfrac{1}{2} R_2,
   \label{eq:ricci-identity}
@@ -178,18 +175,18 @@ These are fundamentally different geometric objects.
 
 The 2D Ising model provides the primary benchmark for the $\dR$ formula.
 Table~\ref{tab:ising2d} presents exact transfer-matrix values for
-$L = 3$--$9$ and multi-seed MCMC data for $L = 10$--$20$
-(Wolff-cluster sampling with FFT cumulant accumulation, 100k--500k
+$L = 3$--$9$ and multi-seed MCMC data for $L = 10$--$24$
+(Wolff-cluster sampling with FFT cumulant accumulation, 50k--500k
 sweeps $\times$ 3 independent seeds per size). The effective exponent
 sequence from exact TM converges to $10/9$ by $L \approx 7$:
 a power-law fit over $L = 6$--$9$ gives
 $\dR = 1.1115 \pm 0.0002$, deviating from $10/9$ by only $1.8\sigma$.
 
-The MCMC data at $L = 10$--$20$ extend the test into the regime where
+The MCMC data at $L = 10$--$24$ extend the test into the regime where
 the formula $\dR = (d\nu + 2\eta)/(d\nu + \eta)$ predicts purely
 asymptotic scaling. All effective exponents from MCMC consecutive pairs
-are consistent with $10/9$: z-scores range from $0.28$ to $1.62$ (all
-below $1.7\sigma$). A systematic MCMC bias of $1$--$3\%$ (growing with
+are consistent with $10/9$: z-scores range from $0.27$ to $1.62$ (all
+below $1.7\sigma$). A systematic MCMC noise of $1$--$3\%$ (growing with
 $L$) is attributed to insufficient decorrelation of third cumulants
 $\kappa_{abc}$ and does not affect the conclusion.
 
@@ -204,7 +201,8 @@ $\alpha_f = 1/4 = 0.2500$, definitively ruling out the $9/8$ hypothesis.
   Fisher scalar curvature $|\Scal(\Jc)|$ for 2D Ising on $L\times L$ tori (PBC).
   Values for $L \leq 9$ are from exact transfer-matrix computation;
   $L \geq 10$ use multi-seed Wolff-cluster MCMC with FFT cumulant accumulation
-  (errors are inter-seed standard deviations from 3 independent seeds).
+  (errors are inter-seed standard deviations from 3 independent seeds;
+  50k--500k sweeps per seed).
   $d_\mathrm{eff}$ denotes the effective exponent from consecutive $L$ pairs.}
 \begin{ruledtabular}
 \begin{tabular}{rrrrl}
@@ -224,6 +222,8 @@ $\alpha_f = 1/4 = 0.2500$, definitively ruling out the $9/8$ hypothesis.
   16 & 256 & 512  & $5999 \pm 14$  & 1.1261 \\
   18 & 324 & 648  & $7782 \pm 40$  & 1.1044 \\
   20 & 400 & 800  & $9785 \pm 82$\phantom{0} & 1.0870 \\
+  22 & 484 & 968  & $12282 \pm 195$ & 1.1922 \\
+  24 & 576 & 1152 & $14800 \pm 292$ & 1.0717 \\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -233,7 +233,7 @@ $\alpha_f = 1/4 = 0.2500$, definitively ruling out the $9/8$ hypothesis.
 \caption{\label{fig:scaling}
   Log-log plot of $|\Scal(\Jc)|$ vs $n=L^2$ for 2D Ising on $L\times L$ tori.
   Filled circles: exact TM ($L=3$--$9$). Open circles with error bars: multi-seed
-  MCMC ($L=10$--$20$, 3 seeds each). Solid line: $\dR = 10/9$ prediction.
+  MCMC ($L=10$--$24$, 3 seeds each). Solid line: $\dR = 10/9$ prediction.
   Inset: effective exponent $d_\mathrm{eff}(L,L+1)$ vs $L$, converging to the
   prediction (horizontal dashed).}
 \end{figure}
@@ -452,7 +452,7 @@ Equation~\eqref{eq:formula} is directly falsifiable via exact TM
     prediction by $>3\sigma$ across at least three consecutive pairs, the
     formula is rejected.
   \item For 2D Ising: exact TM ($L = 6$--$9$) confirms the prediction
-    at $1.8\sigma$; multi-seed MCMC ($L = 10$--$20$) confirms all
+    at $1.8\sigma$; multi-seed MCMC ($L = 10$--$24$) confirms all
     effective exponents within $1.7\sigma$. For 3D Ising,
     $L = 8$--$10$ MCMC runs with symavg will provide the decisive test.
 \end{enumerate}
@@ -483,7 +483,7 @@ second-order phase transitions.
 \begin{acknowledgments}
 Computations were performed using exact transfer-matrix enumeration
 (2D models, Apple M3~Max), multi-seed Wolff-cluster MCMC with FFT
-cumulant accumulation (2D Ising $L = 10$--$20$, Intel i9-14900KF +
+cumulant accumulation (2D Ising $L = 10$--$24$, Intel i9-14900KF +
 NVIDIA RTX~4090), and GPU-accelerated MCMC with translational symmetry
 averaging (3D Ising, NVIDIA RTX~4090). Ricci tensor evaluation used
 JAX/GPU for $m \leq 512$ and CPU for larger manifold dimensions.
