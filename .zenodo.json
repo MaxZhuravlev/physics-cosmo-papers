@@ -58,25 +58,25 @@
       "scheme": "doi"
     },
     {
-      "identifier": "10.5281/zenodo.18807275",
-      "relation": "hasPart",
-      "resource_type": "publication-preprint",
-      "scheme": "doi"
-    },
-    {
       "identifier": "10.5281/zenodo.18807277",
       "relation": "hasPart",
       "resource_type": "publication-preprint",
       "scheme": "doi"
     },
     {
-      "identifier": "10.5281/zenodo.18807279",
+      "identifier": "10.5281/zenodo.18815955",
       "relation": "hasPart",
       "resource_type": "publication-preprint",
       "scheme": "doi"
     },
     {
-      "identifier": "10.5281/zenodo.18815955",
+      "identifier": "10.5281/zenodo.18827211",
+      "relation": "hasPart",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.18827215",
       "relation": "hasPart",
       "resource_type": "publication-preprint",
       "scheme": "doi"
