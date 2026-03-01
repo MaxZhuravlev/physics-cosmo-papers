@@ -98,8 +98,8 @@ conditions (tori). We find a power-law divergence
 $|\Scal(\Jc)| \sim n^{\dR}$ and derive the formula for the exponent
 $\dR = (d\nu + 2\eta)/(d\nu + \eta)$ in terms of standard critical
 exponents. The curvature formulas used here are developed in the
-companion paper~\cite{Paper7}, which also proves the Ricci decomposition
-identity exploited throughout.
+companion paper~\cite{Paper7}, which also proves the Riemann tensor decomposition
+identity that underlies the scalar Ricci identity exploited throughout.
 
 
 %% ====================================================================
@@ -136,8 +136,11 @@ follow directly. Explicit closed-form curvature expressions in terms of
 $F_{ab}$ and $\kappa_{abc}$ are given in~\cite{Paper7}.
 
 \paragraph{Ricci decomposition.}
-The companion paper~\cite{Paper7} proves for single-block discrete
-exponential families the Ricci identity
+The companion paper~\cite{Paper7} establishes the Riemann tensor decomposition
+identity $R^a{}_{bcd}|_{\mathrm{lin}} = -2\,R^a{}_{bcd}|_{\mathrm{quad}}$
+for cycle graphs (analytically) and verifies it across 42 graph families
+including all single-block discrete exponential families tested.
+As a scalar consequence numerically verified throughout this work, the curvature satisfies the Ricci identity
 \begin{equation}
   R_3 = -\tfrac{1}{2} R_1, \qquad R_4 = -\tfrac{1}{2} R_2,
   \label{eq:ricci-identity}
@@ -300,8 +303,8 @@ models; the data are consistent with convergence toward the predictions.
 
 \subsection{Ricci decomposition identity}
 
-The identity $R_3 = -R_1/2$, $R_4 = -R_2/2$ (proved in~\cite{Paper7}
-for single-block discrete exponential families) is verified here numerically
+The identity $R_3 = -R_1/2$, $R_4 = -R_2/2$ (established via the Riemann
+decomposition in~\cite{Paper7} and verified numerically here) is verified
 to 5--6 significant figures for: all 2D Ising sizes $L = 3$--$8$ (PBC),
 and all 3D Ising sizes $L = 2$--$7$ including all five independent MCMC seeds.
 Representative ratios from 3D Ising at $L = 7$:
@@ -431,8 +434,8 @@ scaling exponent $\dR$ that is absent in the fixed-dimensional
 thermodynamic setting.
 
 \paragraph{Ricci identity and multi-model consistency.}
-The Ricci decomposition $R = (R_1 + R_2)/2$ proved in~\cite{Paper7}
-for discrete exponential families provides the structural constraint
+The Ricci decomposition $R = (R_1 + R_2)/2$, derived from the Riemann
+decomposition in~\cite{Paper7} for discrete exponential families, provides the structural constraint
 that makes the curvature computable from two independent Ricci scalars.
 This simplification is essential for the 3D MCMC pipeline, where the
 full curvature tensor would be prohibitively expensive to evaluate.
