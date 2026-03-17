@@ -20,8 +20,9 @@ Research papers investigating the geometry of Fisher information manifolds on la
 | 5 | **Spectral Gap Selection of Lorentzian Signature** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18942495.svg)](https://doi.org/10.5281/zenodo.18942495) |
 | 6 | **The Anisotropic Quantum-Classical Boundary** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18942497.svg)](https://doi.org/10.5281/zenodo.18942497) |
 | 7 | **Flatness of Statistical Manifolds for Acyclic Graphs** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19049934.svg)](https://doi.org/10.5281/zenodo.19049934) |
-| 8 | **Rigorous Asymptotics of Fisher Curvature Scaling** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18942511.svg)](https://doi.org/10.5281/zenodo.18942511) |
+| 8 | ~~**Rigorous Asymptotics of Fisher Curvature Scaling**~~ (**RETIRED** — central theorem falsified) | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18942511.svg)](https://doi.org/10.5281/zenodo.18942511) |
 | 9 | **A Linear Exponent Law for Alpha-Power Fisher Curvature at the 2D Ising Critical Point** | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18943128.svg)](https://doi.org/10.5281/zenodo.18943128) |
+| 10 | **The Scaling Closure Theorem: Fisher Curvature Exponents from CFT Structure** | *(pending SciPost submission)* |
 
 ### Prediction Letter
 
@@ -42,8 +43,9 @@ paper3-good-regulator/
 paper5-spectral-selection/
 paper6-directional-alpha/
 paper7-curvature/
-paper8-asymptotics/
+paper8-asymptotics/       # RETIRED — central theorem falsified
 paper9-alpha-regime/
+paper10-proof/            # Pending SciPost submission
 prediction-letter/
 ```
 
