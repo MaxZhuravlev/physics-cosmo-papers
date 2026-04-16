@@ -1,0 +1,54 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# published — Authorization (Submodule)
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# @uu/modules/authorization/ L2 submodule instance
+# Inherits from parent PhysicsResearch/cosmological-unification/authorization.yaml
+# via extends mechanism. Per user directive 2026-04-16: "as best" → per-submodule
+# coverage for scope precision.
+#
+# Adopted: 2026-04-16 | Session: 1a71bf76 | Worker: Physics-ADOPT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+schema_version: "1.0.0"
+schema_id: "uu/authorization/v1"
+
+# Inherits ALL identities, roles, and proposal channels from umbrella.
+# Local overrides only set scope precision for this submodule.
+extends: "../authorization.yaml"
+
+system:
+  name: published
+  parent: cosmological-unification
+  beneficiary: PhysicsResearch
+  path: "published/**"
+  description: "Published artifacts (finalized papers, replication materials) (submodule)."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SCOPE INHERITANCE
+# ═══════════════════════════════════════════════════════════════════════════════
+scope_inheritance:
+  model: "cumulative"  # parent scopes + local scope apply together
+  rationale: |
+    Published artifacts are historically sensitive — changes here touch
+    externally-visible outputs (arXiv submissions, replication packages).
+    Daria's verified-dev scope includes `published/**` at the umbrella
+    level; cross-org / out-of-scope changes still require review.
+    Max remains owner at `**` (both layers).
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LOCAL SCOPE CONSTRAINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+# published/** touches external outputs — consider GPG signing mandatory for
+# any non-owner commits. Role policy already enforces gpg_verify: recommended
+# for verified-dev; set to required here for published artifacts.
+local_scope_overrides:
+  - path_pattern: "published/papers/**"
+    gpg_verify_override: required
+    rationale: "Finalized physics papers — provenance must be cryptographically attested for external trust."
+
+meta:
+  adopted_at: "2026-04-16"
+  adopted_from_cw_session: "1a71bf76"
+  parent_authorization: "../authorization.yaml"
+  inheritance_model: "extends (forward-only additive)"
